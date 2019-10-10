@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2019-10-10T18:56:32 MSK" name="Surefire suite" finished-at="2019-10-10T18:56:33 MSK" duration-ms="1055">
+    <groups>
+    </groups>
+    <test started-at="2019-10-10T18:56:32 MSK" name="Surefire test" finished-at="2019-10-10T18:56:33 MSK" duration-ms="1055">
+      <class name="by.htp.jd2.dao.impl.SQLCarDaoTest">
+        <test-method signature="delCar() throws by.htp.jd2.dao.DaoException" started-at="2019-10-10T18:56:32 MSK" name="delCar" finished-at="2019-10-10T18:56:33 MSK" duration-ms="951" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- delCar -->
+      </class> <!-- by.htp.jd2.dao.impl.SQLCarDaoTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
