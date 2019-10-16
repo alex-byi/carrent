@@ -53,7 +53,7 @@ public class SqlCrashDao implements CrashDao {
     }
 
     @Override
-    public int addCrash(Crash crash, int orderId) throws DaoException {
+    public int addCrash(Crash crash) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         int id = 0;

@@ -63,7 +63,6 @@ public class SQLOrderDao implements OrderDao {
                 isCanceled = rs.getBoolean(12);
                 isComplete = rs.getBoolean(13);
                 rejectReason = rs.getString(14);
-
                 list.add(new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
                         amount, id, isCanceled, isComplete, rejectReason));
             }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDao {
 
-    User authorization(String login, String password) throws DaoException, SQLException;
+    User authorization(String login, String password) throws DaoException;
 
     boolean registration(User user) throws DaoException;
 

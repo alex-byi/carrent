@@ -7,7 +7,7 @@ import by.htp.jd2.entity.Crash;
 public interface CrashDao {
     List<Crash> getAllCrashs() throws DaoException;
 
-    int addCrash(Crash crash, int orderId) throws DaoException;
+    int addCrash(Crash crash) throws DaoException;
 
     List<Crash> getUsersCrashs(int idUser) throws DaoException;
 

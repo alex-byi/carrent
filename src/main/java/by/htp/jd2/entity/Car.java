@@ -1,6 +1,8 @@
 package by.htp.jd2.entity;
 
 
+import java.util.Objects;
+
 public final class Car {
 
     private int id;
@@ -42,7 +44,7 @@ public final class Car {
     }
 
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -105,67 +107,38 @@ public final class Car {
         this.transmissionType = transmissionType;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return id == car.id &&
+                price == car.price &&
+                active == car.active &&
+                Objects.equals(name, car.name) &&
+                Objects.equals(fuel, car.fuel) &&
+                Objects.equals(color, car.color) &&
+                Objects.equals(body, car.body) &&
+                transmissionType == car.transmissionType;
+    }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (active ? 1231 : 1237);
-        result = prime * result + ((body == null) ? 0 : body.hashCode());
-        result = prime * result + ((color == null) ? 0 : color.hashCode());
-        result = prime * result + ((fuel == null) ? 0 : fuel.hashCode());
-        result = prime * result + id;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + price;
-        result = prime * result + ((transmissionType == null) ? 0 : transmissionType.hashCode());
-        return result;
+        return Objects.hash(id, name, price, fuel, color, body, transmissionType, active);
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Car other = (Car) obj;
-        if (active != other.active)
-            return false;
-        if (body == null) {
-            if (other.body != null)
-                return false;
-        } else if (!body.equals(other.body))
-            return false;
-        if (color == null) {
-            if (other.color != null)
-                return false;
-        } else if (!color.equals(other.color))
-            return false;
-        if (fuel == null) {
-            if (other.fuel != null)
-                return false;
-        } else if (!fuel.equals(other.fuel))
-            return false;
-        if (id != other.id)
-            return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (price != other.price)
-            return false;
-        if (transmissionType != other.transmissionType)
-            return false;
-        return true;
-    }
 
     @Override
     public String toString() {
-        return "Car [name=" + name + ", price=" + price + ", fuel=" + fuel + ", color=" + color + ", body=" + body
-                + ", transmissionType=" + transmissionType + "]";
+        return "Car{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", fuel='" + fuel + '\'' +
+                ", color='" + color + '\'' +
+                ", body='" + body + '\'' +
+                ", transmissionType=" + transmissionType +
+                ", active=" + active +
+                '}';
     }
-
-
 }

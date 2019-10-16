@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
         User user = null;
         try {
             user = userDao.authorization(login, password);
-        } catch (DaoException | SQLException e) {
+        } catch (DaoException e) {
             throw new ServiceException(e);
         }
         if (user != null) {

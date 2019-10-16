@@ -27,7 +27,7 @@ public class SQLUserDao implements UserDao {
     private static final String HASH_PASSWORD = "SELECT MD5(?); ";
 
     @Override
-    public User authorization(String loginA, String passwordA) throws SQLException, DaoException {
+    public User authorization(String loginA, String passwordA) throws DaoException {
         String login = null;
         String password = null;
         String fullName = null;
@@ -105,16 +105,16 @@ public class SQLUserDao implements UserDao {
 
     @Override
     public List<User> getAllUsers() throws DaoException {
-        String login = null;
-        String password = null;
-        String fullName = null;
-        String passNum = null;
-        String email = null;
-        String address = null;
-        UserType type = null;
-        int cash = 0;
-        boolean active = false;
-        int id = 0;
+        String login;
+        String password;
+        String fullName;
+        String passNum;
+        String email;
+        String address;
+        UserType type;
+        int cash;
+        boolean active;
+        int id;
         List<User> list = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
@@ -208,18 +208,14 @@ public class SQLUserDao implements UserDao {
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        List<String> logins = new ArrayList<String>();
+        List<String> logins = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(SELECT_LOGINS)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 logins.add(rs.getString(1));
             }
-            if (logins.contains(login)) {
-                return false;
-            } else {
-                return true;
-            }
+            return !logins.contains(login);
         } catch (SQLException e) {
             throw new DaoException("SELECT USER BY ID ERROR", e);
         } finally {

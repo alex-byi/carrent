@@ -1,5 +1,7 @@
 package by.htp.jd2.entity;
 
+import java.util.Objects;
+
 public final class Crash {
 
     private int id;
@@ -30,7 +32,7 @@ public final class Crash {
         return isComplete;
     }
 
-    private void setComplete(boolean isComplete) {
+    public void setComplete(boolean isComplete) {
         this.isComplete = isComplete;
     }
 
@@ -38,7 +40,7 @@ public final class Crash {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -75,50 +77,32 @@ public final class Crash {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + amount;
-        result = prime * result + ((damage == null) ? 0 : damage.hashCode());
-        result = prime * result + id;
-        result = prime * result + idCar;
-        result = prime * result + idUser;
-        result = prime * result + (isComplete ? 1231 : 1237);
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Crash crash = (Crash) o;
+        return id == crash.id &&
+                amount == crash.amount &&
+                idCar == crash.idCar &&
+                idUser == crash.idUser &&
+                isComplete == crash.isComplete &&
+                Objects.equals(damage, crash.damage);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Crash other = (Crash) obj;
-        if (amount != other.amount)
-            return false;
-        if (damage == null) {
-            if (other.damage != null)
-                return false;
-        } else if (!damage.equals(other.damage))
-            return false;
-        if (id != other.id)
-            return false;
-        if (idCar != other.idCar)
-            return false;
-        if (idUser != other.idUser)
-            return false;
-        if (isComplete != other.isComplete)
-            return false;
-        return true;
+    public int hashCode() {
+        return Objects.hash(id, damage, amount, idCar, idUser, isComplete);
     }
 
     @Override
     public String toString() {
-        return "Crash [id=" + id + ", damage=" + damage + ", amount=" + amount + ", idCar=" + idCar + ", idUser="
-                + idUser + ", isComplete=" + isComplete + "]";
+        return "Crash{" +
+                "id=" + id +
+                ", damage='" + damage + '\'' +
+                ", amount=" + amount +
+                ", idCar=" + idCar +
+                ", idUser=" + idUser +
+                ", isComplete=" + isComplete +
+                '}';
     }
-
-
 }

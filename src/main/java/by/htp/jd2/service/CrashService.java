@@ -7,7 +7,7 @@ import by.htp.jd2.entity.Crash;
 public interface CrashService {
     List<Crash> getAllCrashs() throws ServiceException;
 
-    int addCrash(Crash crash, int orderId) throws ServiceException;
+    int addCrash(Crash crash) throws ServiceException;
 
     List<Crash> getUsersCrashs(int idUser) throws ServiceException;
 

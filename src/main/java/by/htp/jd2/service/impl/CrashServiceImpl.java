@@ -25,11 +25,11 @@ public class CrashServiceImpl implements CrashService {
     }
 
     @Override
-    public int addCrash(Crash crash, int orderId) throws ServiceException {
+    public int addCrash(Crash crash) throws ServiceException {
         int id = 0;
         SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         try {
-            id = crashDao.addCrash(crash, orderId);
+            id = crashDao.addCrash(crash);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

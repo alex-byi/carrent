@@ -51,7 +51,7 @@ public final class Order {
         return rejectReason;
     }
 
-    private void setRejectReason(String rejectReason) {
+    public void setRejectReason(String rejectReason) {
         this.rejectReason = rejectReason;
     }
 
@@ -75,7 +75,7 @@ public final class Order {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

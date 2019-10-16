@@ -36,7 +36,7 @@ public class AddCrashCommand implements Command {
                 int orderId = Integer.parseInt(request.getParameter("orderId"));
                 int carId = Integer.parseInt(request.getParameter("carId"));
                 Crash crash = new Crash(description, amount, carId, userId);
-                int crashId = ServiceProvider.getInstance().getCrashService().addCrash(crash, orderId);
+                int crashId = ServiceProvider.getInstance().getCrashService().addCrash(crash);
                 ServiceProvider.getInstance().getOrderService().setCrash(orderId, crashId);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(error + e);
