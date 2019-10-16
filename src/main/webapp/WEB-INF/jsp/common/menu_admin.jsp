@@ -7,7 +7,7 @@
 <html>
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
-    <fmt:setBundle basename="by.htp.jd2.languagebundles.title"/>
+    <fmt:setBundle basename="title"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>

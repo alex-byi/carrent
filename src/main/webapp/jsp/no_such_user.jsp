@@ -8,7 +8,7 @@
 
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
-    <fmt:setBundle basename="by.htp.jd2.languagebundles.title"/>
+    <fmt:setBundle basename="title"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>
         <fmt:message key="header.title"/>
@@ -35,7 +35,7 @@
                         <fmt:message key="registration.wrongname"/>
                     </h1>
                     <br/> <input type="submit"
-                                 value="<fmt:message key=" registration.tryagain" />">
+                                 value="<fmt:message key=" registration.tryagain"/>">
 
                 </form>
                 <form name='form-login'
@@ -43,7 +43,6 @@
 
                     <input type="submit"
                            value="<fmt:message key=" registration.reg" />">
-
                 </form>
             </div>
             <p>
