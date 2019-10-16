@@ -1,8 +1,0 @@
--------------------------------------------------------------------------------
-Test set: by.htp.jd2.dao.impl.SQLCarDaoTest
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.366 s <<< FAILURE! - in by.htp.jd2.dao.impl.SQLCarDaoTest
-getAllCars on getAllCars(by.htp.jd2.dao.impl.SQLCarDaoTest)(by.htp.jd2.dao.impl.SQLCarDaoTest)  Time elapsed: 0.019 s  <<< FAILURE!
-java.lang.AssertionError: expected:<12> but was:<11>
-	at by.htp.jd2.dao.impl.SQLCarDaoTest.getAllCars(SQLCarDaoTest.java:87)
-

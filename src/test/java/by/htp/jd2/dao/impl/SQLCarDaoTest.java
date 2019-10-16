@@ -22,6 +22,7 @@ public class SQLCarDaoTest {
         SQLCarDao sqlCarDao = new SQLCarDao();
         boolean expected = sqlCarDao.delCar(1);
         Assert.assertTrue(expected);
+        activateCar();
     }
 
     @Test
