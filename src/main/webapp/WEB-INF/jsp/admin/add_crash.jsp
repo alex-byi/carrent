@@ -2,8 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -53,7 +52,7 @@
 
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>
@@ -80,7 +79,7 @@
                         <td valign=top>
                             <fmt:message key="crashorders.damagedescr"/>
                             <input type="text" name="description" value="" required
-                                   placeholder="<fmt:message key=" crashorders.damagedescr" /> "
+                                   placeholder=<fmt:message key="crashorders.damagedescr"/>
                             size=37 maxlength=50>
                         </td>
                     </tr>
@@ -89,7 +88,7 @@
                             <fmt:message key="crashorders.amount"/>
                             <input
                                     type="number" min="0" name="amount" value="" required
-                                    placeholder="<fmt:message key=" crashorders.amount"/> " size=37
+                                    placeholder=<fmt:message key="crashorders.amount"/> size=37
                             maxlength=50>
                         </td>
                     </tr>
@@ -98,7 +97,7 @@
                         <td>
                             <center>
                                 <input type="submit"
-                                       value="<fmt:message key=" crashorders.create"/>" />
+                                       value=<fmt:message key="crashorders.create"/> />
                             </center>
                         </td>
                     </tr>

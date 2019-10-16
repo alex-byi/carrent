@@ -8,7 +8,6 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
 import by.htp.jd2.service.validation.UserDataValidator;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

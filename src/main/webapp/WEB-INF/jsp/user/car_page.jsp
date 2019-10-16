@@ -2,9 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" >
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 
-<html>
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -50,7 +49,7 @@
 
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>

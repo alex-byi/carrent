@@ -2,9 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
@@ -26,14 +24,12 @@
         <center>
             <div id="login">
 
-                <form name="LanguageForm" method="POST" action="controller"
-                      class="lang">
-                    <input type="hidden" name="command" value="set_language"/> <input
-                        type="hidden" name="page" value="index"/> <input
+                <form name="LanguageForm" method="POST" action="controller" class="lang">
+                    <input type="hidden" name="command" value="set_language"/> <input type="hidden" name="page"
+                                                                                      value="index"/> <input
                         name="language" type="submit" value="RU"/> <input type="hidden"
                                                                           name="command" value="set_language"/> <input
-                        name="language"
-                        type="submit" value="EN"/>
+                        name="language" type="submit" value="EN"/>
                 </form>
 
                 <form name='form-login' method="POST" action="controller">
@@ -41,15 +37,13 @@
                         <fmt:message key="login.title"/>
                     </h1>
                     <br/> <input type="hidden" name="command" value="authorization"/>
-                    <input type="text" name="login" value="" required
-                           placeholder="<fmt:message key=" login.name"/>" /> <input
-                        type="password" name="pass" value="" required
-                        placeholder="<fmt:message key=" login.password"/>" /> <input
-                        type="submit" value="<fmt:message key=" login.enter"/>">
+                    <input type="text" name="login" value="" required placeholder=<fmt:message key="login.name"/> />
+                    <input type="password" name="pass" value="" required
+                           placeholder=<fmt:message key="login.password"/> /> <input
+                        type="submit" value=<fmt:message key="login.enter"/>>
                 </form>
-                <form name="RegisterForm" method="POST"
-                      action='jsp/registration_user.jsp'>
-                    <input type="submit" value="<fmt:message key=" login.register"/>">
+                <form name="RegisterForm" method="POST" action='jsp/registration_user.jsp'>
+                    <input type="submit" value=<fmt:message key="login.register"/> >
                 </form>
 
             </div>

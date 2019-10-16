@@ -1,9 +1,7 @@
 <%@page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -21,7 +19,7 @@
 <c:if test="${sessionScope.duplicateLogin != null }">
     <center>
         <h2>
-            <c:out value="${duplicateLogin}"></c:out>
+            <c:out value="${duplicateLogin}"/>
         </h2>
     </center>
 </c:if>
@@ -51,13 +49,13 @@
             </div>
 
             <input type="text" name="login" minlength="5" value="" autofocus
-                   required placeholder="<fmt:message key=" registration.login" />">
+                   required placeholder=<fmt:message key="registration.login"/>>
             <div class="titling">
                 <fmt:message key="registration.password"/>
                 <h7>*</h7>
             </div>
             <input type="password" name="pass" minlength="6" value="" required
-                   placeholder="<fmt:message key=" registration.password" />">
+                   placeholder=<fmt:message key="registration.password"/>>
 
             <div class="titling">
                 <fmt:message key="registration.fullname"/>
@@ -65,14 +63,14 @@
             </div>
             <input type="text" name="fullname" minlength="6" maxlength="25"
                    value="" required
-                   placeholder="<fmt:message key=" registration.fullname" />">
+                   placeholder=<fmt:message key="registration.fullname"/>>
 
             <div class="titling">
                 <fmt:message key="registration.address"/>
                 <h7>*</h7>
             </div>
             <input type="text" name="address" minlength="6" value="" required
-                   placeholder="<fmt:message key=" registration.address" />">
+                   placeholder=<fmt:message key="registration.address"/>>
 
             <div class="titling">
                 <fmt:message key="registration.email"/>
@@ -80,19 +78,19 @@
             </div>
             <input type="email" name="email" minlength="6" maxlength="25"
                    value="" required
-                   placeholder="<fmt:message key=" registration.email" />">
+                   placeholder=<fmt:message key="registration.email"/>>
 
             <div class="titling">
                 <fmt:message key="registration.passportnumber"/>
                 <h7>*</h7>
             </div>
             <input type="text" name="passnumber" minlength="6" value="" required
-                   placeholder="<fmt:message key=" registration.passportnumber" />">
+                   placeholder=<fmt:message key="registration.passportnumber"/>>
             <br/> <input type="submit"
-                         value="<fmt:message key=" registration.submit" />"> <br/>
+                         value=<fmt:message key="registration.submit"/>> <br/>
         </form>
         <form name="back">
-            <input type="submit" value="<fmt:message key=" registration.back" />"
+            <input type="submit" value=<fmt:message key="registration.back"/>
             onclick="window.history.go(-1); return false;" />
         </form>
     </div>

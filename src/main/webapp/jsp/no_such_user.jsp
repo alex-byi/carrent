@@ -2,9 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
@@ -35,14 +33,14 @@
                         <fmt:message key="registration.wrongname"/>
                     </h1>
                     <br/> <input type="submit"
-                                 value="<fmt:message key=" registration.tryagain"/>">
+                                 value=<fmt:message key="registration.tryagain"/>>
 
                 </form>
                 <form name='form-login'
                       action="/my-web-project/jsp/registration_user.jsp">
 
                     <input type="submit"
-                           value="<fmt:message key=" registration.reg" />">
+                           value=<fmt:message key="registration.reg"/>>
                 </form>
             </div>
             <p>

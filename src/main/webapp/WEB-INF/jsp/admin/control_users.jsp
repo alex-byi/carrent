@@ -2,8 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -51,7 +50,7 @@
         <div id="page-content">
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>
@@ -124,7 +123,7 @@
                                     <input type="hidden" name="idUser" value="${user.id}"/> <input
                                         type="hidden" name="command" value="del_user"/> <input
                                         type="submit"
-                                        value="<fmt:message key=" usercontrol.deactivate" />"
+                                        value=<fmt:message key="usercontrol.deactivate"/>
                                     onclick="return confirm('
                                     <fmt:message key="usercontrol.deactivate"/>
                                     ?')" /><br/>
@@ -135,7 +134,7 @@
                                     <input type="hidden" name="idUser" value="${user.id}"/> <input
                                         type="hidden" name="command" value="activate_user"/> <input
                                         type="submit"
-                                        value="<fmt:message key=" usercontrol.activate" />"
+                                        value=<fmt:message key="usercontrol.activate"/>
                                     onclick="return confirm('
                                     <fmt:message key="usercontrol.activate"/>
                                     ?')" /><br/>
@@ -150,7 +149,7 @@
                                     type="number" required size="6" min="0" maxlength="6"
                                     pattern="[0-9]{1,6}" name="moneyCol" value=""/> <input
                                     type="submit"
-                                    value="<fmt:message key=" usercontrol.addcash" />"
+                                    value=<fmt:message key="usercontrol.addcash"/>
                                 onclick="return confirm('
                                 <fmt:message key="usercontrol.addcash"/>
                                 ?')" /><br/>

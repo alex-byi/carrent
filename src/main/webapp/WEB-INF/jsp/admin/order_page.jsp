@@ -2,8 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
+
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -52,7 +52,7 @@
 
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>
@@ -160,9 +160,9 @@
                                     <input type="hidden" name="command" value="cancel_order"/>
                                     <input type="hidden" name="orderId" value="${order.id}"/> <input
                                         type="text" required
-                                        placeholder="<fmt:message key=" allorders.cause" />" size="8"
+                                        placeholder=<fmt:message key="allorders.cause"/> size="8"
                                     maxlength="40" name="reason" value="" /><input
-                                        type="submit" value="<fmt:message key=" allorders.cancel" />"
+                                        type="submit" value=<fmt:message key="allorders.cancel"/>
                                     onclick="return confirm('
                                     <fmt:message key="allorders.cancel"/>
                                     ?')" /><br/>
@@ -178,7 +178,7 @@
                                     <input type="hidden" name="command" value="complete_order"/>
                                     <input type="hidden" name="orderId" value="${order.id}"/> <input
                                         type="submit"
-                                        value="<fmt:message key=" allorders.complete" />"
+                                        value=<fmt:message key="allorders.complete"/>
                                     onclick="return confirm('
                                     <fmt:message key="allorders.complete"/>
                                     ?')" /><br/>
@@ -193,11 +193,10 @@
                                            value="new_crash_order_page"/><input type="hidden"
                                                                                 name="orderId" value="${order.id}"/>
                                     <input type="hidden"
-                                           name="carId" value="${order.idCar}"/> <input type="hidden"
-                                                                                        name="userId"
+                                           name="carId" value="${order.idCar}"/> <input type="hidden" name="userId"
                                                                                         value="${order.idUser}"/><input
                                         type="submit"
-                                        value="<fmt:message key=" allorders.createaddbill" />" /><br/>
+                                        value=<fmt:message key="allorders.createaddbill"/> /><br/>
                                 </form>
                             </c:if>
                         </td>

@@ -2,7 +2,6 @@ package by.htp.jd2.dao;
 
 import by.htp.jd2.entity.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface UserDao {

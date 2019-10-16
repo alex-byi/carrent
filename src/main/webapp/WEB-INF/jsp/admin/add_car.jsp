@@ -2,8 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -39,7 +38,7 @@
 
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>
@@ -67,7 +66,7 @@
                                 <fmt:message key="carcontrol.carname"/>
                                 <h7>*</h7>
                                 <input type="text" name="carName" value="" required
-                                       placeholder="<fmt:message key=" carcontrol.carname" />" size=37
+                                       placeholder=<fmt:message key="carcontrol.carname"/> size=37
                                 maxlength=50>
                             </td>
                         </tr>
@@ -77,7 +76,7 @@
                                 <h7>*</h7>
                                 <input
                                         type="number" min="0" name="carPrice" value="" required
-                                        placeholder="<fmt:message key=" carcontrol.carprice" />" size=26
+                                        placeholder=<fmt:message key="carcontrol.carprice"/> size=26
                                 maxlength=125>
                             </td>
                         <tr>
@@ -106,7 +105,7 @@
                                 <fmt:message key="carcontrol.carcolor"/>
                                 <h7>*</h7>
                                 <input type="text" name="carColor" size=26 value="" required
-                                       placeholder="<fmt:message key=" carcontrol.carcolor" />"
+                                       placeholder=<fmt:message key="carcontrol.carcolor"/>
                                 maxlength=10>
                             </td>
                         <tr>
@@ -158,14 +157,12 @@
 
                         <tr>
                             <td align=center><input type="submit"
-                                                    value="<fmt:message key=" addcar.submit" />"
+                                                    value=<fmt:message key="addcar.submit"/>
                                 onClick="alert('
                                 <fmt:message key="addcar.submit"/>
                                 ?')">
                         </tr>
                     </table>
-
-
                 </center>
             </form>
         </div>

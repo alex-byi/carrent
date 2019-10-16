@@ -2,8 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<html xmlns:fmt="http://www.w3.org/1999/XSL/Transform" xmlns:c="http://www.w3.org/2001/XMLSchema">
 <head>
     <fmt:setLocale value="${locale}" scope="session"/>
     <fmt:setBundle basename="title"/>
@@ -51,7 +50,7 @@
         <div id="page-content">
             <c:if test="${sessionScope.error != null }">
                 <h2>
-                    <c:out value="${sessionScope.error }"></c:out>
+                    <c:out value="${sessionScope.error }"/>
                 </h2>
                 <br>
             </c:if>
@@ -109,14 +108,13 @@
                     <td>
                         <form action="controller" method="post">
                             <input type="hidden" name="command" value="add_car_page"/> <input
-                                type="submit" value="<fmt:message key=" carcontrol.addcar" />" /><br/>
+                                type="submit" value=<fmt:message key="carcontrol.addcar"/> /><br/>
                         </form>
                     </td>
                 </tr>
             </table>
             <p>
                 <br>
-
                 <c:if test="${requestScope.fuelCar != null}" var="testcif">
                     <h2>Все автомобили с ... двигателем:</h2>
                     <table id="usertable">
@@ -180,7 +178,7 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="del_car"/> <input
                                                     type="submit"
-                                                    value="<fmt:message key=" carcontrol.deactivate" />"
+                                                    value=<fmt:message key="carcontrol.deactivate"/>
                                                 onclick="return confirm('
                                                 <fmt:message key="carcontrol.deactivate"/>
                                                 ?')" /><br/>
@@ -191,7 +189,7 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="activate_car"/> <input
                                                     type="submit"
-                                                    value="<fmt:message key=" carcontrol.activate" />"
+                                                    value=<fmt:message key="carcontrol.activate"/>
                                                 onclick="return confirm('
                                                 <fmt:message key="carcontrol.activate"/>
                                                 ?')" /><br/>
@@ -269,7 +267,7 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="del_car"/> <input
                                                     type="submit"
-                                                    value="<fmt:message key=" carcontrol.deactivate" />"
+                                                    value=<fmt:message key="carcontrol.deactivate"/>
                                                 onclick="return confirm('
                                                 <fmt:message key="carcontrol.deactivate"/>
                                                 ?')" /><br/>
@@ -280,7 +278,7 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="activate_car"/> <input
                                                     type="submit"
-                                                    value="<fmt:message key=" carcontrol.activate" />"
+                                                    value=<fmt:message key="carcontrol.activate"/>
                                                 onclick="return confirm('
                                                 <fmt:message key="carcontrol.activate"/>
                                                 ?')" /><br/>
@@ -295,9 +293,7 @@
                     </table>
                 </c:if>
 
-                <c:if
-                        test="${requestScope.transmissionCar == null && requestScope.fuelCar == null}"
-                        var="testcif">
+                <c:if test="${requestScope.transmissionCar == null && requestScope.fuelCar == null}" var="testcif">
             <p>
                 <br>
             <h2>
@@ -365,7 +361,7 @@
                                     <input type="hidden" name="idCar" value="${car.id}"/> <input
                                         type="hidden" name="command" value="del_car"/> <input
                                         type="submit"
-                                        value="<fmt:message key=" carcontrol.deactivate" />"
+                                        value=<fmt:message key="carcontrol.deactivate"/>
                                     onclick="return confirm('
                                     <fmt:message key="carcontrol.deactivate"/>
                                     ?')" /><br/>
@@ -376,7 +372,7 @@
                                     <input type="hidden" name="idCar" value="${car.id}"/> <input
                                         type="hidden" name="command" value="activate_car"/> <input
                                         type="submit"
-                                        value="<fmt:message key=" carcontrol.activate" />"
+                                        value=<fmt:message key="carcontrol.activate"/>
                                     onclick="return confirm('
                                     <fmt:message key="carcontrol.activate"/>
                                     ?')" /><br/>
