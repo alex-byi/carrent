@@ -19,6 +19,10 @@ import by.htp.jd2.entity.Order;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * confirmation order by user
+ */
 public class ConfirmOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ConfirmOrderCommand.class.getName());
     private static final String error = "Confirm order ERROR";
@@ -47,7 +51,7 @@ public class ConfirmOrderCommand implements Command {
                 List<Car> availableCars = ServiceProvider.getInstance().getCarService().getAllAvailableCars(date1,
                         date2);
                 car = ServiceProvider.getInstance().getCarService().getCarById(idCar);
-                if (availableCars.contains(car) == true) {
+                if (availableCars.contains(car)) {
                     ServiceProvider.getInstance().getOrderService().addNewOrder(order);
                 } else {
                     session.setAttribute("error", errorConfirmOrder);

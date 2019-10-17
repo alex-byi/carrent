@@ -22,6 +22,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to page with all crashs(additional bills) of all users
+ */
 public class CrashPageAdminCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CrashPageAdminCommand.class.getName());
     private static final String error = "go to crash page admin page error";

@@ -1,5 +1,10 @@
 package by.htp.jd2.dao.connectionpool;
 
+
+/**
+ * @author alexey
+ * parameters for connection to database
+ */
 final class DBParameter {
     private DBParameter() {
     }

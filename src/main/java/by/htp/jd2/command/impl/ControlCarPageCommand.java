@@ -18,6 +18,10 @@ import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to "Control car" page
+ */
 public class ControlCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlCarPageCommand.class.getName());
     private static final String error = "go to Control car page error";

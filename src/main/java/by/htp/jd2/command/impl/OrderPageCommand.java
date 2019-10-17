@@ -22,6 +22,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to page with all orders of all users
+ */
 public class OrderPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageCommand.class.getName());
     private static final String debug = "Go to order page command";
@@ -36,7 +40,6 @@ public class OrderPageCommand implements Command {
         } else {
             try {
 
-//				int stringCol = ServiceProvider.getInstance().getOrderService().pageCol();
                 int currentPage = Integer.parseInt(request.getParameter("currentPage"));
                 int page = currentPage * 5;
 
@@ -44,16 +47,16 @@ public class OrderPageCommand implements Command {
                 request.setAttribute("allOrders", orders);
                 request.setAttribute("currentPage", currentPage);
 
-                Set<Car> cars = new HashSet<Car>();
-                Car car = null;
+                Set<Car> cars = new HashSet<>();
+                Car car;
                 for (Order order : orders) {
                     car = ServiceProvider.getInstance().getCarService().getCarById(order.getIdCar());
                     cars.add(car);
                 }
                 request.setAttribute("carsO", cars);
 
-                Set<User> users = new HashSet<User>();
-                User user = null;
+                Set<User> users = new HashSet<>();
+                User user;
                 for (Order order : orders) {
                     user = ServiceProvider.getInstance().getUserService().getUserById(order.getIdUser());
                     users.add(user);

@@ -16,6 +16,10 @@ import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.entity.UserType;
 
+/**
+ * @author alexey
+ * command which is redirect to User or Admin page
+ */
 public class UserPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserPageCommand.class.getName());
     private static final String debug = "Go to userpage page command";
@@ -25,7 +29,7 @@ public class UserPageCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(false);
-        User user = null;
+        User user;
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
             LOG.error(error);

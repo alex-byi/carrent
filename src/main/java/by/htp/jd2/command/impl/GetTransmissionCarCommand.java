@@ -18,6 +18,10 @@ import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * get list of cars with some transmission type
+ */
 public class GetTransmissionCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetTransmissionCarCommand.class.getName());
     private static final String debug = "Get transmission cars command";

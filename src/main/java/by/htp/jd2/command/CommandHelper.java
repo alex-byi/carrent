@@ -16,7 +16,6 @@ import by.htp.jd2.command.impl.DelCarCommand;
 import by.htp.jd2.command.impl.ControlCarPageCommand;
 import by.htp.jd2.command.impl.DelUserCommand;
 import by.htp.jd2.command.impl.CrashPageAdminCommand;
-import by.htp.jd2.command.impl.GetCarsCommand;
 import by.htp.jd2.command.impl.GetFuelCarsCommand;
 import by.htp.jd2.command.impl.GetTransmissionCarCommand;
 import by.htp.jd2.command.impl.LanguageCommand;
@@ -30,13 +29,15 @@ import by.htp.jd2.command.impl.OrderPageStep2UserCommand;
 import by.htp.jd2.command.impl.OrderPageStep3UserCommand;
 import by.htp.jd2.command.impl.OrderPageUserCommand;
 import by.htp.jd2.command.impl.RegistrationCommand;
-import by.htp.jd2.command.impl.UploadFile;
 import by.htp.jd2.command.impl.UserCrashPageCommand;
 import by.htp.jd2.command.impl.UserCrashPayCommand;
 import by.htp.jd2.command.impl.UserOrdersPageCommand;
 import by.htp.jd2.command.impl.UserPageCommand;
 import by.htp.jd2.command.impl.UserPayCommand;
 
+/**
+ * @author alexey
+ */
 public class CommandHelper {
 
     private static final CommandHelper instance = new CommandHelper();
@@ -49,7 +50,6 @@ public class CommandHelper {
         commands.put(CommandName.REGISTRATION, new RegistrationCommand());
         commands.put(CommandName.LOG_OUT, new LogOutCommand());
         commands.put(CommandName.USER_PAGE, new UserPageCommand());
-        commands.put(CommandName.CAR_PAGE, new GetCarsCommand());
         commands.put(CommandName.ALL_USERS, new ControlUsersPageCommand());
         commands.put(CommandName.ADD_CAR, new AddCarCommand());
         commands.put(CommandName.ADD_CAR_PAGE, new AddCarPageCommand());
@@ -76,7 +76,6 @@ public class CommandHelper {
         commands.put(CommandName.USER_CRASH_PAY, new UserCrashPayCommand());
         commands.put(CommandName.GET_TRANSMISSION_CARS, new GetTransmissionCarCommand());
         commands.put(CommandName.GET_FUEL_CARS, new GetFuelCarsCommand());
-        commands.put(CommandName.UPLOAD, new UploadFile());
 
     }
 

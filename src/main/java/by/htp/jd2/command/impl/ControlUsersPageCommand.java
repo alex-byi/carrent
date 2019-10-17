@@ -18,6 +18,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to "Control users" page
+ */
 public class ControlUsersPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlUsersPageCommand.class.getName());
     private static final String error = "go to Control users page error";

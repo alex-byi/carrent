@@ -15,6 +15,10 @@ import by.htp.jd2.entity.Crash;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * add additional bill to order
+ */
 public class AddCrashCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCrashCommand.class.getName());
     private static final String error = "ADD crash bill ERROR";

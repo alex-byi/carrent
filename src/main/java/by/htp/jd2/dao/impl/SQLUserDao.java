@@ -13,6 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author alexey
+ */
 public class SQLUserDao implements UserDao {
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.`login` = ?) AND (users.`password` = ?);";
@@ -26,6 +29,12 @@ public class SQLUserDao implements UserDao {
     private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE users.`iduser` = ?;";
     private static final String HASH_PASSWORD = "SELECT MD5(?); ";
 
+
+    /**
+     * @param loginA    string user login
+     * @param passwordA string user password
+     * @return object User
+     */
     @Override
     public User authorization(String loginA, String passwordA) throws DaoException {
         String login = null;
@@ -74,6 +83,10 @@ public class SQLUserDao implements UserDao {
     }
 
 
+    /**
+     * @param user object User
+     * @return true if registration complete successfully
+     */
     @Override
     public boolean registration(User user) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -103,6 +116,10 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @return List of all users from database
+     */
     @Override
     public List<User> getAllUsers() throws DaoException {
         String login;
@@ -141,6 +158,11 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param id int id user
+     * @return true if installation flag "active" to false successfully
+     */
     @Override
     public boolean delUser(int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -156,6 +178,12 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param sum int sum order receipt
+     * @param id int User id
+     * @return true if payment successfully
+     */
     @Override
     public boolean pay(int sum, int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -172,6 +200,11 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param id int user id
+     * @return true if activate successfully
+     */
     @Override
     public boolean activateUser(int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -187,6 +220,12 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param sum int sum
+     * @param id int user id
+     * @return true if adding money complete successfully
+     */
     @Override
     public boolean addMoney(int sum, int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -203,9 +242,13 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param login string login
+     * @return false if user contain in userlist
+     */
     @Override
     public boolean checkUser(String login) throws DaoException {
-
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         List<String> logins = new ArrayList<>();
@@ -223,6 +266,11 @@ public class SQLUserDao implements UserDao {
         }
     }
 
+    /**
+     *
+     * @param id int user id
+     * @return User object
+     */
     @Override
     public User getUserById(int id) throws DaoException {
         String login = null;

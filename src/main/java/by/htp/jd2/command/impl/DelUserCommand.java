@@ -15,6 +15,10 @@ import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * deactivate user to deny access to application
+ */
 public class DelUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(DelUserCommand.class.getName());
     private static final String error = "Del User ERROR";

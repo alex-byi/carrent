@@ -22,6 +22,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to page where user can see all his orders
+ */
 public class UserOrdersPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserOrdersPageCommand.class.getName());
     private static final String debug = "User orders page command";

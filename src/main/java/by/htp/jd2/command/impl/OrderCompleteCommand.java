@@ -14,6 +14,10 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * complete order
+ */
 public class OrderCompleteCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCompleteCommand.class.getName());
     private static final String debug = "Order complete command";

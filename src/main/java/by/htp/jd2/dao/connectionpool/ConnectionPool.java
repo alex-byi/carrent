@@ -6,6 +6,10 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
+/**
+ * @author alexey
+ * connection pool singleton
+ */
 public final class ConnectionPool {
 
     private static DBResourceManager dbResourseManager = DBResourceManager.getInstance();
@@ -53,6 +57,11 @@ public final class ConnectionPool {
         return INSTANCE;
     }
 
+    /**
+     * take connection from pool
+     *
+     * @return free connection
+     */
     public Connection retrieve() {
         Connection connection = null;
         try {
@@ -63,6 +72,9 @@ public final class ConnectionPool {
         return connection;
     }
 
+    /**
+     * put back connection to pool
+     */
     public void putback(Connection connection) {
         if (connection != null) {
             try {

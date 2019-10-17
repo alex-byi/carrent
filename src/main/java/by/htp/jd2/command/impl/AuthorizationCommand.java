@@ -18,6 +18,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * authorization to application
+ */
 public class AuthorizationCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger(AuthorizationCommand.class.getName());

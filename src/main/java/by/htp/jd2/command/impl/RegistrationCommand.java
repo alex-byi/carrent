@@ -38,7 +38,7 @@ public class RegistrationCommand implements Command {
         User user = new User(login, password, fullName, passNum, email, address);
 
         try {
-            if (ServiceProvider.getInstance().getUserService().checkUser(login) == false) {
+            if (!ServiceProvider.getInstance().getUserService().checkUser(login)) {
                 session.setAttribute("duplicateLogin", duplicate);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.REGISTRATION_PAGE);
                 dispatcher.forward(request, response);

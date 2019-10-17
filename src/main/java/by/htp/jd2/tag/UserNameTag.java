@@ -8,6 +8,11 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
+/**
+ * @author alexey
+ * <p>
+ * custom tag for print information about user role
+ */
 public class UserNameTag extends TagSupport implements Serializable {
 
     private static final long serialVersionUID = 2165644125276866180L;

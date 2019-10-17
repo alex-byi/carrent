@@ -10,6 +10,11 @@ import javax.servlet.http.HttpSession;
 
 import by.htp.jd2.command.Command;
 
+
+/**
+ * @author alexey
+ * change language command
+ */
 public class LanguageCommand implements Command {
 
     @Override

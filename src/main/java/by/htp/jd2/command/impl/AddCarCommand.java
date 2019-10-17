@@ -17,6 +17,11 @@ import by.htp.jd2.entity.TransmissionType;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * <p>
+ * add new car to database
+ */
 public class AddCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarCommand.class.getName());
     private static final String error = "Add car ERROR";

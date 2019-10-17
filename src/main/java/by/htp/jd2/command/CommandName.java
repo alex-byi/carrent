@@ -1,5 +1,9 @@
 package by.htp.jd2.command;
 
+/**
+ * @author alexey
+ * enum of all commands
+ */
 public enum CommandName {
 
     AUTHORIZATION,
@@ -8,7 +12,6 @@ public enum CommandName {
     LOG_OUT,
     USER_PAGE,
     ORDER_PAGE,
-    CAR_PAGE,
     ALL_USERS,
     ADD_CAR,
     ADD_CAR_PAGE,
@@ -33,8 +36,7 @@ public enum CommandName {
     USER_CRASH_PAGE,
     USER_CRASH_PAY,
     GET_TRANSMISSION_CARS,
-    GET_FUEL_CARS,
-    UPLOAD
+    GET_FUEL_CARS
 
 
 }

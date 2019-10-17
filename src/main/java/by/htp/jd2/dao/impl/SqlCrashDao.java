@@ -12,6 +12,9 @@ import by.htp.jd2.dao.DaoException;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.Crash;
 
+/**
+ * @author alexey
+ */
 public class SqlCrashDao implements CrashDao {
 
     private static final String GET_ALL_CRASH_BILLS = "SELECT * FROM crashbill;";
@@ -21,14 +24,18 @@ public class SqlCrashDao implements CrashDao {
     private static final String SET_CRASH_PAYMENT = "UPDATE crashbill set iscomplete = '1' WHERE idcrashbill = ?;";
     private static final String GET_CRASH_BY_ID = "SELECT * FROM crashbill WHERE idcrashbill = ?;";
 
+
+    /**
+     * @return List of all additional bills from database
+     */
     @Override
     public List<Crash> getAllCrashs() throws DaoException {
-        int id = 0;
-        String damage = null;
-        int amount = 0;
-        int idCar = 0;
-        int idUser = 0;
-        boolean isComplete = false;
+        int id;
+        String damage;
+        int amount;
+        int idCar;
+        int idUser;
+        boolean isComplete;
         List<Crash> list = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
@@ -52,6 +59,11 @@ public class SqlCrashDao implements CrashDao {
 
     }
 
+    /**
+     *
+     * @param crash Crash object
+     * @return id of added crash
+     */
     @Override
     public int addCrash(Crash crash) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -77,14 +89,19 @@ public class SqlCrashDao implements CrashDao {
         }
     }
 
+    /**
+     *
+     * @param idUserC int id user
+     * @return List of crashs of concrete user
+     */
     @Override
     public List<Crash> getUsersCrashs(int idUserC) throws DaoException {
-        int id = 0;
-        String damage = null;
-        int amount = 0;
-        int idCar = 0;
-        int idUser = 0;
-        boolean isComplete = false;
+        int id;
+        String damage;
+        int amount;
+        int idCar;
+        int idUser;
+        boolean isComplete;
         List<Crash> list = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
@@ -109,6 +126,11 @@ public class SqlCrashDao implements CrashDao {
         }
     }
 
+    /**
+     *
+     * @param idCrash int crash id
+     * @return true if crash payment install successfully or false if no
+     */
     @Override
     public boolean setCrashPayment(int idCrash) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -124,6 +146,11 @@ public class SqlCrashDao implements CrashDao {
         }
     }
 
+    /**
+     *
+     * @param idCrash int crash id
+     * @return crash object
+     */
     @Override
     public Crash getCrashById(int idCrash) throws DaoException {
         int id = 0;

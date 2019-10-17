@@ -10,6 +10,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * @author alexey
+ */
 public class SQLCarDao implements CarDAO {
 
     private static final String GET_ALL_CAR = "SELECT * FROM cars;";
@@ -22,6 +26,9 @@ public class SQLCarDao implements CarDAO {
     private static final String GET_TRANSMISSION_CARS = "SELECT * FROM cars WHERE transmission = ?;";
     private static final String GET_FUEL_CARS = "SELECT * FROM cars WHERE fuel = ?;";
 
+    /**
+     * @return List of all cars from database
+     */
     @Override
     public List<Car> getAllCars() throws DaoException {
         int id;
@@ -56,6 +63,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param car Car object
+     * @return true if adding successfully or false if no
+     */
     @Override
     public boolean addNewCar(Car car) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -76,6 +88,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param id int car id
+     * @return true if deactivate successfully or false if no
+     */
     @Override
     public boolean delCar(int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -91,6 +108,12 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param startDate string date of start rent in format YYYY-MM-DD
+     * @param endDate string date of end rent in format YYYY-MM-DD
+     * @return List of all available cars from database
+     */
     @Override
     public List<Car> getAllAvailableCars(String startDate, String endDate) throws DaoException {
         int id;
@@ -129,6 +152,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param id int car id
+     * @return Car object
+     */
     @Override
     public Car getCarById(int id) throws DaoException {
         String name = null;
@@ -160,6 +188,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param id int car id
+     * @return true if activate successfully or false if no
+     */
     @Override
     public boolean activateCar(int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -175,6 +208,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param transmission string transmission type
+     * @return List all car with transmission type
+     */
     @Override
     public List<Car> getTransmissionCar(String transmission) throws DaoException {
         int id;
@@ -211,6 +249,11 @@ public class SQLCarDao implements CarDAO {
         }
     }
 
+    /**
+     *
+     * @param fuelC string fuel type
+     * @return List all car with fuel type
+     */
     @Override
     public List<Car> getFuelCars(String fuelC) throws DaoException {
         int id;

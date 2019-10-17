@@ -1,5 +1,10 @@
 package by.htp.jd2.controller;
 
+
+/**
+ * @author alexey
+ * pages addresses
+ */
 public final class JSPPageName {
 
     private JSPPageName() {
@@ -9,7 +14,6 @@ public final class JSPPageName {
     public static final String ADMIN_AUTH_PAGE = "/WEB-INF/jsp/admin/auth_admin.jsp";
     public static final String INDEX_PAGE = "/index.jsp";
     public static final String NO_SUCH_USER = "jsp/no_such_user.jsp";
-    public static final String CAR_PAGE = "/WEB-INF/jsp/user/car_page.jsp";
     public static final String CONTROL_USERS_PAGE = "/WEB-INF/jsp/admin/control_users.jsp";
     public static final String ADD_CAR_PAGE = "/WEB-INF/jsp/admin/add_car.jsp";
     public static final String CONTROL_CAR_PAGE = "/WEB-INF/jsp/admin/control_car.jsp";

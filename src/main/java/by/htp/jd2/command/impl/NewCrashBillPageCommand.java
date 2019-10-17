@@ -14,6 +14,10 @@ import org.apache.logging.log4j.Logger;
 import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
+/**
+ * @author alexey
+ * add new additional bill(crash bill) to order
+ */
 public class NewCrashBillPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(NewCrashBillPageCommand.class.getName());
     private static final String debug = "Go to new crash bill page";

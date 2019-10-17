@@ -12,6 +12,9 @@ import by.htp.jd2.dao.OrderDao;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.Order;
 
+/**
+ * @author alexey
+ */
 public class SQLOrderDao implements OrderDao {
 
     private static final String GET_ALL_ORDERS = "SELECT * FROM orders order by idorders desc LIMIT ?, 5;";
@@ -26,6 +29,10 @@ public class SQLOrderDao implements OrderDao {
     private static final String SET_CRASHBILL_ID = "UPDATE orders SET orders.crashbill_idcrashbill = ?, orders.iscrash = '1' WHERE orders.idorders = ?;";
     private static final String GET_PAGE_COL = "SELECT count(orders.idorders) FROM orders;";
 
+    /**
+     * @param page int page number
+     * @return List of orders
+     */
     @Override
     public List<Order> getAllOrders(int page) throws DaoException {
         String dateOrder;
@@ -74,6 +81,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param order order object
+     * @return true if adding is successfully or false if no
+     */
     @Override
     public boolean addNewOrder(Order order) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -96,6 +108,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param idUser int user id
+     * @return List of orders for current user
+     */
     @Override
     public List<Order> userOrders(int idUser) throws DaoException {
         String dateOrder;
@@ -142,6 +159,12 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param orderId int order id
+     * @param amount int amount
+     * @return true if set complete successfully or false if no
+     */
     @Override
     public boolean setAmount(int orderId, int amount) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -158,6 +181,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param id int order id
+     * @return order object
+     */
     @Override
     public Order getOrderById(int id) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -204,6 +232,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param orderId int order id
+     * @return true if payment complete successfully
+     */
     @Override
     public boolean setPayment(int orderId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -219,6 +252,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param orderId int order id
+     * @return true if setting complete flag complete successfully
+     */
     @Override
     public boolean setComplete(int orderId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -234,6 +272,11 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param orderId int order id
+     * @return true if setting canceled flag complete successfully
+     */
     @Override
     public boolean setCanceled(int orderId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -249,6 +292,12 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param reason string reason of addition bill
+     * @param orderId int order id
+     * @return true if setting reason of reject complete successfully
+     */
     @Override
     public boolean setRejectReason(String reason, int orderId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -265,6 +314,12 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @param orderId int order id
+     * @param crashId int crash id
+     * @return true if setting crash flag complete successfully
+     */
     @Override
     public boolean setCrash(int orderId, int crashId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -281,6 +336,10 @@ public class SQLOrderDao implements OrderDao {
         }
     }
 
+    /**
+     *
+     * @return number of page from database
+     */
     @Override
     public int pageCol() throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();

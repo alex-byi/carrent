@@ -13,6 +13,10 @@ import org.apache.logging.log4j.Logger;
 import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
+/**
+ * @author alexey
+ * log out user command + invalidate session
+ */
 public class LogOutCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LogOutCommand.class.getName());
     private static final String debug = "Log out command";
@@ -20,7 +24,6 @@ public class LogOutCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().invalidate();
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.INDEX_PAGE);
         dispatcher.forward(request, response);
         LOG.debug(debug);

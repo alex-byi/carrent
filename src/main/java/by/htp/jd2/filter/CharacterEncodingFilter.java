@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+/**
+ * @author alexey
+ * filter
+ */
 public class CharacterEncodingFilter implements Filter {
 
     private String code = "UTF-8";

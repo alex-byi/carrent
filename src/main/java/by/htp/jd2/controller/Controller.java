@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import by.htp.jd2.command.Command;
 import by.htp.jd2.command.CommandHelper;
 
+/**
+ * @author alexey
+ * controllel for all application
+ */
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

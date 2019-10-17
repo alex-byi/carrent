@@ -16,6 +16,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * user pay order
+ */
 public class UserPayCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserPayCommand.class.getName());
     private static final String debug = "User pay command";

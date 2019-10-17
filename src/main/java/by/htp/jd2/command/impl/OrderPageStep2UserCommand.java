@@ -21,6 +21,10 @@ import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to page where user can choose car
+ */
 public class OrderPageStep2UserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageStep2UserCommand.class.getName());
     private static final String debug = "Order step 2 command";

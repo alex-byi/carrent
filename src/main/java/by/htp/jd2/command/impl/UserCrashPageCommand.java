@@ -23,6 +23,10 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * go to page where user can see all his additional bills
+ */
 public class UserCrashPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPageCommand.class.getName());
     private static final String debug = "Go to USER crash page command";
@@ -41,7 +45,7 @@ public class UserCrashPageCommand implements Command {
             try {
                 crashs = ServiceProvider.getInstance().getCrashService().getUsersCrashs(user.getId());
 
-                Set<Car> cars = new HashSet<Car>();
+                Set<Car> cars = new HashSet<>();
                 for (Crash crash : crashs) {
                     cars.add(ServiceProvider.getInstance().getCarService().getCarById(crash.getIdCar()));
                 }

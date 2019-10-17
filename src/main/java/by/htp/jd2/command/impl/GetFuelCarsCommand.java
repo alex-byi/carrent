@@ -18,6 +18,10 @@ import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
+/**
+ * @author alexey
+ * get list of cars with some fuel type
+ */
 public class GetFuelCarsCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetFuelCarsCommand.class.getName());
     private static final String error = "Get fuel cars USER ERROR";
