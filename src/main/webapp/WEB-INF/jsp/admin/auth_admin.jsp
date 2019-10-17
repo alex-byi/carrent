@@ -89,8 +89,7 @@
                 </tr>
                 <tr>
                     <td style="font-size: 20pt;">
-                        <fmt:message
-                                key="userpage.address"/>
+                        <fmt:message key="userpage.address"/>
                     </td>
                     <td style="font-size: 20pt;">${user.address}</td>
                 </tr>

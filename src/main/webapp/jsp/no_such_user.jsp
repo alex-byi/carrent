@@ -33,24 +33,16 @@
                         <fmt:message key="registration.wrongname"/>
                     </h1>
                     <br/> <input type="submit"
-                                 value=<fmt:message key="registration.tryagain"/>>
+                                 value="<fmt:message key='registration.tryagain'/>"/>
 
                 </form>
                 <form name='form-login'
                       action="/my-web-project/jsp/registration_user.jsp">
 
                     <input type="submit"
-                           value=<fmt:message key="registration.reg"/>>
+                           value="<fmt:message key='registration.reg'/>"/>
                 </form>
             </div>
-            <p>
-                <br>
-            <center>
-                <h2>
-                    Если нашли какие-то косяки - не ломайте, а скажите мне, и я
-                    возмооооожно исправлю (<strike>нет</strike>)
-                </h2>
-            </center>
         </center>
     </div>
 </div>
