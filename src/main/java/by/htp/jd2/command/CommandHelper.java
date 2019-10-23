@@ -3,37 +3,7 @@ package by.htp.jd2.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.htp.jd2.command.impl.ActivateCarCommand;
-import by.htp.jd2.command.impl.ActivateUserCommand;
-import by.htp.jd2.command.impl.AddCarCommand;
-import by.htp.jd2.command.impl.AddCarPageCommand;
-import by.htp.jd2.command.impl.AddCrashCommand;
-import by.htp.jd2.command.impl.AddMoneyCommand;
-import by.htp.jd2.command.impl.ControlUsersPageCommand;
-import by.htp.jd2.command.impl.AuthorizationCommand;
-import by.htp.jd2.command.impl.ConfirmOrderCommand;
-import by.htp.jd2.command.impl.DelCarCommand;
-import by.htp.jd2.command.impl.ControlCarPageCommand;
-import by.htp.jd2.command.impl.DelUserCommand;
-import by.htp.jd2.command.impl.CrashPageAdminCommand;
-import by.htp.jd2.command.impl.GetFuelCarsCommand;
-import by.htp.jd2.command.impl.GetTransmissionCarCommand;
-import by.htp.jd2.command.impl.LanguageCommand;
-import by.htp.jd2.command.impl.LogOutCommand;
-import by.htp.jd2.command.impl.NewCrashBillPageCommand;
-import by.htp.jd2.command.impl.NoSuchCommand;
-import by.htp.jd2.command.impl.OrderCancelCommand;
-import by.htp.jd2.command.impl.OrderCompleteCommand;
-import by.htp.jd2.command.impl.OrderPageCommand;
-import by.htp.jd2.command.impl.OrderPageStep2UserCommand;
-import by.htp.jd2.command.impl.OrderPageStep3UserCommand;
-import by.htp.jd2.command.impl.OrderPageUserCommand;
-import by.htp.jd2.command.impl.RegistrationCommand;
-import by.htp.jd2.command.impl.UserCrashPageCommand;
-import by.htp.jd2.command.impl.UserCrashPayCommand;
-import by.htp.jd2.command.impl.UserOrdersPageCommand;
-import by.htp.jd2.command.impl.UserPageCommand;
-import by.htp.jd2.command.impl.UserPayCommand;
+import by.htp.jd2.command.impl.*;
 
 /**
  * @author alexey
@@ -76,6 +46,8 @@ public class CommandHelper {
         commands.put(CommandName.USER_CRASH_PAY, new UserCrashPayCommand());
         commands.put(CommandName.GET_TRANSMISSION_CARS, new GetTransmissionCarCommand());
         commands.put(CommandName.GET_FUEL_CARS, new GetFuelCarsCommand());
+        commands.put(CommandName.USER_ADD_FUNDS_PAGE, new UserAddCashCommand());
+        commands.put(CommandName.USER_ADD_MONEY, new AddMoneyUserCommand());
 
     }
 

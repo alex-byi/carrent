@@ -25,5 +25,6 @@ public final class JSPPageName {
     public static final String ADD_CRASH = "/WEB-INF/jsp/admin/add_crash.jsp";
     public static final String USER_CRASH_PAGE = "/WEB-INF/jsp/user/crash_page.jsp";
     public static final String REGISTRATION_PAGE = "jsp/registration_user.jsp";
+    public static final String USER_ADD_CASH = "/WEB-INF/jsp/user/add_funds.jsp";
 
 }

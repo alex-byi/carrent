@@ -68,6 +68,9 @@ public class LanguageCommand implements Command {
             case "order_page_admin":
                 response.sendRedirect("controller?command=ORDER_PAGE");
                 break;
+            case "user_add_funds":
+                response.sendRedirect("controller?command=USER_ADD_FUNDS_PAGE");
+                break;
 
         }
 

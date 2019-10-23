@@ -44,7 +44,7 @@ public class NewCrashBillPageCommand implements Command {
                 LOG.debug(debug);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                LOG.error(error);
+                LOG.error(error, e);
             }
         }
     }

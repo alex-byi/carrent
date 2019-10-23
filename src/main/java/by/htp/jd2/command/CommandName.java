@@ -36,7 +36,11 @@ public enum CommandName {
     USER_CRASH_PAGE,
     USER_CRASH_PAY,
     GET_TRANSMISSION_CARS,
-    GET_FUEL_CARS
+    GET_FUEL_CARS,
+    USER_ADD_FUNDS_PAGE,
+    USER_ADD_MONEY
+
+
 
 
 }

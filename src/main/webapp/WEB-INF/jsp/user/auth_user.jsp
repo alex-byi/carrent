@@ -99,7 +99,12 @@
                     <td style="font-size: 20pt;">
                         <fmt:message key="userpage.cash"/>
                     </td>
-                    <td style="font-size: 20pt;">${user.cash}</td>
+                    <td valign="center" style="font-size: 20pt;">
+                        <form action="controller" method="post">
+                            <input type="hidden" name="command" value="user_add_funds_page"/> ${user.cash} <input
+                                type="submit" value="пополнить"/><br/>
+                        </form>
+                    </td>
                 </tr>
             </table>
         </div>

@@ -8,7 +8,6 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.UserService;
 import by.htp.jd2.service.validation.UserDataValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -17,21 +16,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User authorization(String login, String password) throws ServiceException {
-        if (!validator.check(login, password)) {
-            throw new ServiceException("MMMMMMMMMMMMMM");
+        if (validator.checkLoginInfo(login, password)) {
+            throw new ServiceException("Login or password no valid");
         }
         SQLUserDao userDao = DaoProvider.getInstance().getUserDao();
-        User user = null;
+        User user;
         try {
             user = userDao.authorization(login, password);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        if (user != null) {
-            return user;
-        } else {
-            return null;
-        }
+        return user;
     }
 
     @Override
@@ -47,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() throws ServiceException {
         SQLUserDao userDao = DaoProvider.getInstance().getUserDao();
-        List<User> list = new ArrayList<>();
+        List<User> list;
         try {
             list = userDao.getAllUsers();
         } catch (DaoException e) {
@@ -109,16 +104,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(int id) throws ServiceException {
         SQLUserDao userDao = DaoProvider.getInstance().getUserDao();
-        User user = null;
+        User user;
         try {
             user = userDao.getUserById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        if (user != null) {
-            return user;
-        } else {
-            return null;
-        }
+        return user;
     }
 }

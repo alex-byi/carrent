@@ -1,5 +1,8 @@
 package by.htp.jd2.dao.connectionpool;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +14,8 @@ import java.util.concurrent.BlockingQueue;
  * connection pool singleton
  */
 public final class ConnectionPool {
+
+    private static final Logger LOG = LogManager.getLogger(ConnectionPool.class.getName());
 
     private static DBResourceManager dbResourseManager = DBResourceManager.getInstance();
     private final static String URL = dbResourseManager.getValue(DBParameter.DB_URL);
@@ -26,7 +31,7 @@ public final class ConnectionPool {
         try {
             return Integer.parseInt(dbResourseManager.getValue(DBParameter.DB_POLL_SIZE));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            LOG.error(e);
             return 4;
         }
     }
@@ -45,7 +50,8 @@ public final class ConnectionPool {
                 }
             }
         } catch (InterruptedException | SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
+            LOG.error(e);
+            throw new RuntimeException(e);
         }
 
     }
@@ -67,7 +73,8 @@ public final class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOG.error(e);
+            throw new RuntimeException(e);
         }
         return connection;
     }
@@ -81,7 +88,8 @@ public final class ConnectionPool {
                 connection.setAutoCommit(true);
                 connections.put(connection);
             } catch (InterruptedException | SQLException e) {
-                e.printStackTrace();
+                LOG.error(e);
+                throw new RuntimeException(e);
             }
         }
     }

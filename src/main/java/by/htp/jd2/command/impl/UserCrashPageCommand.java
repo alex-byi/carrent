@@ -55,7 +55,12 @@ public class UserCrashPageCommand implements Command {
                 LOG.error(error + e);
             }
 
-            request.setAttribute("allCrashs", crashs);
+            if (crashs.size() != 0) {
+                request.setAttribute("allCrashs", crashs);
+            } else {
+                request.setAttribute("allCrashs", null);
+            }
+
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_CRASH_PAGE);
             dispatcher.forward(request, response);
             LOG.debug(debug);

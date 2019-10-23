@@ -1,6 +1,5 @@
 package by.htp.jd2.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.htp.jd2.dao.DaoException;
@@ -15,7 +14,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders(int page) throws ServiceException {
         SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
-        List<Order> list = new ArrayList<>();
+        List<Order> list;
         try {
             list = orderDao.getAllOrders(page);
         } catch (DaoException e) {
@@ -37,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> userOrders(int id) throws ServiceException {
         SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
-        List<Order> list = new ArrayList<>();
+        List<Order> list;
         try {
             list = orderDao.userOrders(id);
         } catch (DaoException e) {
@@ -121,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int pageCol() throws ServiceException {
         SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
-        int pageCol = 0;
+        int pageCol;
         try {
             pageCol = orderDao.pageCol();
         } catch (DaoException e) {

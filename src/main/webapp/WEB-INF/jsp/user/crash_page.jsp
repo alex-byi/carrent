@@ -21,7 +21,6 @@
     <div class="page-buffer">
         <div id="menu">
             <div id="lang">
-
                 <center>
                     <form name="LanguageForm" method="POST" action="controller"
                           class="lang">
@@ -55,56 +54,67 @@
             <h2>
                 <fmt:message key="crashorders.youcrashes"/>
             </h2>
-            <table id="usertable">
-                <thead>
-                <tr>
-                    <th>
-                        <fmt:message key="crashpage.damage"/>
-                    </th>
-                    <th>
-                        <fmt:message key="crashpage.amount"/>
-                    </th>
-                    <th>
-                        <fmt:message key="crashpage.car"/>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="crash" items="${requestScope.allCrashs}">
-                    <tr>
-                        <td>${crash.damage}</td>
-                        <td>${crash.amount}</td>
-                        <td>
-                            <c:forEach var="car" items="${cars}">
-                                <c:if test="${crash.idCar == car.id }">
-                                    <c:out value="${car.name}"/>
-                                </c:if>
-                            </c:forEach>
-                        </td>
-                        <td>
-                            <c:if test="${crash.complete == false }">
-                                <c:if test="${crash.amount > user.cash}">
-                                    <fmt:message key="crashpage.nomoney"/>
-                                </c:if>
-                                <c:if test="${crash.amount < user.cash}">
-                                    <form action="controller" method="post">
-                                        <input type="hidden" name="command" value="USER_CRASH_PAY"/>
-                                        <input type="hidden" name="crashId" value="${crash.id}"/>
-                                        <input type="hidden" name="amount" value="${crash.amount}"/>
-                                        <input type="submit"
-                                               value=<fmt:message key="crashorders.pay"/>
-                                        onclick="return confirm('
-                                        <fmt:message key="crashorders.pay"/>
-                                        ?')" /><br/>
-                                    </form>
-                                </c:if>
-                            </c:if>
-                        </td>
 
+            <c:if test="${requestScope.allCrashs == null}">
+                <br>
+                <br>
+                <br>
+                <center><h2>Поздравляем, Вы хороший водитель, и вас нету дополнительных счетов</h2></center>
+            </c:if>
+
+            <c:if test="${requestScope.allCrashs != null}">
+
+                <table id="usertable">
+                    <thead>
+                    <tr>
+                        <th>
+                            <fmt:message key="crashpage.damage"/>
+                        </th>
+                        <th>
+                            <fmt:message key="crashpage.amount"/>
+                        </th>
+                        <th>
+                            <fmt:message key="crashpage.car"/>
+                        </th>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="crash" items="${requestScope.allCrashs}">
+                        <tr>
+                            <td>${crash.damage}</td>
+                            <td>${crash.amount}</td>
+                            <td>
+                                <c:forEach var="car" items="${cars}">
+                                    <c:if test="${crash.idCar == car.id }">
+                                        <c:out value="${car.name}"/>
+                                    </c:if>
+                                </c:forEach>
+                            </td>
+                            <td>
+                                <c:if test="${crash.complete == false }">
+                                    <c:if test="${crash.amount > user.cash}">
+                                        <fmt:message key="crashpage.nomoney"/>
+                                    </c:if>
+                                    <c:if test="${crash.amount < user.cash}">
+                                        <form action="controller" method="post">
+                                            <input type="hidden" name="command" value="USER_CRASH_PAY"/>
+                                            <input type="hidden" name="crashId" value="${crash.id}"/>
+                                            <input type="hidden" name="amount" value="${crash.amount}"/>
+                                            <input type="submit"
+                                                   value=<fmt:message key="crashorders.pay"/>
+                                            onclick="return confirm('
+                                            <fmt:message key="crashorders.pay"/>
+                                            ?')" /><br/>
+                                        </form>
+                                    </c:if>
+                                </c:if>
+                            </td>
+
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
 
     </div>

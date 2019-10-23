@@ -39,9 +39,11 @@ public class SQLCarDao implements CarDAO {
         String body;
         TransmissionType transmissionType;
         boolean active;
+
         List<Car> list = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
+
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_CAR)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

@@ -1,6 +1,5 @@
 package by.htp.jd2.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.htp.jd2.dao.DaoException;
@@ -15,7 +14,7 @@ public class CrashServiceImpl implements CrashService {
     @Override
     public List<Crash> getAllCrashs() throws ServiceException {
         SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
-        List<Crash> list = new ArrayList<>();
+        List<Crash> list;
         try {
             list = crashDao.getAllCrashs();
         } catch (DaoException e) {
@@ -26,7 +25,7 @@ public class CrashServiceImpl implements CrashService {
 
     @Override
     public int addCrash(Crash crash) throws ServiceException {
-        int id = 0;
+        int id;
         SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         try {
             id = crashDao.addCrash(crash);
@@ -39,7 +38,7 @@ public class CrashServiceImpl implements CrashService {
     @Override
     public List<Crash> getUsersCrashs(int idUser) throws ServiceException {
         SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
-        List<Crash> list = new ArrayList<>();
+        List<Crash> list;
         try {
             list = crashDao.getUsersCrashs(idUser);
         } catch (DaoException e) {

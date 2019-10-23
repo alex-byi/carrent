@@ -34,7 +34,6 @@ public class ActivateCarCommand implements Command {
             response.sendRedirect("index.jsp");
             LOG.error(error);
         } else {
-
             try {
                 int id = Integer.parseInt(request.getParameter(RequestParameterName.ID_CAR));
                 ServiceProvider.getInstance().getCarService().activateCar(id);
