@@ -15,8 +15,9 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
 /**
- * @author alexey
  * go to page whera user can start new order(choose date)
+ *
+ * @author alexey
  */
 public class OrderPageUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageUserCommand.class.getName());

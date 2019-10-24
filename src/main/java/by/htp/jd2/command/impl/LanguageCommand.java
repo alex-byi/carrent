@@ -12,8 +12,9 @@ import by.htp.jd2.command.Command;
 
 
 /**
- * @author alexey
  * change language command
+ *
+ * @author alexey
  */
 public class LanguageCommand implements Command {
 

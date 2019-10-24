@@ -16,9 +16,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
- * <p>
  * activate one car by carID
+ *
+ * @author alexey
  */
 public class ActivateCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ActivateCarCommand.class.getName());

@@ -22,8 +22,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to page where user can confirm order
+ *
+ * @author alexey
  */
 public class OrderPageStep3UserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageStep3UserCommand.class.getName());

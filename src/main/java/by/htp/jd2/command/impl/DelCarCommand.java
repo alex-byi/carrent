@@ -16,8 +16,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * deactivate car to exclude from list of availible cars
+ *
+ * @author alexey
  */
 public class DelCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(DelCarCommand.class.getName());

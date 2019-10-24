@@ -5,6 +5,8 @@ import by.htp.jd2.dao.DaoException;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.entity.TransmissionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.List;
  * @author alexey
  */
 public class SQLCarDao implements CarDAO {
+    private static final Logger LOG = LogManager.getLogger(SQLCarDao.class.getName());
 
     private static final String GET_ALL_CAR = "SELECT * FROM cars;";
     private static final String ADD_CAR = "INSERT INTO cars(name, price, fuel, color, body, transmission)"
@@ -59,6 +62,7 @@ public class SQLCarDao implements CarDAO {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -84,6 +88,7 @@ public class SQLCarDao implements CarDAO {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("ADD CAR ERROR", e);
         } finally {
             pool.putback(connection);
@@ -104,6 +109,7 @@ public class SQLCarDao implements CarDAO {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("DEL CAR ERROR", e);
         } finally {
             pool.putback(connection);
@@ -148,6 +154,7 @@ public class SQLCarDao implements CarDAO {
             }
             return listAvailableCarsId;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL AVAILABLE CARS IDs ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -184,6 +191,7 @@ public class SQLCarDao implements CarDAO {
             }
             return new Car(name, price, fuel, color, body, transmissionType, active, id);
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -204,6 +212,7 @@ public class SQLCarDao implements CarDAO {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("ACTIVATE CAR ERROR", e);
         } finally {
             pool.putback(connection);
@@ -245,6 +254,7 @@ public class SQLCarDao implements CarDAO {
             }
             return listAvailableCarsId;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET TRANSMISSION CARS IDs ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -286,6 +296,7 @@ public class SQLCarDao implements CarDAO {
             }
             return listAvailableCarsId;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET FUEL CARS IDs ERROR!!!", e);
         } finally {
             pool.putback(connection);

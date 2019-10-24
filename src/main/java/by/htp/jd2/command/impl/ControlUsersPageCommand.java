@@ -19,8 +19,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to "Control users" page
+ *
+ * @author alexey
  */
 public class ControlUsersPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlUsersPageCommand.class.getName());

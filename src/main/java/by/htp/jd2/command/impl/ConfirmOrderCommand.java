@@ -20,8 +20,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * confirmation order by user
+ *
+ * @author alexey
  */
 public class ConfirmOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ConfirmOrderCommand.class.getName());

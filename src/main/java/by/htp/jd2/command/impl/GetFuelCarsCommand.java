@@ -19,8 +19,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * get list of cars with some fuel type
+ *
+ * @author alexey
  */
 public class GetFuelCarsCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetFuelCarsCommand.class.getName());

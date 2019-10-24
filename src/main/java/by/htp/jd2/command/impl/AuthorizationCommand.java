@@ -19,8 +19,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * authorization to application
+ *
+ * @author alexey
  */
 public class AuthorizationCommand implements Command {
 

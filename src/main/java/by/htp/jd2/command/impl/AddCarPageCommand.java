@@ -15,8 +15,9 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
 /**
+ * go to "Add car" page
+ *
  * @author alexey
- * @ go to "Add car" page
  */
 public class AddCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarPageCommand.class.getName());

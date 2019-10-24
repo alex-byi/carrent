@@ -17,8 +17,9 @@ import by.htp.jd2.entity.User;
 import by.htp.jd2.entity.UserType;
 
 /**
- * @author alexey
  * command which is redirect to User or Admin page
+ *
+ * @author alexey
  */
 public class UserPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserPageCommand.class.getName());

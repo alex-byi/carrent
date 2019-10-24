@@ -15,8 +15,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * complete order
+ *
+ * @author alexey
  */
 public class OrderCompleteCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCompleteCommand.class.getName());

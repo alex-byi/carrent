@@ -16,9 +16,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
- * <p>
  * activate user by userID
+ *
+ * @author alexey
  */
 public class ActivateUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ActivateUserCommand.class.getName());

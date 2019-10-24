@@ -15,8 +15,9 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
 /**
- * @author alexey
  * add new additional bill(crash bill) to order
+ *
+ * @author alexey
  */
 public class NewCrashBillPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(NewCrashBillPageCommand.class.getName());

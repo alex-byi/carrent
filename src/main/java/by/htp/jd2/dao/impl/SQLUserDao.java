@@ -5,6 +5,8 @@ import by.htp.jd2.dao.UserDao;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.entity.UserType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,6 +19,8 @@ import java.util.List;
  * @author alexey
  */
 public class SQLUserDao implements UserDao {
+
+    private static final Logger LOG = LogManager.getLogger(SQLUserDao.class.getName());
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.`login` = ?) AND (users.`password` = ?);";
     private static final String REGISTRATION_USER = "INSERT INTO users(login, password, passportnumber, fullname, address, email) VALUES(?, ?, ?, ?, ?, ?)";
@@ -76,6 +80,7 @@ public class SQLUserDao implements UserDao {
             }
             return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("AUTORIZATION ERROR", e);
         } finally {
             pool.putback(connection);
@@ -110,6 +115,7 @@ public class SQLUserDao implements UserDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("REGISTRATION ERROR", e);
         } finally {
             pool.putback(connection);
@@ -152,6 +158,7 @@ public class SQLUserDao implements UserDao {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -172,6 +179,7 @@ public class SQLUserDao implements UserDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("DEL USER ERROR", e);
         } finally {
             pool.putback(connection);
@@ -194,6 +202,7 @@ public class SQLUserDao implements UserDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("PAY ERROR", e);
         } finally {
             pool.putback(connection);
@@ -214,6 +223,7 @@ public class SQLUserDao implements UserDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("ACTIVATE USER ERROR", e);
         } finally {
             pool.putback(connection);
@@ -236,6 +246,7 @@ public class SQLUserDao implements UserDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("ADD MONEY ERROR", e);
         } finally {
             pool.putback(connection);
@@ -260,6 +271,7 @@ public class SQLUserDao implements UserDao {
             }
             return !logins.contains(login);
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SELECT USER BY ID ERROR", e);
         } finally {
             pool.putback(connection);
@@ -301,6 +313,7 @@ public class SQLUserDao implements UserDao {
             }
             return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET USER BY ID ERROR", e);
         } finally {
             pool.putback(connection);

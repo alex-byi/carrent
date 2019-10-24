@@ -14,6 +14,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
+/**
+ * add money to user by USER
+ *
+ * @author alexey
+ */
 public class AddMoneyUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddMoneyUserCommand.class.getName());
     private static final String error = "ADD money by USER ERROR";

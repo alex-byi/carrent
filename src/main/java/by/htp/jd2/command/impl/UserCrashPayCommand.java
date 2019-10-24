@@ -17,8 +17,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * pay additional bill by user
+ *
+ * @author alexey
  */
 public class UserCrashPayCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPayCommand.class.getName());

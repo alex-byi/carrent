@@ -11,11 +11,15 @@ import by.htp.jd2.dao.DaoException;
 import by.htp.jd2.dao.OrderDao;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.Order;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author alexey
  */
 public class SQLOrderDao implements OrderDao {
+
+    private static final Logger LOG = LogManager.getLogger(SQLOrderDao.class.getName());
 
     private static final String GET_ALL_ORDERS = "SELECT * FROM orders order by idorders desc LIMIT ?, 5;";
     private static final String ADD_ORDER = "INSERT INTO orders (dateorder, startdate, enddate, cars_idcars, users_iduser, amount, dayCol) VALUES(?, ?, ?, ?, ?, ?, ?)";
@@ -75,6 +79,7 @@ public class SQLOrderDao implements OrderDao {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL ORDER ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -102,6 +107,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("RADD ORDER ERROR", e);
         } finally {
             pool.putback(connection);
@@ -153,6 +159,7 @@ public class SQLOrderDao implements OrderDao {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL USER ORDERS ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -175,6 +182,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET AMOUNT ORDER ERROR", e);
         } finally {
             pool.putback(connection);
@@ -226,6 +234,7 @@ public class SQLOrderDao implements OrderDao {
             return new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol, amount,
                     id, isCanceled, isComplete, rejectReason);
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ORDER BY ID ERROR", e);
         } finally {
             pool.putback(connection);
@@ -246,6 +255,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET PAYMENT ERROR", e);
         } finally {
             pool.putback(connection);
@@ -266,6 +276,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET COMPLETE ERROR", e);
         } finally {
             pool.putback(connection);
@@ -286,6 +297,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET CANCELED ERROR", e);
         } finally {
             pool.putback(connection);
@@ -308,6 +320,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET REJECT REASON ERROR", e);
         } finally {
             pool.putback(connection);
@@ -330,6 +343,7 @@ public class SQLOrderDao implements OrderDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET CRASH ERROR", e);
         } finally {
             pool.putback(connection);
@@ -352,6 +366,7 @@ public class SQLOrderDao implements OrderDao {
                 pageCol = rs.getInt(1);
             }
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET PAGE COUNT ERROR", e);
         }
         return pageCol;

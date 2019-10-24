@@ -14,8 +14,9 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 
 /**
- * @author alexey
  * log out user command + invalidate session
+ *
+ * @author alexey
  */
 public class LogOutCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LogOutCommand.class.getName());

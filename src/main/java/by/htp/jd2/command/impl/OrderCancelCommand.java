@@ -15,8 +15,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * cancel order
+ *
+ * @author alexey
  */
 public class OrderCancelCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCancelCommand.class.getName());

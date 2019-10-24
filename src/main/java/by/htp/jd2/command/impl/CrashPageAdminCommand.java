@@ -23,8 +23,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to page with all crashs(additional bills) of all users
+ *
+ * @author alexey
  */
 public class CrashPageAdminCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(CrashPageAdminCommand.class.getName());

@@ -23,8 +23,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to page with all orders of all users
+ *
+ * @author alexey
  */
 public class OrderPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageCommand.class.getName());

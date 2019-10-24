@@ -24,8 +24,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to page where user can see all his additional bills
+ *
+ * @author alexey
  */
 public class UserCrashPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPageCommand.class.getName());

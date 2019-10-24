@@ -19,8 +19,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * go to "Control car" page
+ *
+ * @author alexey
  */
 public class ControlCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlCarPageCommand.class.getName());

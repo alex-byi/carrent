@@ -19,8 +19,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
- * @author alexey
  * get list of cars with some transmission type
+ *
+ * @author alexey
  */
 public class GetTransmissionCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetTransmissionCarCommand.class.getName());

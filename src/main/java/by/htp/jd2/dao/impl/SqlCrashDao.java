@@ -11,11 +11,15 @@ import by.htp.jd2.dao.CrashDao;
 import by.htp.jd2.dao.DaoException;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.Crash;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author alexey
  */
 public class SqlCrashDao implements CrashDao {
+
+    private static final Logger LOG = LogManager.getLogger(SqlCrashDao.class.getName());
 
     private static final String GET_ALL_CRASH_BILLS = "SELECT * FROM crashbill;";
     private static final String ADD_CRASH = "INSERT INTO crashbill (description, amount, cars_idcars , users_iduser) VALUES(?, ?, ?, ?);";
@@ -52,6 +56,7 @@ public class SqlCrashDao implements CrashDao {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET ALL CRASHBILL ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -83,6 +88,7 @@ public class SqlCrashDao implements CrashDao {
             }
             return id;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("ADD CRASH ERROR", e);
         } finally {
             pool.putback(connection);
@@ -120,6 +126,7 @@ public class SqlCrashDao implements CrashDao {
             }
             return list;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET USERS CRASHBILLS ERROR!!!", e);
         } finally {
             pool.putback(connection);
@@ -140,6 +147,7 @@ public class SqlCrashDao implements CrashDao {
             ps.executeUpdate();
             return true;
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("SET PAYMENT CRASH ERROR", e);
         } finally {
             pool.putback(connection);
@@ -176,6 +184,7 @@ public class SqlCrashDao implements CrashDao {
             return new Crash(id, damage, amount, idCar, idUser, isComplete);
 
         } catch (SQLException e) {
+            LOG.error(e);
             throw new DaoException("GET CRASHBILL BY ID ERROR!!!", e);
         } finally {
             pool.putback(connection);

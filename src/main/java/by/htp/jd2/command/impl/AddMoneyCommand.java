@@ -15,8 +15,9 @@ import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.ServiceProvider;
 
 /**
+ * add money to user by ADMIN
+ *
  * @author alexey
- * add money to user
  */
 public class AddMoneyCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddMoneyCommand.class.getName());
