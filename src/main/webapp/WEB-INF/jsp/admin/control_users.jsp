@@ -123,10 +123,8 @@
                                     <input type="hidden" name="idUser" value="${user.id}"/> <input
                                         type="hidden" name="command" value="del_user"/> <input
                                         type="submit"
-                                        value=<fmt:message key="usercontrol.deactivate"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="usercontrol.deactivate"/>
-                                    ?')" /><br/>
+                                        value="<fmt:message key='usercontrol.deactivate'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                             <c:if test="${user.active == false}">
@@ -134,10 +132,8 @@
                                     <input type="hidden" name="idUser" value="${user.id}"/> <input
                                         type="hidden" name="command" value="activate_user"/> <input
                                         type="submit"
-                                        value=<fmt:message key="usercontrol.activate"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="usercontrol.activate"/>
-                                    ?')" /><br/>
+                                        value="<fmt:message key='usercontrol.activate'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                         </td>
@@ -149,10 +145,8 @@
                                     type="number" required size="6" min="0" maxlength="6"
                                     pattern="[0-9]{1,6}" name="moneyCol" value=""/> <input
                                     type="submit"
-                                    value=<fmt:message key="usercontrol.addcash"/>
-                                onclick="return confirm('
-                                <fmt:message key="usercontrol.addcash"/>
-                                ?')" /><br/>
+                                    value="<fmt:message key='usercontrol.addcash'/>"
+                                    onclick="return confirm('?')"/>
                             </form>
                         </td>
                     </tr>

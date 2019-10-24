@@ -101,10 +101,8 @@
                                             <input type="hidden" name="crashId" value="${crash.id}"/>
                                             <input type="hidden" name="amount" value="${crash.amount}"/>
                                             <input type="submit"
-                                                   value=<fmt:message key="crashorders.pay"/>
-                                            onclick="return confirm('
-                                            <fmt:message key="crashorders.pay"/>
-                                            ?')" /><br/>
+                                                   value="<fmt:message key='crashorders.pay'/>"
+                                                   onclick="return confirm('?')"/>
                                         </form>
                                     </c:if>
                                 </c:if>

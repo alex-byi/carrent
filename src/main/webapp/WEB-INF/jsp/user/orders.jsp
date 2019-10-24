@@ -122,11 +122,8 @@
                                                 type="hidden" name="orderId" value="${order.id}"/> <input
                                                 type="hidden" name="userId"
                                                 value="${sessionScope.user.id}"/> <input type="submit"
-                                                                                         value=<fmt:message
-                                                                                         key="crashorders.pay"/>
-                                            onclick="return confirm('
-                                            <fmt:message key="crashorders.pay"/>
-                                            ?')" /><br/>
+                                                                                         value="<fmt:message key='crashorders.pay'/>"
+                                                                                         onclick="return confirm('?')"/>
                                         </form>
                                     </c:if>
                                 </td>
@@ -137,11 +134,8 @@
                                         <input type="hidden" name="userType" value="user"/> <input
                                             type="hidden" name="reason" value="Отменен пользователем"/><input
                                             type="submit"
-                                            value=<fmt:message key="allorders.cancel"/>
-                                        onclick="return confirm('
-                                        <fmt:message key="allorders.cancel"/>
-                                        ?')" /><br/>
-
+                                            value="<fmt:message key='allorders.cancel'/>"
+                                            onclick="return confirm('?')"/>
                                     </form>
                                 </td>
                             </tr>

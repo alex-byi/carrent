@@ -58,9 +58,18 @@
             <p>
             <table id="usertable">
                 <tr>
-                    <th>Поиск по типу трансмиссии</th>
-                    <th>Поиск по типу топлива</th>
-                    <th>Добавить автомобиль</th>
+                    <th>
+                        <fmt:message
+                                key="search.transmission"/>
+                    </th>
+                    <th>
+                        <fmt:message
+                                key="search.fuel"/>
+                    </th>
+                    <th>
+                        <fmt:message
+                                key="carcontrol.addcar"/>
+                    </th>
                 </tr>
                 <tr>
                     <td>
@@ -81,7 +90,8 @@
                                 <fmt:message
                                         key="addcar.manual"/>
                             </option>
-                        </select><input type="submit" value=" Поиск"/><br/>
+                        </select><input type="submit" value=" <fmt:message
+                                        key='search.search'/>"/><br/>
                         </form>
                     </td>
                     <td>
@@ -102,7 +112,8 @@
                                 <fmt:message
                                         key="addcar.electricity"/>
                             </option>
-                        </select><input type="submit" value=" Поиск"/><br/>
+                        </select><input type="submit" value=" <fmt:message
+                                        key='search.search'/>"/><br/>
                         </form>
                     </td>
                     <td>
@@ -116,7 +127,6 @@
             <p>
                 <br>
                 <c:if test="${requestScope.fuelCar != null}" var="testcif">
-                    <h2>Все автомобили с ... двигателем:</h2>
                     <table id="usertable">
                         <tr>
                             <th>
@@ -178,10 +188,9 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="del_car"/> <input
                                                     type="submit"
-                                                    value=<fmt:message key="carcontrol.deactivate"/>
-                                                onclick="return confirm('
-                                                <fmt:message key="carcontrol.deactivate"/>
-                                                ?')" /><br/>
+                                                    value="<fmt:message key='carcontrol.deactivate'/>"
+                                                    onclick="return confirm('?')"
+                                            />
                                             </form>
                                         </c:if>
                                         <c:if test="${car.active == false }">
@@ -189,10 +198,9 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="activate_car"/> <input
                                                     type="submit"
-                                                    value=<fmt:message key="carcontrol.activate"/>
-                                                onclick="return confirm('
-                                                <fmt:message key="carcontrol.activate"/>
-                                                ?')" /><br/>
+                                                    value="<fmt:message key='carcontrol.activate'/>"
+                                                    onclick="return confirm('?')"
+                                            />
                                             </form>
                                         </c:if>
                                     </td>
@@ -205,7 +213,6 @@
                 </c:if>
 
                 <c:if test="${requestScope.transmissionCar != null}" var="testcif">
-                    <h2>Все автомобили с ... трансмиссией:</h2>
                     <table id="usertable">
                         <tr>
                             <th>
@@ -267,10 +274,8 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="del_car"/> <input
                                                     type="submit"
-                                                    value=<fmt:message key="carcontrol.deactivate"/>
-                                                onclick="return confirm('
-                                                <fmt:message key="carcontrol.deactivate"/>
-                                                ?')" /><br/>
+                                                    value="<fmt:message key='carcontrol.deactivate'/>"
+                                                    onclick="return confirm('?')"/>
                                             </form>
                                         </c:if>
                                         <c:if test="${car.active == false }">
@@ -278,10 +283,8 @@
                                                 <input type="hidden" name="idCar" value="${car.id}"/> <input
                                                     type="hidden" name="command" value="activate_car"/> <input
                                                     type="submit"
-                                                    value=<fmt:message key="carcontrol.activate"/>
-                                                onclick="return confirm('
-                                                <fmt:message key="carcontrol.activate"/>
-                                                ?')" /><br/>
+                                                    value="<fmt:message key='carcontrol.activate'/>"
+                                                    onclick="return confirm('?')"/>
                                             </form>
                                         </c:if>
                                     </td>
@@ -361,10 +364,8 @@
                                     <input type="hidden" name="idCar" value="${car.id}"/> <input
                                         type="hidden" name="command" value="del_car"/> <input
                                         type="submit"
-                                        value=<fmt:message key="carcontrol.deactivate"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="carcontrol.deactivate"/>
-                                    ?')" /><br/>
+                                        value="<fmt:message key='carcontrol.deactivate'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                             <c:if test="${car.active == false }">
@@ -372,10 +373,8 @@
                                     <input type="hidden" name="idCar" value="${car.id}"/> <input
                                         type="hidden" name="command" value="activate_car"/> <input
                                         type="submit"
-                                        value=<fmt:message key="carcontrol.activate"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="carcontrol.activate"/>
-                                    ?')" /><br/>
+                                        value="<fmt:message key='carcontrol.activate'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                         </td>
@@ -384,7 +383,6 @@
             </table>
             </c:if>
         </div>
-
     </div>
 
 </div>

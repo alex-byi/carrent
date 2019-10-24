@@ -157,10 +157,8 @@
 
                         <tr>
                             <td align=center><input type="submit"
-                                                    value=<fmt:message key="addcar.submit"/>
-                                onClick="alert('
-                                <fmt:message key="addcar.submit"/>
-                                ?')">
+                                                    value="<fmt:message key='addcar.submit'/>"
+                                                    onClick="alert('?')">
                         </tr>
                     </table>
                 </center>

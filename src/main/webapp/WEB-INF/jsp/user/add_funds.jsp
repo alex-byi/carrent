@@ -51,7 +51,10 @@
             </c:if>
             <c:remove var="error" scope="session"/>
 
-            <h2>ПОПОЛНИТЬ</h2>
+            <h2>
+                <fmt:message
+                        key='usercontrol.addcash'/>
+            </h2>
 
             <form action="controller" method="post">
                 <input
@@ -61,36 +64,41 @@
                     <thead>
                     <tr>
                         <th>
-                            Введите номер карты
+                            <fmt:message
+                                    key='addcash.cardnumber'/>
                         </th>
                         <th>
-                            Введите имя владельца
+                            <fmt:message
+                                    key='addcash.name'/>
                         </th>
                         <th>
-                            Введите сумму
+                            <fmt:message
+                                    key='addcash.amount'/>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>
-                            <input type="text" required pattern="[0-9]{16,16}" maxlength="16" value=""/>
+                            <input type="text" required placeholder="XXXXXXXXXXXXXXXX" pattern="[0-9]{16,16}"
+                                   maxlength="16" minlength="16" value=""/>
                         </td>
                         <td>
-                            <input type="text" value=""/>
+                            <input type="text" required placeholder="<fmt:message key='addcash.name'/>" value=""
+                                   maxlength="16" minlength="5"/>
                         </td>
                         <td>
-                            <input type="text" required pattern="[0-9]{1,6}" maxlength="5" name="moneyCol" value=""/>
+                            <input type="text" required placeholder="<fmt:message key='addcash.amount'/>"
+                                   pattern="[0-9]{1,6}" maxlength="5" minlength="2" name="moneyCol"
+                                   value=""/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="3">
                             <center><input
                                     type="submit"
-                                    value=<fmt:message key="usercontrol.addcash"/>
-                                onclick="return confirm('
-                                <fmt:message key="usercontrol.addcash"/>
-                                ?')" />
+                                    value="<fmt:message key='usercontrol.addcash'/>"
+                                    onclick="return confirm('?')"/>
                             </center>
                         </td>
                     </tr>

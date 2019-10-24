@@ -102,7 +102,8 @@
                     <td valign="center" style="font-size: 20pt;">
                         <form action="controller" method="post">
                             <input type="hidden" name="command" value="user_add_funds_page"/> ${user.cash} <input
-                                type="submit" value="пополнить"/><br/>
+                                type="submit" value=" <fmt:message
+                                key='usercontrol.addcash'/>"/><br/>
                         </form>
                     </td>
                 </tr>

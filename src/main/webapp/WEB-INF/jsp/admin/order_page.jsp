@@ -160,12 +160,10 @@
                                     <input type="hidden" name="command" value="cancel_order"/>
                                     <input type="hidden" name="orderId" value="${order.id}"/> <input
                                         type="text" required
-                                        placeholder=<fmt:message key="allorders.cause"/> size="8"
-                                    maxlength="40" name="reason" value="" /><input
-                                        type="submit" value=<fmt:message key="allorders.cancel"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="allorders.cancel"/>
-                                    ?')" /><br/>
+                                        placeholder="<fmt:message key='allorders.cause'/>" size="8"
+                                        maxlength="40" name="reason" value=""/><input
+                                        type="submit" value="<fmt:message key='allorders.cancel'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                             <c:if test="${order.canceled != false}"> ${order.rejectReason}</c:if>
@@ -178,10 +176,8 @@
                                     <input type="hidden" name="command" value="complete_order"/>
                                     <input type="hidden" name="orderId" value="${order.id}"/> <input
                                         type="submit"
-                                        value=<fmt:message key="allorders.complete"/>
-                                    onclick="return confirm('
-                                    <fmt:message key="allorders.complete"/>
-                                    ?')" /><br/>
+                                        value="<fmt:message key='allorders.complete'/>"
+                                        onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
                         </td>
@@ -190,13 +186,13 @@
                             <c:if test="${order.crash == false}">
                                 <form action="controller" method="post">
                                     <input type="hidden" name="command"
-                                           value="new_crash_order_page"/><input type="hidden"
-                                                                                name="orderId" value="${order.id}"/>
+                                           value="new_crash_order_page"/><input type="hidden" name="orderId"
+                                                                                value="${order.id}"/>
                                     <input type="hidden"
                                            name="carId" value="${order.idCar}"/> <input type="hidden" name="userId"
                                                                                         value="${order.idUser}"/><input
                                         type="submit"
-                                        value=<fmt:message key="allorders.createaddbill"/> /><br/>
+                                        value="<fmt:message key='allorders.createaddbill'/>"/>
                                 </form>
                             </c:if>
                         </td>
