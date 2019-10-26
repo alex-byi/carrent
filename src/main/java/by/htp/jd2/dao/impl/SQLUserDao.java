@@ -24,7 +24,7 @@ public class SQLUserDao implements UserDao {
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.`login` = ?) AND (users.`password` = ?);";
     private static final String REGISTRATION_USER = "INSERT INTO users(login, password, passportnumber, fullname, address, email) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String GET_ALL_USERS = "SELECT * FROM users;";
+    private static final String GET_ALL_USERS = "SELECT * FROM users order by iduser desc LIMIT ?, 5;";
     private static final String DEL_USER = "UPDATE users SET users.active = '0' WHERE users.`iduser` = ?;";
     private static final String ACTIVATE_USER = "UPDATE users SET users.active = '1' WHERE users.`iduser` = ?;";
     private static final String PAY_BILL = "UPDATE users SET users.cash = users.cash - ? WHERE users.iduser = ?;";
@@ -32,6 +32,7 @@ public class SQLUserDao implements UserDao {
     private static final String SELECT_LOGINS = "SELECT users.login FROM users;";
     private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE users.`iduser` = ?;";
     private static final String HASH_PASSWORD = "SELECT MD5(?); ";
+    private static final String SEARCH_USER = "select * from users where login like ?;";
 
 
     /**
@@ -127,7 +128,7 @@ public class SQLUserDao implements UserDao {
      * @return List of all users from database
      */
     @Override
-    public List<User> getAllUsers() throws DaoException {
+    public List<User> getAllUsers(int page) throws DaoException {
         String login;
         String password;
         String fullName;
@@ -142,6 +143,7 @@ public class SQLUserDao implements UserDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_USERS)) {
+            ps.setInt(1, page);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 id = rs.getInt(1);
@@ -315,6 +317,52 @@ public class SQLUserDao implements UserDao {
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET USER BY ID ERROR", e);
+        } finally {
+            pool.putback(connection);
+
+        }
+    }
+
+    /**
+     * @param searchLogin String login or half login name
+     * @return List of {@link User} objects
+     */
+    @Override
+    public List<User> searchUser(String searchLogin) throws DaoException {
+        String login;
+        int id;
+        String password;
+        String fullName;
+        String passNum;
+        String email;
+        String address;
+        UserType type;
+        int cash;
+        boolean active;
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.retrieve();
+        List<User> list = new ArrayList<>();
+
+        try (PreparedStatement ps = connection.prepareStatement(SEARCH_USER)) {
+            ps.setString(1, "%" + searchLogin + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                type = UserType.valueOf(rs.getString(4).toUpperCase());
+                active = rs.getBoolean(5);
+                passNum = rs.getString(6);
+                fullName = rs.getString(7);
+                address = rs.getString(8);
+                email = rs.getString(9);
+                cash = rs.getInt(10);
+                login = rs.getString(2);
+                password = rs.getString(3);
+                id = rs.getInt(1);
+                list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
+            }
+            return list;
+        } catch (SQLException e) {
+            LOG.error(e);
+            throw new DaoException("SEARCH USER ERROR", e);
         } finally {
             pool.putback(connection);
 

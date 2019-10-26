@@ -48,6 +48,8 @@ public class CommandHelper {
         commands.put(CommandName.GET_FUEL_CARS, new GetFuelCarsCommand());
         commands.put(CommandName.USER_ADD_FUNDS_PAGE, new UserAddCashCommand());
         commands.put(CommandName.USER_ADD_MONEY, new AddMoneyUserCommand());
+        commands.put(CommandName.USER_SEARCH, new UserSearchCommand());
+        commands.put(CommandName.USER_ORDERS_SEARCH, new UserOrdersSearchCommand());
 
     }
 

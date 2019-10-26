@@ -28,6 +28,7 @@ import by.htp.jd2.service.ServiceProvider;
  * @author alexey
  */
 public class OrderPageCommand implements Command {
+
     private static final Logger LOG = LogManager.getLogger(OrderPageCommand.class.getName());
     private static final String debug = "Go to order page command";
     private static final String error = "Go to order page command ERROR";
@@ -35,13 +36,20 @@ public class OrderPageCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+
+        int currentPage;
+
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
             LOG.error(error);
         } else {
             try {
 
-                int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                if (request.getParameter("currentPage") == null) {
+                    currentPage = 0;
+                } else {
+                    currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                }
                 int page = currentPage * 5;
 
                 List<Order> orders = ServiceProvider.getInstance().getOrderService().getAllOrders(page);

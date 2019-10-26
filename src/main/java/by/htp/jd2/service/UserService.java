@@ -10,7 +10,7 @@ public interface UserService {
 
     boolean registration(User user) throws ServiceException;
 
-    List<User> getAllUsers() throws ServiceException;
+    List<User> getAllUsers(int page) throws ServiceException;
 
     boolean delUser(int id) throws ServiceException;
 
@@ -23,4 +23,6 @@ public interface UserService {
     boolean checkUser(String login) throws ServiceException;
 
     User getUserById(int id) throws ServiceException;
+
+    List<User> searchUser(String searchLogin) throws ServiceException;
 }

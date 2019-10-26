@@ -1,10 +1,12 @@
 package by.htp.jd2.entity;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class Car {
+public final class Car implements Serializable {
 
+    private static final long serialVersionUID = 910894813499440171L;
     private int id;
     private String name;
     private int price;
@@ -14,6 +16,8 @@ public final class Car {
     private TransmissionType transmissionType;
     private boolean active;
 
+    public Car() {
+    }
 
     public Car(String carname, int price, String carfuel, String carcolor, String carbody, TransmissionType transmissionType, boolean active) {
         setName(carname);

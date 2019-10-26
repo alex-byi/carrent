@@ -45,8 +45,8 @@ public class UserOrdersPageCommand implements Command {
             try {
                 List<Order> orders = ServiceProvider.getInstance().getOrderService().userOrders(user.getId());
                 request.setAttribute("userOrders", orders);
-                Set<Car> cars = new HashSet<Car>();
-                Car car = null;
+                Set<Car> cars = new HashSet<>();
+                Car car;
                 for (Order order : orders) {
                     car = ServiceProvider.getInstance().getCarService().getCarById(order.getIdCar());
                     cars.add(car);

@@ -32,13 +32,23 @@ public class ControlUsersPageCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(false);
+        int currentPage;
+
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
             LOG.error(error);
         } else {
             try {
-                List<User> users = ServiceProvider.getInstance().getUserService().getAllUsers();
-                session.setAttribute("allUsers", users);
+                if (request.getParameter("currentPage") == null) {
+                    currentPage = 0;
+                } else {
+                    currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                }
+                int page = currentPage * 5;
+
+                List<User> users = ServiceProvider.getInstance().getUserService().getAllUsers(page);
+                request.setAttribute("allUsers", users);
+                request.setAttribute("currentPage", currentPage);
             } catch (ServiceException e) {
                 LOG.error(error + e);
                 e.printStackTrace();

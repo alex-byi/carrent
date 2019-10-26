@@ -1,6 +1,11 @@
 package by.htp.jd2.entity;
 
-public final class User {
+import java.io.Serializable;
+
+public final class User implements Serializable {
+
+
+    private static final long serialVersionUID = -4899089534072772832L;
     private String login;
     private String password;
     private String fullName;
@@ -11,6 +16,9 @@ public final class User {
     private int cash;
     private boolean active;
     private int id;
+
+    public User() {
+    }
 
     public User(String login, String password, String fullName, String passNum, String email, String address, int cash,
                 UserType type, boolean active, int id) {

@@ -209,7 +209,7 @@
                                     <form action="controller" method="post">
                                         <input type="hidden" name="command" value="order_page"/> <input
                                             type="hidden" name="currentPage" value="${currentPage - 1}"/>
-                                        <input type="submit" value="Назад"/><br/>
+                                        <input type="submit" value="<fmt:message key='page.back'/>"/><br/>
                                     </form>
                                 </c:if>
                             </center>
@@ -220,7 +220,7 @@
                                     <form action="controller" method="post">
                                         <input type="hidden" name="command" value="order_page"/> <input
                                             type="hidden" name="currentPage" value="${currentPage + 1}"/>
-                                        <input type="submit" value="Вперед"/><br/>
+                                        <input type="submit" value="<fmt:message key='page.forward'/>"/><br/>
                                     </form>
                                 </c:if>
                             </center>

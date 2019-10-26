@@ -30,8 +30,7 @@
     </form>
     <form name="menu" class="menu" action="controller" method="post">
         <input type="hidden" name="command" value="order_page"/> <input
-            type="hidden" name="currentPage" value="0"/> <input type="submit"
-                                                                value="<fmt:message key='menu.allorders'/>"/><br/>
+            type="submit" value="<fmt:message key='menu.allorders'/>"/><br/>
     </form>
 
     <form name="menu" class="menu" action="controller" method="post">

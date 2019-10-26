@@ -1,7 +1,10 @@
 package by.htp.jd2.entity;
 
-public final class Order {
+import java.io.Serializable;
 
+public final class Order implements Serializable {
+
+    private static final long serialVersionUID = 8604506722901962308L;
     private String dateOrder;
     private String startDate;
     private String endDate;
@@ -16,6 +19,10 @@ public final class Order {
     private boolean isCanceled;
     private boolean isComplete;
     private String rejectReason;
+
+
+    public Order() {
+    }
 
     public Order(String dateOrder, String startDate, String endDate, boolean isPaid, boolean isCrash, int idCar,
                  int crashBill, int idUser, int dayCol, int amount, int id, boolean isCanceled, boolean isComplete,

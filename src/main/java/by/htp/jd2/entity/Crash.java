@@ -1,15 +1,21 @@
 package by.htp.jd2.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class Crash {
+public final class Crash implements Serializable {
 
+
+    private static final long serialVersionUID = 2471287905195877412L;
     private int id;
     private String damage;
     private int amount;
     private int idCar;
     private int idUser;
     private boolean isComplete;
+
+    public Crash() {
+    }
 
     public Crash(int id, String damage, int amount, int idCar, int idUser, boolean isComplete) {
         setId(id);

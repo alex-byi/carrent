@@ -68,9 +68,7 @@ public class AuthorizationCommand implements Command {
         } catch (ServiceException e) {
             e.printStackTrace();
             LOG.error(error + e);
-            LOG.error(e + "!!!!!!!!!!!");
             session.setAttribute("error", error);
-
         }
         LOG.debug(debug);
     }

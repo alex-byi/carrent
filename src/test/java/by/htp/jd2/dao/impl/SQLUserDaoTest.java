@@ -28,9 +28,9 @@ public class SQLUserDaoTest {
     @Test
     public void getAllUsers() throws DaoException {
         SQLUserDao sqlUserDao = new SQLUserDao();
-        List<User> users = sqlUserDao.getAllUsers();
+        List<User> users = sqlUserDao.getAllUsers(5);
         int expected = users.size();
-        Assert.assertEquals(expected, getUserCount());
+        Assert.assertEquals(expected, 5);
     }
 
     @Test

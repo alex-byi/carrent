@@ -27,9 +27,10 @@ public interface UserDao {
 
     /**
      * Returns a list of all users from the database
+     * @param page int current page
      * @return List {@link User} objects
      */
-    List<User> getAllUsers() throws DaoException;
+    List<User> getAllUsers(int page) throws DaoException;
 
     /**
      * Sets the activity flag to false
@@ -74,5 +75,13 @@ public interface UserDao {
      * @return {@link User} object
      */
     User getUserById(int id) throws DaoException;
+
+    /**
+     * Gets the list of users after search
+     *
+     * @param searchLogin String login or half login name
+     * @return List of {@link User} objects
+     */
+    List<User> searchUser(String searchLogin) throws DaoException;
 
 }

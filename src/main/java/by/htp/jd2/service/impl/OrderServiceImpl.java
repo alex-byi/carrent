@@ -8,8 +8,14 @@ import by.htp.jd2.dao.impl.SQLOrderDao;
 import by.htp.jd2.entity.Order;
 import by.htp.jd2.service.OrderService;
 import by.htp.jd2.service.ServiceException;
+import by.htp.jd2.service.validation.OrderDataValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class OrderServiceImpl implements OrderService {
+
+    private static final OrderDataValidator validator = OrderDataValidator.getInstance();
+    private static final Logger LOG = LogManager.getLogger(OrderServiceImpl.class.getName());
 
     @Override
     public List<Order> getAllOrders(int page) throws ServiceException {
@@ -18,17 +24,25 @@ public class OrderServiceImpl implements OrderService {
         try {
             list = orderDao.getAllOrders(page);
         } catch (DaoException e) {
+            LOG.error(e);
             throw new ServiceException(e);
+        }
+        if (validator.checkOrdersList(list)) {
+            throw new ServiceException("List<Order> no valid");
         }
         return list;
     }
 
     @Override
     public boolean addNewOrder(Order order) throws ServiceException {
+        if (validator.checkOrderInfo(order)) {
+            throw new ServiceException("Order data is no valid");
+        }
         SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.addNewOrder(order);
         } catch (DaoException e) {
+            LOG.error(e);
             throw new ServiceException(e);
         }
     }
@@ -41,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
             list = orderDao.userOrders(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
+        }
+        if (validator.checkOrdersList(list)) {
+            throw new ServiceException("List<Order> no valid");
         }
         return list;
     }
@@ -63,6 +80,9 @@ public class OrderServiceImpl implements OrderService {
             order = orderDao.getOrderById(id);
         } catch (DaoException e) {
             throw new ServiceException(e);
+        }
+        if (validator.checkOrderInfo(order)) {
+            throw new ServiceException("Order data is no valid");
         }
         return order;
     }
