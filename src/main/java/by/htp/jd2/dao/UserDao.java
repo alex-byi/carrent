@@ -19,7 +19,8 @@ public interface UserDao {
     User authorization(String login, String password) throws DaoException;
 
     /**
-     * user re-registration in system
+     * user registration in system
+     *
      * @param user
      * @return true if registration successfully
      */
@@ -27,6 +28,7 @@ public interface UserDao {
 
     /**
      * Returns a list of all users from the database
+     *
      * @param page int current page
      * @return List {@link User} objects
      */
@@ -34,6 +36,7 @@ public interface UserDao {
 
     /**
      * Sets the activity flag to false
+     *
      * @param id int User id
      * @return true if deactivate successfully
      */
@@ -41,6 +44,7 @@ public interface UserDao {
 
     /**
      * Sets the activity flag to true
+     *
      * @param id int User id
      * @return true if activate successfully
      */
@@ -48,22 +52,25 @@ public interface UserDao {
 
     /**
      * Pays the order by taking money from the account
+     *
      * @param sum int total sum
-     * @param id int User id
+     * @param id  int User id
      * @return true if payment complete successfully
      */
     boolean pay(int sum, int id) throws DaoException;
 
     /**
      * Adding money to the account of the user
+     *
      * @param sum int sum
-     * @param id int User ID
+     * @param id  int User ID
      * @return true if adding money complete successfully
      */
     boolean addMoney(int sum, int id) throws DaoException;
 
     /**
      * Checks user for existence
+     *
      * @param login String User login
      * @return true if User exists
      */
@@ -71,6 +78,7 @@ public interface UserDao {
 
     /**
      * Gets the user by their ID
+     *
      * @param id int User id
      * @return {@link User} object
      */

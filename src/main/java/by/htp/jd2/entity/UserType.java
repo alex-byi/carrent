@@ -1,6 +1,11 @@
 package by.htp.jd2.entity;
 
-public enum UserType {
 
+/**
+ * Entity user roles
+ *
+ * @author alexey
+ */
+public enum UserType {
     USER, ADMIN
 }

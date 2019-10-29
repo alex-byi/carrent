@@ -1,8 +1,9 @@
 package by.htp.jd2.command;
 
 /**
- * @author alexey
  * enum of all commands
+ *
+ * @author alexey
  */
 public enum CommandName {
 
@@ -41,8 +42,6 @@ public enum CommandName {
     USER_ADD_MONEY,
     USER_SEARCH,
     USER_ORDERS_SEARCH
-
-
 
 
 }

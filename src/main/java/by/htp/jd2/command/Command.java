@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author alexey
  * interface for all commands
+ *
+ * @author alexey
  */
 public interface Command {
 

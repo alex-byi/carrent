@@ -52,6 +52,7 @@ public interface OrderDao {
 
     /**
      * Sets payment flag in true
+     *
      * @param orderId int Order id
      * @return true if payment setting successfully
      */
@@ -59,6 +60,7 @@ public interface OrderDao {
 
     /**
      * Sets complete flag in true
+     *
      * @param orderId int order id
      * @return true if setting successfully
      */
@@ -66,6 +68,7 @@ public interface OrderDao {
 
     /**
      * Sets complete flag in true
+     *
      * @param orderId intt Order ID
      * @return true if setting successfully
      */
@@ -73,7 +76,8 @@ public interface OrderDao {
 
     /**
      * Sets the reason for cancellation to order
-     * @param reason String reject reason
+     *
+     * @param reason  String reject reason
      * @param orderId int Order ID
      * @return true if setting successfully
      */
@@ -81,6 +85,7 @@ public interface OrderDao {
 
     /**
      * Sets the crash to order
+     *
      * @param orderId int Order ID
      * @param crashId int Crash ID
      * @return true if setting successfully

@@ -9,9 +9,9 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 
 /**
- * @author alexey
- * <p>
  * custom tag for print information about user role
+ *
+ * @author alexey
  */
 public class UserNameTag extends TagSupport implements Serializable {
 

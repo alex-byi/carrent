@@ -18,6 +18,7 @@ public interface CrashDao {
 
     /**
      * Adds information about a new accident to the database
+     *
      * @param crash Crash object
      * @return int Last Added crash bill ID
      */
@@ -25,6 +26,7 @@ public interface CrashDao {
 
     /**
      * Returns a list of all additional user bills from the database
+     *
      * @param idUser int user ID
      * @return List crash objects
      */
@@ -32,6 +34,7 @@ public interface CrashDao {
 
     /**
      * Sets the payment flag to true in the database
+     *
      * @param idCrash int Crash ID
      * @return true if payment successfully
      */
@@ -39,6 +42,7 @@ public interface CrashDao {
 
     /**
      * Returns an Crash object by its ID from the database
+     *
      * @param idCrash int Crash id
      * @return Crash object
      */

@@ -5,9 +5,14 @@ import by.htp.jd2.service.impl.CrashServiceImpl;
 import by.htp.jd2.service.impl.OrderServiceImpl;
 import by.htp.jd2.service.impl.UserServiceImpl;
 
+
+/**
+ * Service provider
+ *
+ * @author alexey
+ */
 public class ServiceProvider {
     private static final ServiceProvider instance = new ServiceProvider();
-
 
     private UserService userService = new UserServiceImpl();
     private CarService carService = new CarServiceImpl();

@@ -10,8 +10,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * @author alexey
  * connection pool singleton
+ *
+ * @author alexey
  */
 public final class ConnectionPool {
 
@@ -22,7 +23,6 @@ public final class ConnectionPool {
     private final static String LOGIN = dbResourseManager.getValue(DBParameter.DB_USER);
     private final static String PASSWORD = dbResourseManager.getValue(DBParameter.DB_PASSWORD);
     private final static int POLL_SIZE = getPoll();
-    private final static String DRIVER = dbResourseManager.getValue(DBParameter.DB_DRIVER);
 
     private static ConnectionPool INSTANCE;
     private BlockingQueue<Connection> connections;
@@ -41,15 +41,13 @@ public final class ConnectionPool {
 
         try {
             connections = new ArrayBlockingQueue<>(POLL_SIZE);
-            Class.forName(DRIVER);
-
             for (int i = 0; i < POLL_SIZE; i++) {
                 connection = DriverManager.getConnection(URL, LOGIN, PASSWORD);
                 if (connection != null) {
                     connections.put(connection);
                 }
             }
-        } catch (InterruptedException | SQLException | ClassNotFoundException e) {
+        } catch (InterruptedException | SQLException e) {
             LOG.error(e);
             throw new RuntimeException(e);
         }
@@ -69,7 +67,7 @@ public final class ConnectionPool {
      * @return free connection
      */
     public Connection retrieve() {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = connections.take();
         } catch (InterruptedException e) {

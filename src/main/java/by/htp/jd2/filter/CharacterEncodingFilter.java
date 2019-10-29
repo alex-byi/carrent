@@ -10,8 +10,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
+ * character  filter
+ *
  * @author alexey
- * filter
  */
 public class CharacterEncodingFilter implements Filter {
 

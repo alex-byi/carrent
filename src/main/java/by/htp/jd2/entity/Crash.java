@@ -3,8 +3,12 @@ package by.htp.jd2.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Additional crash bill Entity
+ *
+ * @author alexey
+ */
 public final class Crash implements Serializable {
-
 
     private static final long serialVersionUID = 2471287905195877412L;
     private int id;

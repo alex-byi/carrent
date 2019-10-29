@@ -4,6 +4,12 @@ package by.htp.jd2.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+
+/**
+ * Car entity
+ *
+ * @author alexey
+ */
 public final class Car implements Serializable {
 
     private static final long serialVersionUID = 910894813499440171L;

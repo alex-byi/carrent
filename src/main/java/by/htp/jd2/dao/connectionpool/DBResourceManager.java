@@ -3,9 +3,10 @@ package by.htp.jd2.dao.connectionpool;
 import java.util.ResourceBundle;
 
 /**
- * @author alexey
- * <p>
  * resource manager
+ *
+ * @author alexey
+ *
  */
 class DBResourceManager {
     private final static DBResourceManager instance = new DBResourceManager();

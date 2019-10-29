@@ -2,8 +2,9 @@ package by.htp.jd2.controller;
 
 
 /**
- * @author alexey
  * pages addresses
+ *
+ * @author alexey
  */
 public final class JSPPageName {
 

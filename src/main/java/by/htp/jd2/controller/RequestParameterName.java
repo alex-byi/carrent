@@ -2,8 +2,9 @@ package by.htp.jd2.controller;
 
 
 /**
- * @author alexey
  * name of parameters from requests
+ *
+ * @author alexey
  */
 public class RequestParameterName {
 

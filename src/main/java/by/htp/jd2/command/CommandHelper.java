@@ -3,7 +3,8 @@ package by.htp.jd2.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.htp.jd2.command.impl.*;
+import by.htp.jd2.command.impl.action.*;
+import by.htp.jd2.command.impl.link.*;
 
 /**
  * @author alexey

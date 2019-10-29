@@ -5,6 +5,11 @@ import by.htp.jd2.dao.impl.SQLOrderDao;
 import by.htp.jd2.dao.impl.SQLUserDao;
 import by.htp.jd2.dao.impl.SqlCrashDao;
 
+/**
+ * Dao Provider
+ *
+ * @author alexey
+ */
 public class DaoProvider {
     private static final DaoProvider instance = new DaoProvider();
 

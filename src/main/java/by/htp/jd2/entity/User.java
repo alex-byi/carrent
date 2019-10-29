@@ -2,8 +2,13 @@ package by.htp.jd2.entity;
 
 import java.io.Serializable;
 
-public final class User implements Serializable {
 
+/**
+ * User entity
+ *
+ * @author alexey
+ */
+public final class User implements Serializable {
 
     private static final long serialVersionUID = -4899089534072772832L;
     private String login;

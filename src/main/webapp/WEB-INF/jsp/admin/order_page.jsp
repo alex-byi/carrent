@@ -180,6 +180,10 @@
                                         onclick="return confirm('?')"/>
                                 </form>
                             </c:if>
+                            <c:if
+                                    test="${order.complete == true}">
+                                <fmt:message key='allorders.successfullyComplete'/>
+                            </c:if>
                         </td>
 
                         <td>

@@ -70,24 +70,4 @@ public class SQLUserDaoTest {
         Assert.assertEquals(user, actualUser);
 
     }
-
-    private int getUserCount() {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.retrieve();
-        int pageCol = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM users LIMIT 1;");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                pageCol = rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            pool.putback(connection);
-        }
-        return pageCol;
-    }
-
-
 }

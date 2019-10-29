@@ -2,6 +2,12 @@ package by.htp.jd2.entity;
 
 import java.io.Serializable;
 
+
+/**
+ * Order entity
+ *
+ * @author alexey
+ */
 public final class Order implements Serializable {
 
     private static final long serialVersionUID = 8604506722901962308L;
