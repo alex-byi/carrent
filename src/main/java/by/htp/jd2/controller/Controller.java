@@ -18,7 +18,7 @@ import by.htp.jd2.command.CommandHelper;
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private static final CommandHelper helper = CommandHelper.getInstance();
+    private final CommandHelper helper = CommandHelper.getInstance();
 
     public Controller() {
         super();

@@ -30,7 +30,7 @@ public class UserDataValidator {
     }
 
     public boolean checkUserLogin(String login) {
-        return !login.isEmpty();
+        return login.isEmpty();
     }
 
 

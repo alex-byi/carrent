@@ -36,7 +36,7 @@ public class CrashServiceImpl implements CrashService {
     @Override
     public int addCrash(Crash crash) throws ServiceException {
         int id;
-        if (!validator.checkCrashInfo(crash)) {
+        if (validator.checkCrashInfo(crash)) {
             throw new ServiceException("Crash data is no valid");
         }
         SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
