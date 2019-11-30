@@ -19,9 +19,9 @@ public final class ConnectionPool {
     private static final Logger LOG = LogManager.getLogger(ConnectionPool.class.getName());
 
     private static DBResourceManager dbResourseManager = DBResourceManager.getInstance();
-    private final static String URL = dbResourseManager.getValue(DBParameter.DB_URL);
-    private final static String LOGIN = dbResourseManager.getValue(DBParameter.DB_USER);
-    private final static String PASSWORD = dbResourseManager.getValue(DBParameter.DB_PASSWORD);
+    private final static String URL = dbResourseManager.getValue(DBParameter.PSQL_URL);
+    private final static String LOGIN = dbResourseManager.getValue(DBParameter.PSQL_USER);
+    private final static String PASSWORD = dbResourseManager.getValue(DBParameter.PSQL_PASSWORD);
     private final static int POLL_SIZE = getPoll();
 
     private static ConnectionPool INSTANCE;
@@ -29,7 +29,7 @@ public final class ConnectionPool {
 
     private static int getPoll() {
         try {
-            return Integer.parseInt(dbResourseManager.getValue(DBParameter.DB_POLL_SIZE));
+            return Integer.parseInt(dbResourseManager.getValue(DBParameter.PSQL_POLL_SIZE));
         } catch (NumberFormatException e) {
             LOG.error(e);
             return 4;

@@ -5,6 +5,7 @@ import by.htp.jd2.dao.UserDao;
 import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.entity.UserType;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,7 @@ public class SQLUserDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger(SQLUserDao.class.getName());
 
-    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.`login` = ?) AND (users.`password` = ?);";
+    private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.login = ?) AND (users.password = ?);";
     private static final String REGISTRATION_USER = "INSERT INTO users(login, password, passportnumber, fullname, address, email) VALUES(?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_USERS = "SELECT * FROM users order by iduser desc LIMIT ?, 5;";
     private static final String DEL_USER = "UPDATE users SET users.active = '0' WHERE users.`iduser` = ?;";
@@ -33,6 +34,13 @@ public class SQLUserDao implements UserDao {
     private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE users.`iduser` = ?;";
     private static final String HASH_PASSWORD = "SELECT MD5(?); ";
     private static final String SEARCH_USER = "select * from users where login like ?;";
+
+
+    private static String md5Apache(String st) {
+
+        return DigestUtils.md5Hex(st);
+    }
+
 
 
     /**
@@ -54,29 +62,30 @@ public class SQLUserDao implements UserDao {
         int id = 0;
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        String hash = null;
+        String hash;
         try {
-            PreparedStatement ps = connection.prepareStatement(HASH_PASSWORD);
-            ps.setString(1, passwordA);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                hash = rs.getString(1);
-            }
-            ps = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
+//            PreparedStatement ps = connection.prepareStatement(HASH_PASSWORD);
+//            ps.setString(1, passwordA);
+//            ResultSet rs = ps.executeQuery();
+//            while (rs.next()) {
+//                hash = rs.getString(1);
+//            }
+            hash = md5Apache(passwordA);
+            PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
             ps.setString(1, loginA);
             ps.setString(2, hash);
-            rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                id = rs.getInt(1);
-                type = UserType.valueOf(rs.getString(4).toUpperCase());
-                active = rs.getBoolean(5);
-                passNum = rs.getString(6);
-                fullName = rs.getString(7);
+                id = rs.getInt(5);
+                type = UserType.valueOf(rs.getString(1).toUpperCase());
+                active = rs.getBoolean(9);
+                passNum = rs.getString(3);
+                fullName = rs.getString(6);
                 address = rs.getString(8);
-                email = rs.getString(9);
+                email = rs.getString(7);
                 cash = rs.getInt(10);
-                login = rs.getString(2);
-                password = rs.getString(3);
+                login = rs.getString(4);
+                password = rs.getString(2);
 
             }
             return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
