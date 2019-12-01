@@ -11,11 +11,6 @@
     <h2>ООО "Зеленоглазое такси"</h2>
 </center>
 <div>
-<!--    <%
-
-    System.out.println("Current Date="+d);
-    %>-->
-
     <a href="mailto:alex-byi@mail.ru">Написать нам</a>
 </div>
 </body>
