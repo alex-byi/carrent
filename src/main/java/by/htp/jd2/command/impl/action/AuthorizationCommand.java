@@ -1,7 +1,6 @@
 package by.htp.jd2.command.impl.action;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
@@ -34,13 +33,6 @@ public class AuthorizationCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        InputStream mfStream = getClass().getClassLoader().getResourceAsStream("META-INF/MANIFEST.MF");
-        Manifest mf = new Manifest();
-        mf.read(mfStream);
-        Attributes atts = mf.getMainAttributes();
-        System.out.println("version: " + atts.getValue(Attributes.Name.IMPLEMENTATION_VERSION));
-
 
         String login;
         String password;

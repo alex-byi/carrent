@@ -73,16 +73,6 @@
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.2.2</version>
-                    <configuration>
-                        <archive>
-                            <manifestEntries>
-                                <Specification-Title>${project.name}</Specification-Title>
-                                <Specification-Version>${project.version}</Specification-Version>
-                                <Implementation-Version>${build.number}</Implementation-Version>
-                                <Timestamp>${build.timestamp}</Timestamp>
-                            </manifestEntries>
-                        </archive>
-                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -100,9 +90,6 @@
                 <plugin>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.2</version>
-                    <configuration>
-                        <skipTests>false</skipTests>
-                    </configuration>
                 </plugin>
 
                 <plugin>
