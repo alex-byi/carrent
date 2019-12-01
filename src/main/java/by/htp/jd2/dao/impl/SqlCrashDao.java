@@ -25,7 +25,7 @@ public class SqlCrashDao implements CrashDao {
     private static final String ADD_CRASH = "INSERT INTO crashbill (description, amount, cars_idcars , users_iduser) VALUES(?, ?, ?, ?);";
     private static final String GET_LAST_ID = "SELECT MAX( idcrashbill ) FROM crashbill;";
     private static final String GET_USERS_CRASH_BILLS = "select * from crashbill where users_iduser = ?;";
-    private static final String SET_CRASH_PAYMENT = "UPDATE crashbill set iscomplete = '1' WHERE idcrashbill = ?;";
+    private static final String SET_CRASH_PAYMENT = "UPDATE crashbill set complete = '1' WHERE idcrashbill = ?;";
     private static final String GET_CRASH_BY_ID = "SELECT * FROM crashbill WHERE idcrashbill = ?;";
 
 
@@ -49,9 +49,9 @@ public class SqlCrashDao implements CrashDao {
                 id = rs.getInt(1);
                 damage = rs.getString(2);
                 amount = rs.getInt(3);
-                idCar = rs.getInt(4);
-                idUser = rs.getInt(5);
-                isComplete = rs.getBoolean(6);
+                idCar = rs.getInt(5);
+                idUser = rs.getInt(6);
+                isComplete = rs.getBoolean(4);
                 list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
             }
             return list;
@@ -65,7 +65,6 @@ public class SqlCrashDao implements CrashDao {
     }
 
     /**
-     *
      * @param crash Crash object
      * @return id of added crash
      */
@@ -96,7 +95,6 @@ public class SqlCrashDao implements CrashDao {
     }
 
     /**
-     *
      * @param idUserC int id user
      * @return List of crashs of concrete user
      */
@@ -119,9 +117,10 @@ public class SqlCrashDao implements CrashDao {
                 id = rs.getInt(1);
                 damage = rs.getString(2);
                 amount = rs.getInt(3);
-                idCar = rs.getInt(4);
-                idUser = rs.getInt(5);
-                isComplete = rs.getBoolean(6);
+                idCar = rs.getInt(5);
+                idUser = rs.getInt(6);
+                isComplete = rs.getBoolean(4);
+
                 list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
             }
             return list;
@@ -134,7 +133,6 @@ public class SqlCrashDao implements CrashDao {
     }
 
     /**
-     *
      * @param idCrash int crash id
      * @return true if crash payment install successfully or false if no
      */
@@ -155,7 +153,6 @@ public class SqlCrashDao implements CrashDao {
     }
 
     /**
-     *
      * @param idCrash int crash id
      * @return crash object
      */
@@ -174,12 +171,13 @@ public class SqlCrashDao implements CrashDao {
             ps.setInt(1, idCrash);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+
                 id = rs.getInt(1);
                 damage = rs.getString(2);
                 amount = rs.getInt(3);
-                idCar = rs.getInt(4);
-                idUser = rs.getInt(5);
-                isComplete = rs.getBoolean(6);
+                idCar = rs.getInt(5);
+                idUser = rs.getInt(6);
+                isComplete = rs.getBoolean(4);
             }
             return new Crash(id, damage, amount, idCar, idUser, isComplete);
 

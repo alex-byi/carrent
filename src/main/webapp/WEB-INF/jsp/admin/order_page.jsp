@@ -158,7 +158,9 @@
                                     test="${order.canceled == false && order.complete == false}">
                                 <form action="controller" method="post">
                                     <input type="hidden" name="command" value="cancel_order"/>
-                                    <input type="hidden" name="orderId" value="${order.id}"/> <input
+                                    <input type="hidden" name="orderId" value="${order.id}"/>
+                                    <input type="hidden" name="userType" value="admin"/>
+                                    <input
                                         type="text" required
                                         placeholder="<fmt:message key='allorders.cause'/>" size="8"
                                         maxlength="40" name="reason" value=""/><input

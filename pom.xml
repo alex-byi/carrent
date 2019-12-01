@@ -64,22 +64,16 @@
             <version>7.0.21</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
-        </dependency>
     </dependencies>
 
     <build>
         <finalName>my-web-project</finalName>
-        <pluginManagement>      <!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>3.1.0</version>
                 </plugin>
-                <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>3.0.2</version>
@@ -113,10 +107,11 @@
                     <version>2.2</version>
                     <configuration>
                         <url>http://localhost:8080/manager/text</url>
-                        <server>Tomcatserver</server>
+                        <server>TomcatServer</server>
                         <path>/my-web-project</path>
                         <username>admin</username>
                         <password>12345</password>
+                       <!-- <password>admin</password>-->
                     </configuration>
                 </plugin>
             </plugins>

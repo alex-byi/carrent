@@ -9,6 +9,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +21,12 @@ import java.util.List;
 public class SQLCarDao implements CarDAO {
     private static final Logger LOG = LogManager.getLogger(SQLCarDao.class.getName());
 
-    private static final String GET_ALL_CAR = "SELECT * FROM cars;";
+    private static final String GET_ALL_CAR = "SELECT * FROM cars order by idcars desc;";
     private static final String ADD_CAR = "INSERT INTO cars(name, price, fuel, color, body, transmission)"
             + " VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String DEL_CAR = "UPDATE cars SET cars.active = '0' WHERE cars.`idcars` = ?;";
-    private static final String ACTIVATE_CAR = "UPDATE cars SET cars.active = '1' WHERE cars.`idcars` = ?;";
-    private static final String GET_ALL_AVAILABLE_CARS_ID = "select * from cars where idcars NOT IN (select cars_idcars from orders where (enddate > ?) OR ((startdate > ?) AND (startdate < ?)));";
+    private static final String DEL_CAR = "UPDATE cars SET active = '0' WHERE idcars = ?;";
+    private static final String ACTIVATE_CAR = "UPDATE cars SET active = '1' WHERE idcars = ?;";
+    private static final String GET_ALL_AVAILABLE_CARS_ID = "select * from cars where idcars NOT IN (select orders.cars_idcar from orders where (enddate > ?) OR ((startdate > ?) AND (startdate < ?)));";
     private static final String GET_CAR_BY_ID = "SELECT * FROM cars WHERE idcars = ?;";
     private static final String GET_TRANSMISSION_CARS = "SELECT * FROM cars WHERE transmission = ?;";
     private static final String GET_FUEL_CARS = "SELECT * FROM cars WHERE fuel = ?;";
@@ -70,7 +72,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param car Car object
      * @return true if adding successfully or false if no
      */
@@ -96,7 +97,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param id int car id
      * @return true if deactivate successfully or false if no
      */
@@ -117,9 +117,8 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param startDate string date of start rent in format YYYY-MM-DD
-     * @param endDate string date of end rent in format YYYY-MM-DD
+     * @param endDate   string date of end rent in format YYYY-MM-DD
      * @return List of all available cars from database
      */
     @Override
@@ -135,11 +134,14 @@ public class SQLCarDao implements CarDAO {
         List<Car> listAvailableCarsId = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date sqlStartDate, sqlEndDate;
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_AVAILABLE_CARS_ID)) {
-            ps.setString(1, startDate);
-            ps.setString(2, startDate);
-            ps.setString(3, endDate);
+            sqlStartDate  = new java.sql.Date(dateFormat.parse(startDate).getTime());
+            sqlEndDate = new java.sql.Date(dateFormat.parse(endDate).getTime());
+            ps.setDate(1, sqlStartDate);
+            ps.setDate(2, sqlStartDate);
+            ps.setDate(3, sqlEndDate);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 id = rs.getInt(1);
@@ -153,7 +155,7 @@ public class SQLCarDao implements CarDAO {
                 listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
             }
             return listAvailableCarsId;
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             LOG.error(e);
             throw new DaoException("GET ALL AVAILABLE CARS IDs ERROR!!!", e);
         } finally {
@@ -162,7 +164,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param id int car id
      * @return Car object
      */
@@ -199,7 +200,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param id int car id
      * @return true if activate successfully or false if no
      */
@@ -220,7 +220,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param transmission string transmission type
      * @return List all car with transmission type
      */
@@ -262,7 +261,6 @@ public class SQLCarDao implements CarDAO {
     }
 
     /**
-     *
      * @param fuelC string fuel type
      * @return List all car with fuel type
      */

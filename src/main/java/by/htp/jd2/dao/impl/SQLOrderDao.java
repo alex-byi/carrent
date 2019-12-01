@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import by.htp.jd2.dao.DaoException;
@@ -21,17 +24,17 @@ public class SQLOrderDao implements OrderDao {
 
     private static final Logger LOG = LogManager.getLogger(SQLOrderDao.class.getName());
 
-    private static final String GET_ALL_ORDERS = "SELECT * FROM orders order by idorders desc LIMIT ?, 5;";
-    private static final String ADD_ORDER = "INSERT INTO orders (dateorder, startdate, enddate, cars_idcars, users_iduser, amount, dayCol) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String GET_ALL_ORDERS = "SELECT * FROM orders order by idorder desc LIMIT 5 OFFSET ?;";
+    private static final String ADD_ORDER = "INSERT INTO orders (dateorder, startdate, enddate, cars_idcar, users_iduser, amount, dayCol) VALUES(?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ORDERS_BY_ID_USER = "SELECT * FROM orders WHERE users_iduser = ?;";
-    private static final String SET_AMOUNT = "UPDATE orders SET orders.amount = ? WHERE orders.idorders = ?;";
-    private static final String GET_ORDER_BY_ID = "SELECT * FROM orders WHERE idorders = ?;";
-    private static final String SET_PAYMENT = "UPDATE orders SET orders.ispaid = '1' WHERE orders.idorders = ?;";
-    private static final String SET_COMPLETE = "UPDATE orders SET orders.iscomplete = '1' WHERE orders.idorders = ?;";
-    private static final String SET_CANCELED = "UPDATE orders SET orders.iscanceled = '1' WHERE orders.idorders = ?;";
-    private static final String SET_REJECT_REASON = "UPDATE orders SET orders.reject_reason = ? WHERE orders.idorders = ?;";
-    private static final String SET_CRASHBILL_ID = "UPDATE orders SET orders.crashbill_idcrashbill = ?, orders.iscrash = '1' WHERE orders.idorders = ?;";
-    private static final String GET_PAGE_COL = "SELECT count(orders.idorders) FROM orders;";
+    private static final String SET_AMOUNT = "UPDATE orders SET amount = ? WHERE idorder = ?;";
+    private static final String GET_ORDER_BY_ID = "SELECT * FROM orders WHERE idorder = ?;";
+    private static final String SET_PAYMENT = "UPDATE orders SET ispaid = '1' WHERE idorder = ?;";
+    private static final String SET_COMPLETE = "UPDATE orders SET iscomplete = '1' WHERE idorder = ?;";
+    private static final String SET_CANCELED = "UPDATE orders SET iscanceled = '1' WHERE idorder = ?;";
+    private static final String SET_REJECT_REASON = "UPDATE orders SET reject_reason = ? WHERE idorder = ?;";
+    private static final String SET_CRASHBILL_ID = "UPDATE orders SET crashbill_idcrashbill = ?, iscrash = '1' WHERE idorder = ?;";
+    private static final String GET_PAGE_COL = "SELECT count(idorder) FROM orders;";
 
     /**
      * @param page int page number
@@ -95,18 +98,22 @@ public class SQLOrderDao implements OrderDao {
     public boolean addNewOrder(Order order) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date dateOrder, startDate, endDate;
         try (PreparedStatement ps = connection.prepareStatement(ADD_ORDER)) {
-            ps.setString(1, order.getDateOrder());
-            ps.setString(2, order.getStartDate());
-            ps.setString(3, order.getEndDate());
+            dateOrder = new java.sql.Date(dateFormat.parse(order.getDateOrder()).getTime());
+            startDate  = new java.sql.Date(dateFormat.parse(order.getStartDate()).getTime());
+            endDate = new java.sql.Date(dateFormat.parse(order.getEndDate()).getTime());
+            ps.setDate(1, dateOrder);
+            ps.setDate(2, startDate);
+            ps.setDate(3, endDate);
             ps.setInt(4, order.getIdCar());
             ps.setInt(5, order.getIdUser());
             ps.setInt(6, order.getAmount());
             ps.setInt(7, order.getDayCol());
             ps.executeUpdate();
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             LOG.error(e);
             throw new DaoException("RADD ORDER ERROR", e);
         } finally {

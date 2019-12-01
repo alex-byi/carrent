@@ -15,7 +15,7 @@ public class ConnectionListener implements ServletContextListener {
 
     private static final Logger LOG = LogManager.getLogger(ConnectionListener.class.getName());
     private static DBResourceManager dbResourseManager = DBResourceManager.getInstance();
-    private final static String DRIVER = dbResourseManager.getValue(DBParameter.PSQL_DRIVER);
+    private final static String DRIVER = dbResourseManager.getValue(DBParameter.DB_DRIVER);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {

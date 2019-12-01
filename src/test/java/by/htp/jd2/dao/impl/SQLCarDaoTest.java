@@ -95,7 +95,7 @@ public class SQLCarDaoTest {
 
     @Test
     public void getCarById() throws DaoException {
-        Car actualCar = new Car("Volvo xc70", 200, "дизель", "черный",
+        Car actualCar = new Car("volvo xc70", 200, "дизель", "черный",
                 "универсал", TransmissionType.AUTOMATIC, true);
         actualCar.setId(1);
         SQLCarDao sqlCarDao = new SQLCarDao();

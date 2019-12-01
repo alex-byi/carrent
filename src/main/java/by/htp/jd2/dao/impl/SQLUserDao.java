@@ -25,23 +25,19 @@ public class SQLUserDao implements UserDao {
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM users WHERE(users.login = ?) AND (users.password = ?);";
     private static final String REGISTRATION_USER = "INSERT INTO users(login, password, passportnumber, fullname, address, email) VALUES(?, ?, ?, ?, ?, ?)";
-    private static final String GET_ALL_USERS = "SELECT * FROM users order by iduser desc LIMIT ?, 5;";
-    private static final String DEL_USER = "UPDATE users SET users.active = '0' WHERE users.`iduser` = ?;";
-    private static final String ACTIVATE_USER = "UPDATE users SET users.active = '1' WHERE users.`iduser` = ?;";
-    private static final String PAY_BILL = "UPDATE users SET users.cash = users.cash - ? WHERE users.iduser = ?;";
-    private static final String ADD_MONEY = "UPDATE users SET users.cash = users.cash + ? WHERE users.iduser = ?;";
-    private static final String SELECT_LOGINS = "SELECT users.login FROM users;";
-    private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE users.`iduser` = ?;";
-    private static final String HASH_PASSWORD = "SELECT MD5(?); ";
+    private static final String GET_ALL_USERS = "SELECT * FROM users order by iduser desc LIMIT 5 OFFSET ?;";
+    private static final String DEL_USER = "UPDATE users SET active = '0' WHERE iduser = ?;";
+    private static final String ACTIVATE_USER = "UPDATE users SET active = '1' WHERE iduser = ?;";
+    private static final String PAY_BILL = "UPDATE users SET cash = cash - ? WHERE iduser = ?;";
+    private static final String ADD_MONEY = "UPDATE users SET cash = cash + ? WHERE iduser = ?;";
+    private static final String SELECT_LOGINS = "SELECT login FROM users;";
+    private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE iduser = ?;";
     private static final String SEARCH_USER = "select * from users where login like ?;";
 
 
     private static String md5Apache(String st) {
-
         return DigestUtils.md5Hex(st);
     }
-
-
 
     /**
      * @param loginA    string user login
@@ -62,15 +58,8 @@ public class SQLUserDao implements UserDao {
         int id = 0;
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        String hash;
+        String hash = md5Apache(passwordA);
         try {
-//            PreparedStatement ps = connection.prepareStatement(HASH_PASSWORD);
-//            ps.setString(1, passwordA);
-//            ResultSet rs = ps.executeQuery();
-//            while (rs.next()) {
-//                hash = rs.getString(1);
-//            }
-            hash = md5Apache(passwordA);
             PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
             ps.setString(1, loginA);
             ps.setString(2, hash);
@@ -106,16 +95,10 @@ public class SQLUserDao implements UserDao {
     public boolean registration(User user) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        String hash = null;
+        String hash = md5Apache(user.getPassword());
 
         try {
-            PreparedStatement ps = connection.prepareStatement(HASH_PASSWORD);
-            ps.setString(1, user.getPassword());
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                hash = rs.getString(1);
-            }
-            ps = connection.prepareStatement(REGISTRATION_USER);
+            PreparedStatement ps = connection.prepareStatement(REGISTRATION_USER);
             ps.setString(1, user.getLogin());
             ps.setString(2, hash);
             ps.setString(3, user.getPassNum());
@@ -133,7 +116,6 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @return List of all users from database
      */
     @Override
@@ -155,16 +137,16 @@ public class SQLUserDao implements UserDao {
             ps.setInt(1, page);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                id = rs.getInt(1);
-                type = UserType.valueOf(rs.getString(4).toUpperCase());
-                active = rs.getBoolean(5);
-                passNum = rs.getString(6);
-                fullName = rs.getString(7);
+                id = rs.getInt(5);
+                type = UserType.valueOf(rs.getString(1).toUpperCase());
+                active = rs.getBoolean(9);
+                passNum = rs.getString(3);
+                fullName = rs.getString(6);
                 address = rs.getString(8);
-                email = rs.getString(9);
+                email = rs.getString(7);
                 cash = rs.getInt(10);
-                login = rs.getString(2);
-                password = rs.getString(3);
+                login = rs.getString(4);
+                password = rs.getString(2);
                 list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
             }
             return list;
@@ -177,7 +159,6 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param id int id user
      * @return true if installation flag "active" to false successfully
      */
@@ -198,9 +179,8 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param sum int sum order receipt
-     * @param id int User id
+     * @param id  int User id
      * @return true if payment successfully
      */
     @Override
@@ -221,7 +201,6 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param id int user id
      * @return true if activate successfully
      */
@@ -242,9 +221,8 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param sum int sum
-     * @param id int user id
+     * @param id  int user id
      * @return true if adding money complete successfully
      */
     @Override
@@ -265,7 +243,6 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param login string login
      * @return false if user contain in userlist
      */
@@ -290,7 +267,6 @@ public class SQLUserDao implements UserDao {
     }
 
     /**
-     *
      * @param id int user id
      * @return User object
      */
@@ -312,15 +288,15 @@ public class SQLUserDao implements UserDao {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                type = UserType.valueOf(rs.getString(4).toUpperCase());
-                active = rs.getBoolean(5);
-                passNum = rs.getString(6);
-                fullName = rs.getString(7);
+                type = UserType.valueOf(rs.getString(1).toUpperCase());
+                active = rs.getBoolean(9);
+                passNum = rs.getString(3);
+                fullName = rs.getString(6);
                 address = rs.getString(8);
-                email = rs.getString(9);
+                email = rs.getString(7);
                 cash = rs.getInt(10);
-                login = rs.getString(2);
-                password = rs.getString(3);
+                login = rs.getString(4);
+                password = rs.getString(2);
             }
             return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
         } catch (SQLException e) {
@@ -356,16 +332,16 @@ public class SQLUserDao implements UserDao {
             ps.setString(1, "%" + searchLogin + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                type = UserType.valueOf(rs.getString(4).toUpperCase());
-                active = rs.getBoolean(5);
-                passNum = rs.getString(6);
-                fullName = rs.getString(7);
+                id = rs.getInt(5);
+                type = UserType.valueOf(rs.getString(1).toUpperCase());
+                active = rs.getBoolean(9);
+                passNum = rs.getString(3);
+                fullName = rs.getString(6);
                 address = rs.getString(8);
-                email = rs.getString(9);
+                email = rs.getString(7);
                 cash = rs.getInt(10);
-                login = rs.getString(2);
-                password = rs.getString(3);
-                id = rs.getInt(1);
+                login = rs.getString(4);
+                password = rs.getString(2);
                 list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
             }
             return list;

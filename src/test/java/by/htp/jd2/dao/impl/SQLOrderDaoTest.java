@@ -19,7 +19,7 @@ public class SQLOrderDaoTest {
     @Test
     public void addNewOrder() throws DaoException {
         Order order = new Order("2019-10-01", "2019-10-01", "2019-10-02", 1,
-                2, 200, 2);
+                3, 200, 2);
         SQLOrderDao sqlOrderDao = new SQLOrderDao();
         sqlOrderDao.addNewOrder(order);
         int id = getLastId();
@@ -85,7 +85,7 @@ public class SQLOrderDaoTest {
         Connection connection = pool.retrieve();
         int id = 0;
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT max(idorders) FROM orders;");
+            PreparedStatement ps = connection.prepareStatement("SELECT max(idorder) FROM orders;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 id = rs.getInt(1);
@@ -114,7 +114,7 @@ public class SQLOrderDaoTest {
         boolean isCanceled = false;
         boolean isComplete = false;
         String rejectReason = null;
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM orders WHERE idorders = ?;")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM orders WHERE idorder = ?;")) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -144,7 +144,7 @@ public class SQLOrderDaoTest {
     private static void delOrderAfterAdd(int id) {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM orders WHERE idorders = ?;")) {
+        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM orders WHERE idorder = ?;")) {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
