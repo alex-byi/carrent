@@ -22,8 +22,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class ActivateUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ActivateUserCommand.class.getName());
-    private static final String error = "User activate ERROR";
-    private static final String debug = "Activate user command";
+    private static final String ERROR = "User activate ERROR";
+    private static final String DEBUG = "Activate user command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,19 +32,19 @@ public class ActivateUserCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
-
             try {
                 int id = Integer.parseInt(request.getParameter(RequestParameterName.ID_USER));
                 ServiceProvider.getInstance().getUserService().activateUser(id);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=ALL_USERS");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

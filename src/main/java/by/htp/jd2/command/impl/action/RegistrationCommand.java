@@ -20,9 +20,9 @@ import by.htp.jd2.service.ServiceProvider;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RegistrationCommand.class.getName());
-    private static final String debug = "Registration command";
-    private static final String error = "Registration ERROR";
-    private static final String duplicate = "Пользователь с таким логином уже существует. Выберите другой";
+    private static final String DEBUG = "Registration command";
+    private static final String ERROR = "Registration ERROR";
+    private static final String DUPLICATE = "Пользователь с таким логином уже существует. Выберите другой";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -39,20 +39,21 @@ public class RegistrationCommand implements Command {
 
         try {
             if (!ServiceProvider.getInstance().getUserService().checkUser(login)) {
-                session.setAttribute("duplicateLogin", duplicate);
+                session.setAttribute("duplicateLogin", DUPLICATE);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.REGISTRATION_PAGE);
                 dispatcher.forward(request, response);
             } else {
                 ServiceProvider.getInstance().getUserService().registration(user);
                 session.setAttribute("user", user);
                 response.sendRedirect("controller?command=AUTHORIZATION");
-                LOG.debug(debug);
+                LOG.debug(DEBUG);
             }
 
         } catch (ServiceException e) {
-            LOG.error(error + e);
-            e.printStackTrace();
-            session.setAttribute("error", error);
+            LOG.error(ERROR + e);
+            if (session != null) {
+                session.setAttribute("error", ERROR);
+            }
         }
 
     }

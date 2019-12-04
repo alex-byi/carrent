@@ -30,8 +30,9 @@ import by.htp.jd2.service.ServiceProvider;
 public class OrderPageCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger(OrderPageCommand.class.getName());
-    private static final String debug = "Go to order page command";
-    private static final String error = "Go to order page command ERROR";
+    private static final String DEBUG = "Go to order page command";
+    private static final String ERROR = "Go to order page command ERROR";
+    private static final String CURRENT_PAGE_PARAMETER = "currentPage";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -41,20 +42,20 @@ public class OrderPageCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
 
-                if (request.getParameter("currentPage") == null) {
+                if (request.getParameter(CURRENT_PAGE_PARAMETER) == null) {
                     currentPage = 0;
                 } else {
-                    currentPage = Integer.parseInt(request.getParameter("currentPage"));
+                    currentPage = Integer.parseInt(request.getParameter(CURRENT_PAGE_PARAMETER));
                 }
                 int page = currentPage * 5;
 
                 List<Order> orders = ServiceProvider.getInstance().getOrderService().getAllOrders(page);
                 request.setAttribute("allOrders", orders);
-                request.setAttribute("currentPage", currentPage);
+                request.setAttribute(CURRENT_PAGE_PARAMETER, currentPage);
 
                 Set<Car> cars = new HashSet<>();
                 Car car;
@@ -73,13 +74,12 @@ public class OrderPageCommand implements Command {
                 request.setAttribute("usersO", users);
 
             } catch (ServiceException e) {
-                e.printStackTrace();
-                LOG.error(error + e);
+                LOG.error(ERROR, e);
                 request.getSession().invalidate();
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ORDER_PAGE);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

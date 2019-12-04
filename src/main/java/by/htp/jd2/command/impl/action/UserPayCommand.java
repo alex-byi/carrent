@@ -23,8 +23,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class UserPayCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserPayCommand.class.getName());
-    private static final String debug = "User pay command";
-    private static final String error = "Pay ERROR";
+    private static final String DEBUG = "User pay command";
+    private static final String ERROR = "Pay ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,25 +32,28 @@ public class UserPayCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
-                int userId = Integer.parseInt(request.getParameter("userId"));
-                int orderId = Integer.parseInt(request.getParameter("orderId"));
-                Order order;
-                User user = (User) session.getAttribute("user");
-                order = ServiceProvider.getInstance().getOrderService().getOrderById(orderId);
-                ServiceProvider.getInstance().getUserService().pay(order.getAmount(), userId);
-                ServiceProvider.getInstance().getOrderService().setPayment(orderId);
-                user.setCash(user.getCash() - order.getAmount());
-                session.setAttribute("user", user);
+                if (session != null) {
+                    int userId = Integer.parseInt(request.getParameter("userId"));
+                    int orderId = Integer.parseInt(request.getParameter("orderId"));
+                    Order order;
+                    User user = (User) session.getAttribute("user");
+                    order = ServiceProvider.getInstance().getOrderService().getOrderById(orderId);
+                    ServiceProvider.getInstance().getUserService().pay(order.getAmount(), userId);
+                    ServiceProvider.getInstance().getOrderService().setPayment(orderId);
+                    user.setCash(user.getCash() - order.getAmount());
+                    session.setAttribute("user", user);
+                }
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=USER_ORDERS_PAGE");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 }

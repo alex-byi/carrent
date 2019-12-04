@@ -20,14 +20,14 @@ import by.htp.jd2.controller.JSPPageName;
  */
 public class LogOutCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(LogOutCommand.class.getName());
-    private static final String debug = "Log out command";
+    private static final String DEBUG = "Log out command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.getSession().invalidate();
         RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.INDEX_PAGE);
         dispatcher.forward(request, response);
-        LOG.debug(debug);
+        LOG.debug(DEBUG);
     }
 
 }

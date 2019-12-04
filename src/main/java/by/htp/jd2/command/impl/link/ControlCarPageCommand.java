@@ -25,8 +25,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class ControlCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlCarPageCommand.class.getName());
-    private static final String error = "go to Control car page error";
-    private static final String debug = "Go to Car control page command";
+    private static final String ERROR = "go to Control car page error";
+    private static final String DEBUG = "Go to Car control page command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -35,19 +35,20 @@ public class ControlCarPageCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
-                List<Car> cars = ServiceProvider.getInstance().getCarService().getAllCars();
-                session.setAttribute("cars", cars);
+                if (session != null) {
+                    List<Car> cars = ServiceProvider.getInstance().getCarService().getAllCars();
+                    session.setAttribute("cars", cars);
+                }
             } catch (ServiceException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
+                LOG.error(ERROR, e);
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.CONTROL_CAR_PAGE);
             dispatcher.forward(request, response);
         }
-        LOG.debug(debug);
+        LOG.debug(DEBUG);
     }
 
 }

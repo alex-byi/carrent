@@ -30,8 +30,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class UserCrashPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPageCommand.class.getName());
-    private static final String debug = "Go to USER crash page command";
-    private static final String error = "Go to USER crash page command ERROR";
+    private static final String DEBUG = "Go to USER crash page command";
+    private static final String ERROR = "Go to USER crash page command ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -39,32 +39,34 @@ public class UserCrashPageCommand implements Command {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
-            List<Crash> crashs = new ArrayList<>();
-            User user = (User) session.getAttribute("user");
-            try {
-                crashs = ServiceProvider.getInstance().getCrashService().getUsersCrashs(user.getId());
+            if (session != null) {
+                List<Crash> crashs = new ArrayList<>();
+                User user = (User) session.getAttribute("user");
 
-                Set<Car> cars = new HashSet<>();
-                for (Crash crash : crashs) {
-                    cars.add(ServiceProvider.getInstance().getCarService().getCarById(crash.getIdCar()));
+                try {
+                    crashs = ServiceProvider.getInstance().getCrashService().getUsersCrashs(user.getId());
+
+                    Set<Car> cars = new HashSet<>();
+                    for (Crash crash : crashs) {
+                        cars.add(ServiceProvider.getInstance().getCarService().getCarById(crash.getIdCar()));
+                    }
+                    request.setAttribute("cars", cars);
+                } catch (ServiceException e) {
+                    LOG.error(ERROR, e);
                 }
-                request.setAttribute("cars", cars);
-            } catch (ServiceException e) {
-                e.printStackTrace();
-                LOG.error(error + e);
-            }
 
-            if (crashs.size() != 0) {
-                request.setAttribute("allCrashs", crashs);
-            } else {
-                request.setAttribute("allCrashs", null);
-            }
+                if (!crashs.isEmpty()) {
+                    request.setAttribute("allCrashs", crashs);
+                } else {
+                    request.setAttribute("allCrashs", null);
+                }
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_CRASH_PAGE);
-            dispatcher.forward(request, response);
-            LOG.debug(debug);
+                RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_CRASH_PAGE);
+                dispatcher.forward(request, response);
+                LOG.debug(DEBUG);
+            }
         }
 
     }

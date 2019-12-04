@@ -21,8 +21,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class AddMoneyCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddMoneyCommand.class.getName());
-    private static final String error = "ADD money ERROR";
-    private static final String debug = "Add money command";
+    private static final String ERROR = "ADD money ERROR";
+    private static final String DEBUG = "Add money command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,19 +30,20 @@ public class AddMoneyCommand implements Command {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 int userId = Integer.parseInt(request.getParameter("idUser"));
                 int moneyCol = Integer.parseInt(request.getParameter("moneyCol"));
                 ServiceProvider.getInstance().getUserService().addMoney(moneyCol, userId);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=ALL_USERS");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 }

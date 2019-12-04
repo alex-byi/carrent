@@ -21,8 +21,8 @@ import by.htp.jd2.controller.JSPPageName;
  */
 public class OrderPageUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageUserCommand.class.getName());
-    private static final String debug = "Go to order page USER command";
-    private static final String error = "Go to order page USER command ERROR";
+    private static final String DEBUG = "Go to order page USER command";
+    private static final String ERROR = "Go to order page USER command ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -31,12 +31,12 @@ public class OrderPageUserCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ORDER_PAGE_USER);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

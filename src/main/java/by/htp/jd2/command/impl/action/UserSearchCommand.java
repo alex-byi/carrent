@@ -24,8 +24,8 @@ import java.util.List;
 public class UserSearchCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger(UserSearchCommand.class.getName());
-    private static final String error = "SEARCH USER ERROR";
-    private static final String debug = "SEARCH USER command";
+    private static final String ERROR = "SEARCH USER ERROR";
+    private static final String DEBUG = "SEARCH USER command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -35,19 +35,21 @@ public class UserSearchCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 List<User> list = ServiceProvider.getInstance().getUserService().searchUser(searchLogin);
                 request.setAttribute("searchedUsers", list);
                 System.out.println(list.size());
             } catch (ServiceException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.CONTROL_USERS_PAGE);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
 
     }

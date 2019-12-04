@@ -21,8 +21,8 @@ import by.htp.jd2.controller.JSPPageName;
  */
 public class AddCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarPageCommand.class.getName());
-    private static final String error = "Go to add car page without session";
-    private static final String debug = "Go to add car page";
+    private static final String ERROR = "Go to add car page without session";
+    private static final String DEBUG = "Go to add car page";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,11 +30,11 @@ public class AddCarPageCommand implements Command {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADD_CAR_PAGE);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
 
         }
     }

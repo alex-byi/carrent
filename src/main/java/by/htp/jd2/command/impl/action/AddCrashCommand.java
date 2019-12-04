@@ -22,8 +22,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class AddCrashCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCrashCommand.class.getName());
-    private static final String error = "ADD crash bill ERROR";
-    private static final String debug = "Add crash command";
+    private static final String ERROR = "ADD crash bill ERROR";
+    private static final String DEBUG = "Add crash command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,7 +32,7 @@ public class AddCrashCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 String description = request.getParameter("description");
@@ -44,12 +44,13 @@ public class AddCrashCommand implements Command {
                 int crashId = ServiceProvider.getInstance().getCrashService().addCrash(crash);
                 ServiceProvider.getInstance().getOrderService().setCrash(orderId, crashId);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=CRASH_PAGE_ADMIN");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 }

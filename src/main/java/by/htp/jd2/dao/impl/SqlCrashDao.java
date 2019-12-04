@@ -28,7 +28,6 @@ public class SqlCrashDao implements CrashDao {
     private static final String SET_CRASH_PAYMENT = "UPDATE crashbill set complete = '1' WHERE idcrashbill = ?;";
     private static final String GET_CRASH_BY_ID = "SELECT * FROM crashbill WHERE idcrashbill = ?;";
 
-
     /**
      * @return List of all additional bills from database
      */
@@ -44,17 +43,18 @@ public class SqlCrashDao implements CrashDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_CRASH_BILLS)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                damage = rs.getString(2);
-                amount = rs.getInt(3);
-                idCar = rs.getInt(5);
-                idUser = rs.getInt(6);
-                isComplete = rs.getBoolean(4);
-                list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    damage = rs.getString(2);
+                    amount = rs.getInt(3);
+                    idCar = rs.getInt(5);
+                    idUser = rs.getInt(6);
+                    isComplete = rs.getBoolean(4);
+                    list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL CRASHBILL ERROR!!!", e);
@@ -73,19 +73,20 @@ public class SqlCrashDao implements CrashDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         int id = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement(ADD_CRASH);
+        try (PreparedStatement ps = connection.prepareStatement(ADD_CRASH)) {
             ps.setString(1, crash.getDamage());
             ps.setInt(2, crash.getAmount());
             ps.setInt(3, crash.getIdCar());
             ps.setInt(4, crash.getIdUser());
             ps.executeUpdate();
-            ps = connection.prepareStatement(GET_LAST_ID);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
+            try (PreparedStatement ps2 = connection.prepareStatement(GET_LAST_ID)) {
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        id = rs.getInt(1);
+                    }
+                    return id;
+                }
             }
-            return id;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("ADD CRASH ERROR", e);
@@ -109,21 +110,21 @@ public class SqlCrashDao implements CrashDao {
         List<Crash> list = new ArrayList<>();
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        try {
-            PreparedStatement ps = connection.prepareStatement(GET_USERS_CRASH_BILLS);
+        try (PreparedStatement ps = connection.prepareStatement(GET_USERS_CRASH_BILLS)) {
             ps.setInt(1, idUserC);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                damage = rs.getString(2);
-                amount = rs.getInt(3);
-                idCar = rs.getInt(5);
-                idUser = rs.getInt(6);
-                isComplete = rs.getBoolean(4);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    damage = rs.getString(2);
+                    amount = rs.getInt(3);
+                    idCar = rs.getInt(5);
+                    idUser = rs.getInt(6);
+                    isComplete = rs.getBoolean(4);
 
-                list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
+                    list.add(new Crash(id, damage, amount, idCar, idUser, isComplete));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET USERS CRASHBILLS ERROR!!!", e);
@@ -166,21 +167,19 @@ public class SqlCrashDao implements CrashDao {
         boolean isComplete = false;
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
-        try {
-            PreparedStatement ps = connection.prepareStatement(GET_CRASH_BY_ID);
+        try (PreparedStatement ps = connection.prepareStatement(GET_CRASH_BY_ID)) {
             ps.setInt(1, idCrash);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-
-                id = rs.getInt(1);
-                damage = rs.getString(2);
-                amount = rs.getInt(3);
-                idCar = rs.getInt(5);
-                idUser = rs.getInt(6);
-                isComplete = rs.getBoolean(4);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    damage = rs.getString(2);
+                    amount = rs.getInt(3);
+                    idCar = rs.getInt(5);
+                    idUser = rs.getInt(6);
+                    isComplete = rs.getBoolean(4);
+                }
+                return new Crash(id, damage, amount, idCar, idUser, isComplete);
             }
-            return new Crash(id, damage, amount, idCar, idUser, isComplete);
-
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET CRASHBILL BY ID ERROR!!!", e);

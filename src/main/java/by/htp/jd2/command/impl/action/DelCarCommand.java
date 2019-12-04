@@ -22,26 +22,27 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class DelCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(DelCarCommand.class.getName());
-    private static final String error = "Del car ERROR";
-    private static final String debug = "Del car command";
+    private static final String ERROR = "Del car ERROR";
+    private static final String DEBUG = "Del car command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 int id = Integer.parseInt(request.getParameter(RequestParameterName.ID_CAR));
                 ServiceProvider.getInstance().getCarService().delCar(id);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=CONTROL_CAR_PAGE");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

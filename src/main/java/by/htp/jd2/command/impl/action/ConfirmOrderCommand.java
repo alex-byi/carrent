@@ -26,9 +26,9 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class ConfirmOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ConfirmOrderCommand.class.getName());
-    private static final String error = "Confirm order ERROR";
-    private static final String debug = "Confirm order Command";
-    private static final String errorConfirmOrder = "Автомобиль уже заказал кто-то другой. Попробуйте еще раз";
+    private static final String ERROR = "Confirm order ERROR";
+    private static final String DEBUG = "Confirm order Command";
+    private static final String ERROR_CONFIRM_ORDER = "Автомобиль уже заказал кто-то другой. Попробуйте еще раз";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -37,7 +37,7 @@ public class ConfirmOrderCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 int idCar = Integer.parseInt(request.getParameter("orderIdCar"));
@@ -55,18 +55,21 @@ public class ConfirmOrderCommand implements Command {
                 if (availableCars.contains(car)) {
                     ServiceProvider.getInstance().getOrderService().addNewOrder(order);
                 } else {
-                    session.setAttribute("error", errorConfirmOrder);
+                    if (session != null) {
+                        session.setAttribute("error", ERROR_CONFIRM_ORDER);
+                    }
                     RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ORDER_PAGE_USER);
                     dispatcher.forward(request, response);
                 }
 
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=USER_ORDERS_PAGE");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

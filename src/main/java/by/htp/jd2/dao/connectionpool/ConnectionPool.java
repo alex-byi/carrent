@@ -48,6 +48,7 @@ public final class ConnectionPool {
                 }
             }
         } catch (InterruptedException | SQLException e) {
+            Thread.currentThread().interrupt(); 
             LOG.error(e);
             throw new RuntimeException(e);
         }
@@ -71,6 +72,7 @@ public final class ConnectionPool {
         try {
             connection = connections.take();
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); 
             LOG.error(e);
             throw new RuntimeException(e);
         }
@@ -86,6 +88,7 @@ public final class ConnectionPool {
                 connection.setAutoCommit(true);
                 connections.put(connection);
             } catch (InterruptedException | SQLException e) {
+                Thread.currentThread().interrupt(); 
                 LOG.error(e);
                 throw new RuntimeException(e);
             }

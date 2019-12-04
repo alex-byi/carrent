@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * @author alexey
  */
@@ -50,19 +49,20 @@ public class SQLCarDao implements CarDAO {
         Connection connection = pool.retrieve();
 
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_CAR)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                name = rs.getString(2);
-                price = rs.getInt(3);
-                fuel = rs.getString(4);
-                color = rs.getString(5);
-                body = rs.getString(6);
-                transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
-                active = rs.getBoolean(8);
-                list.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    name = rs.getString(2);
+                    price = rs.getInt(3);
+                    fuel = rs.getString(4);
+                    color = rs.getString(5);
+                    body = rs.getString(6);
+                    transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
+                    active = rs.getBoolean(8);
+                    list.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
@@ -137,24 +137,25 @@ public class SQLCarDao implements CarDAO {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.sql.Date sqlStartDate, sqlEndDate;
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_AVAILABLE_CARS_ID)) {
-            sqlStartDate  = new java.sql.Date(dateFormat.parse(startDate).getTime());
+            sqlStartDate = new java.sql.Date(dateFormat.parse(startDate).getTime());
             sqlEndDate = new java.sql.Date(dateFormat.parse(endDate).getTime());
             ps.setDate(1, sqlStartDate);
             ps.setDate(2, sqlStartDate);
             ps.setDate(3, sqlEndDate);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                name = rs.getString(2);
-                price = rs.getInt(3);
-                fuel = rs.getString(4);
-                color = rs.getString(5);
-                body = rs.getString(6);
-                transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
-                active = rs.getBoolean(8);
-                listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    name = rs.getString(2);
+                    price = rs.getInt(3);
+                    fuel = rs.getString(4);
+                    color = rs.getString(5);
+                    body = rs.getString(6);
+                    transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
+                    active = rs.getBoolean(8);
+                    listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+                }
+                return listAvailableCarsId;
             }
-            return listAvailableCarsId;
         } catch (SQLException | ParseException e) {
             LOG.error(e);
             throw new DaoException("GET ALL AVAILABLE CARS IDs ERROR!!!", e);
@@ -180,17 +181,18 @@ public class SQLCarDao implements CarDAO {
         Connection connection = pool.retrieve();
         try (PreparedStatement ps = connection.prepareStatement(GET_CAR_BY_ID)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                name = rs.getString(2);
-                price = rs.getInt(3);
-                fuel = rs.getString(4);
-                color = rs.getString(5);
-                body = rs.getString(6);
-                transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
-                active = rs.getBoolean(8);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    name = rs.getString(2);
+                    price = rs.getInt(3);
+                    fuel = rs.getString(4);
+                    color = rs.getString(5);
+                    body = rs.getString(6);
+                    transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
+                    active = rs.getBoolean(8);
+                }
+                return new Car(name, price, fuel, color, body, transmissionType, active, id);
             }
-            return new Car(name, price, fuel, color, body, transmissionType, active, id);
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
@@ -239,19 +241,20 @@ public class SQLCarDao implements CarDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(GET_TRANSMISSION_CARS)) {
             ps.setString(1, transmission);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                name = rs.getString(2);
-                price = rs.getInt(3);
-                fuel = rs.getString(4);
-                color = rs.getString(5);
-                body = rs.getString(6);
-                transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
-                active = rs.getBoolean(8);
-                listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    name = rs.getString(2);
+                    price = rs.getInt(3);
+                    fuel = rs.getString(4);
+                    color = rs.getString(5);
+                    body = rs.getString(6);
+                    transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
+                    active = rs.getBoolean(8);
+                    listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+                }
+                return listAvailableCarsId;
             }
-            return listAvailableCarsId;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET TRANSMISSION CARS IDs ERROR!!!", e);
@@ -280,19 +283,20 @@ public class SQLCarDao implements CarDAO {
 
         try (PreparedStatement ps = connection.prepareStatement(GET_FUEL_CARS)) {
             ps.setString(1, fuelC);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(1);
-                name = rs.getString(2);
-                price = rs.getInt(3);
-                fuel = rs.getString(4);
-                color = rs.getString(5);
-                body = rs.getString(6);
-                transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
-                active = rs.getBoolean(8);
-                listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(1);
+                    name = rs.getString(2);
+                    price = rs.getInt(3);
+                    fuel = rs.getString(4);
+                    color = rs.getString(5);
+                    body = rs.getString(6);
+                    transmissionType = TransmissionType.valueOf(rs.getString(7).toUpperCase());
+                    active = rs.getBoolean(8);
+                    listAvailableCarsId.add(new Car(name, price, fuel, color, body, transmissionType, active, id));
+                }
+                return listAvailableCarsId;
             }
-            return listAvailableCarsId;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET FUEL CARS IDs ERROR!!!", e);
@@ -301,5 +305,3 @@ public class SQLCarDao implements CarDAO {
         }
     }
 }
-
-

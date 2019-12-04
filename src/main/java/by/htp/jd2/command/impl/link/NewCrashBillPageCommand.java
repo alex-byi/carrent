@@ -21,8 +21,8 @@ import by.htp.jd2.controller.JSPPageName;
  */
 public class NewCrashBillPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(NewCrashBillPageCommand.class.getName());
-    private static final String debug = "Go to new crash bill page";
-    private static final String error = "Go to new crash bill page ERROR";
+    private static final String DEBUG = "Go to new crash bill page";
+    private static final String ERROR = "Go to new crash bill page ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,7 +30,7 @@ public class NewCrashBillPageCommand implements Command {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 int orderId = Integer.parseInt(request.getParameter("orderId"));
@@ -42,10 +42,9 @@ public class NewCrashBillPageCommand implements Command {
                 request.setAttribute("userId", userId);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADD_CRASH);
                 dispatcher.forward(request, response);
-                LOG.debug(debug);
+                LOG.debug(DEBUG);
             } catch (NumberFormatException e) {
-                e.printStackTrace();
-                LOG.error(error, e);
+                LOG.error(ERROR, e);
             }
         }
     }

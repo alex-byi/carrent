@@ -28,15 +28,15 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class OrderPageStep2UserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageStep2UserCommand.class.getName());
-    private static final String debug = "Order step 2 command";
-    private static final String error = "Order step 2 command ERROR";
+    private static final String DEBUG = "Order step 2 command";
+    private static final String ERROR = "Order step 2 command ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             String dates = request.getParameter("dates");
             String dateStart = dates.substring(0, 10);
@@ -63,12 +63,11 @@ public class OrderPageStep2UserCommand implements Command {
                 request.setAttribute("endDate1", endDate);
 
             } catch (ParseException | ServiceException e) {
-                e.printStackTrace();
-                LOG.error(error + e);
+                LOG.error(ERROR, e);
             }
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ORDER_PAGE_USER);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
 
         }
     }

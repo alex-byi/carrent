@@ -29,8 +29,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class UserOrdersPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserOrdersPageCommand.class.getName());
-    private static final String debug = "User orders page command";
-    private static final String error = "User orders page command ERROR";
+    private static final String DEBUG = "User orders page command";
+    private static final String ERROR = "User orders page command ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -39,27 +39,29 @@ public class UserOrdersPageCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
-            User user = (User) session.getAttribute("user");
-            try {
-                List<Order> orders = ServiceProvider.getInstance().getOrderService().userOrders(user.getId());
-                request.setAttribute("userOrders", orders);
-                Set<Car> cars = new HashSet<>();
-                Car car;
-                for (Order order : orders) {
-                    car = ServiceProvider.getInstance().getCarService().getCarById(order.getIdCar());
-                    cars.add(car);
-                }
-                request.setAttribute("carsO", cars);
+            if (session != null) {
+                User user = (User) session.getAttribute("user");
+                try {
+                    List<Order> orders = ServiceProvider.getInstance().getOrderService().userOrders(user.getId());
+                    request.setAttribute("userOrders", orders);
+                    Set<Car> cars = new HashSet<>();
+                    Car car;
+                    for (Order order : orders) {
+                        car = ServiceProvider.getInstance().getCarService().getCarById(order.getIdCar());
+                        cars.add(car);
+                    }
+                    request.setAttribute("carsO", cars);
 
-            } catch (ServiceException e) {
-                e.printStackTrace();
-                LOG.error(error + e);
+                } catch (ServiceException e) {
+                    LOG.error(ERROR, e);
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_ORDERS);
+                dispatcher.forward(request, response);
+                LOG.debug(DEBUG);
+
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_ORDERS);
-            dispatcher.forward(request, response);
-            LOG.debug(debug);
         }
     }
 }

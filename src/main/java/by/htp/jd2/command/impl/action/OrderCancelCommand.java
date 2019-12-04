@@ -21,8 +21,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class OrderCancelCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCancelCommand.class.getName());
-    private static final String debug = "Order cancel command";
-    private static final String error = "Cancel order ERROR";
+    private static final String DEBUG = "Order cancel command";
+    private static final String ERROR = "Cancel order ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -30,7 +30,7 @@ public class OrderCancelCommand implements Command {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 int id = Integer.parseInt(request.getParameter("orderId"));
@@ -39,9 +39,10 @@ public class OrderCancelCommand implements Command {
                 ServiceProvider.getInstance().getOrderService().setCanceled(id);
                 ServiceProvider.getInstance().getOrderService().setRejectReason(reason, id);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
 
             if (request.getParameter("userType").equals("user")) {
@@ -49,7 +50,7 @@ public class OrderCancelCommand implements Command {
             } else {
                 response.sendRedirect("controller?command=ORDER_PAGE");
             }
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

@@ -23,8 +23,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class UserCrashPayCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPayCommand.class.getName());
-    private static final String debug = "User crash pay command";
-    private static final String error = "Pay ERROR";
+    private static final String DEBUG = "User crash pay command";
+    private static final String ERROR = "Pay ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -32,27 +32,29 @@ public class UserCrashPayCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
-                User user = (User) session.getAttribute("user");
-                int userId = user.getId();
-                int crashId = Integer.parseInt(request.getParameter("crashId"));
-                int amount = Integer.parseInt(request.getParameter("amount"));
-                Crash crash;
-                crash = ServiceProvider.getInstance().getCrashService().getCrashById(crashId);
-                ServiceProvider.getInstance().getCrashService().setCrashPayment(crashId);
-                ServiceProvider.getInstance().getUserService().pay(amount, userId);
-                user.setCash(user.getCash() - crash.getAmount());
-                session.setAttribute("user", user);
+                if (session != null) {
+                    User user = (User) session.getAttribute("user");
+                    int userId = user.getId();
+                    int crashId = Integer.parseInt(request.getParameter("crashId"));
+                    int amount = Integer.parseInt(request.getParameter("amount"));
+                    Crash crash;
+                    crash = ServiceProvider.getInstance().getCrashService().getCrashById(crashId);
+                    ServiceProvider.getInstance().getCrashService().setCrashPayment(crashId);
+                    ServiceProvider.getInstance().getUserService().pay(amount, userId);
+                    user.setCash(user.getCash() - crash.getAmount());
+                    session.setAttribute("user", user);
+                }
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=USER_CRASH_PAGE");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 

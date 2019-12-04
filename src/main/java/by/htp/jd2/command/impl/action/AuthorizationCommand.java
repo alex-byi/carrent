@@ -1,8 +1,6 @@
 package by.htp.jd2.command.impl.action;
 
-import java.io.*;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
+import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,8 +26,8 @@ import by.htp.jd2.service.ServiceProvider;
 public class AuthorizationCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger(AuthorizationCommand.class.getName());
-    private static final String error = "User activate ERROR";
-    private static final String debug = "Authorization command";
+    private static final String ERROR = "User activate ERROR";
+    private static final String DEBUG = "Authorization command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -55,7 +53,7 @@ public class AuthorizationCommand implements Command {
                 }
 
             } else {
-
+                if (session != null) {
                 User regUser = (User) session.getAttribute("user");
                 user = ServiceProvider.getInstance().getUserService().authorization(regUser.getLogin(),
                         regUser.getPassword());
@@ -67,12 +65,12 @@ public class AuthorizationCommand implements Command {
                     dispatcher.forward(request, response);
                 }
             }
-        } catch (ServiceException e) {
-            e.printStackTrace();
-            LOG.error(error + e);
-            session.setAttribute("error", error);
         }
-        LOG.debug(debug);
+        } catch (ServiceException e) {
+            LOG.error(ERROR, e);
+            session.setAttribute("error", ERROR);
+        }
+        LOG.debug(DEBUG);
     }
 
 }

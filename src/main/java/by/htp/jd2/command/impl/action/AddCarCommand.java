@@ -24,8 +24,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class AddCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarCommand.class.getName());
-    private static final String error = "Add car ERROR";
-    private static final String debug = "Add car command";
+    private static final String ERROR = "Add car ERROR";
+    private static final String DEBUG = "Add car command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,7 +34,7 @@ public class AddCarCommand implements Command {
 
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 String name = request.getParameter(RequestParameterName.REQ_PARAM_CAR_NAME);
@@ -47,12 +47,13 @@ public class AddCarCommand implements Command {
                 Car car = new Car(name, price, fuel, color, body, transmission, true);
                 ServiceProvider.getInstance().getCarService().addNewCar(car);
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
             response.sendRedirect("controller?command=CONTROL_CAR_PAGE");
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 }

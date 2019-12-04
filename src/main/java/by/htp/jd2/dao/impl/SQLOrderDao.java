@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import by.htp.jd2.dao.DaoException;
@@ -61,26 +60,27 @@ public class SQLOrderDao implements OrderDao {
         Connection connection = pool.retrieve();
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_ORDERS)) {
             ps.setInt(1, page);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                dateOrder = rs.getString(2);
-                startDate = rs.getString(3);
-                endDate = rs.getString(4);
-                isPaid = rs.getBoolean(5);
-                isCrash = rs.getBoolean(6);
-                idCar = rs.getInt(7);
-                crashBill = rs.getInt(8);
-                idUser = rs.getInt(9);
-                dayCol = rs.getInt(11);
-                amount = rs.getInt(10);
-                id = rs.getInt(1);
-                isCanceled = rs.getBoolean(12);
-                isComplete = rs.getBoolean(13);
-                rejectReason = rs.getString(14);
-                list.add(new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
-                        amount, id, isCanceled, isComplete, rejectReason));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dateOrder = rs.getString(2);
+                    startDate = rs.getString(3);
+                    endDate = rs.getString(4);
+                    isPaid = rs.getBoolean(5);
+                    isCrash = rs.getBoolean(6);
+                    idCar = rs.getInt(7);
+                    crashBill = rs.getInt(8);
+                    idUser = rs.getInt(9);
+                    dayCol = rs.getInt(11);
+                    amount = rs.getInt(10);
+                    id = rs.getInt(1);
+                    isCanceled = rs.getBoolean(12);
+                    isComplete = rs.getBoolean(13);
+                    rejectReason = rs.getString(14);
+                    list.add(new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
+                            amount, id, isCanceled, isComplete, rejectReason));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL ORDER ERROR!!!", e);
@@ -102,7 +102,7 @@ public class SQLOrderDao implements OrderDao {
         java.sql.Date dateOrder, startDate, endDate;
         try (PreparedStatement ps = connection.prepareStatement(ADD_ORDER)) {
             dateOrder = new java.sql.Date(dateFormat.parse(order.getDateOrder()).getTime());
-            startDate  = new java.sql.Date(dateFormat.parse(order.getStartDate()).getTime());
+            startDate = new java.sql.Date(dateFormat.parse(order.getStartDate()).getTime());
             endDate = new java.sql.Date(dateFormat.parse(order.getEndDate()).getTime());
             ps.setDate(1, dateOrder);
             ps.setDate(2, startDate);
@@ -146,25 +146,26 @@ public class SQLOrderDao implements OrderDao {
         List<Order> list = new ArrayList<>();
         try (PreparedStatement ps = connection.prepareStatement(GET_ORDERS_BY_ID_USER)) {
             ps.setInt(1, idUser);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                dateOrder = rs.getString(2);
-                startDate = rs.getString(3);
-                endDate = rs.getString(4);
-                isPaid = rs.getBoolean(5);
-                isCrash = rs.getBoolean(6);
-                idCar = rs.getInt(7);
-                crashBill = rs.getInt(8);
-                dayCol = rs.getInt(11);
-                amount = rs.getInt(10);
-                id = rs.getInt(1);
-                isCanceled = rs.getBoolean(12);
-                isComplete = rs.getBoolean(13);
-                rejectReason = rs.getString(14);
-                list.add(new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
-                        amount, id, isCanceled, isComplete, rejectReason));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dateOrder = rs.getString(2);
+                    startDate = rs.getString(3);
+                    endDate = rs.getString(4);
+                    isPaid = rs.getBoolean(5);
+                    isCrash = rs.getBoolean(6);
+                    idCar = rs.getInt(7);
+                    crashBill = rs.getInt(8);
+                    dayCol = rs.getInt(11);
+                    amount = rs.getInt(10);
+                    id = rs.getInt(1);
+                    isCanceled = rs.getBoolean(12);
+                    isComplete = rs.getBoolean(13);
+                    rejectReason = rs.getString(14);
+                    list.add(new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
+                            amount, id, isCanceled, isComplete, rejectReason));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL USER ORDERS ERROR!!!", e);
@@ -176,7 +177,7 @@ public class SQLOrderDao implements OrderDao {
     /**
      *
      * @param orderId int order id
-     * @param amount int amount
+     * @param amount  int amount
      * @return true if set complete successfully or false if no
      */
     @Override
@@ -221,25 +222,26 @@ public class SQLOrderDao implements OrderDao {
 
         try (PreparedStatement ps = connection.prepareStatement(GET_ORDER_BY_ID)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                dateOrder = rs.getString(2);
-                startDate = rs.getString(3);
-                endDate = rs.getString(4);
-                isPaid = rs.getBoolean(5);
-                isCrash = rs.getBoolean(6);
-                idCar = rs.getInt(7);
-                crashBill = rs.getInt(8);
-                idUser = rs.getInt(9);
-                dayCol = rs.getInt(11);
-                amount = rs.getInt(10);
-                isCanceled = rs.getBoolean(12);
-                isComplete = rs.getBoolean(13);
-                rejectReason = rs.getString(14);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    dateOrder = rs.getString(2);
+                    startDate = rs.getString(3);
+                    endDate = rs.getString(4);
+                    isPaid = rs.getBoolean(5);
+                    isCrash = rs.getBoolean(6);
+                    idCar = rs.getInt(7);
+                    crashBill = rs.getInt(8);
+                    idUser = rs.getInt(9);
+                    dayCol = rs.getInt(11);
+                    amount = rs.getInt(10);
+                    isCanceled = rs.getBoolean(12);
+                    isComplete = rs.getBoolean(13);
+                    rejectReason = rs.getString(14);
 
+                }
+                return new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol,
+                        amount, id, isCanceled, isComplete, rejectReason);
             }
-            return new Order(dateOrder, startDate, endDate, isPaid, isCrash, idCar, crashBill, idUser, dayCol, amount,
-                    id, isCanceled, isComplete, rejectReason);
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ORDER BY ID ERROR", e);
@@ -313,7 +315,7 @@ public class SQLOrderDao implements OrderDao {
 
     /**
      *
-     * @param reason string reason of addition bill
+     * @param reason  string reason of addition bill
      * @param orderId int order id
      * @return true if setting reason of reject complete successfully
      */
@@ -366,11 +368,11 @@ public class SQLOrderDao implements OrderDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         int pageCol = 0;
-        try {
-            PreparedStatement ps = connection.prepareStatement(GET_PAGE_COL);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                pageCol = rs.getInt(1);
+        try (PreparedStatement ps = connection.prepareStatement(GET_PAGE_COL)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    pageCol = rs.getInt(1);
+                }
             }
         } catch (SQLException e) {
             LOG.error(e);

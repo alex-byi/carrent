@@ -25,8 +25,8 @@ import by.htp.jd2.service.ServiceProvider;
  */
 public class GetFuelCarsCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetFuelCarsCommand.class.getName());
-    private static final String error = "Get fuel cars USER ERROR";
-    private static final String debug = "Get fuel cars command";
+    private static final String ERROR = "Get fuel cars USER ERROR";
+    private static final String DEBUG = "Get fuel cars command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,20 +34,22 @@ public class GetFuelCarsCommand implements Command {
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 List<Car> list = ServiceProvider.getInstance().getCarService().getFuelCars(fuel);
                 request.setAttribute("fuelCar", list);
                 request.setAttribute("fuelStr", fuel);
             } catch (ServiceException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.CONTROL_CAR_PAGE);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
 
     }

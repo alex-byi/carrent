@@ -27,8 +27,8 @@ import java.util.Set;
 public class UserOrdersSearchCommand implements Command {
 
     private static final Logger LOG = LogManager.getLogger(UserOrdersSearchCommand.class.getName());
-    private static final String error = "SEARCH USER ORDERS ERROR";
-    private static final String debug = "SEARCH USER ORDERS command";
+    private static final String ERROR = "SEARCH USER ORDERS ERROR";
+    private static final String DEBUG = "SEARCH USER ORDERS command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -36,7 +36,7 @@ public class UserOrdersSearchCommand implements Command {
         HttpSession session = request.getSession();
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
             try {
                 idUser = Integer.parseInt(request.getParameter("idUser"));
@@ -51,15 +51,16 @@ public class UserOrdersSearchCommand implements Command {
                 }
                 request.setAttribute("carsO", cars);
 
-
             } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
+                LOG.error(ERROR, e);
+                if (session != null) {
+                    session.setAttribute("error", ERROR);
+                }
             }
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.CONTROL_USERS_PAGE);
             dispatcher.forward(request, response);
-            LOG.debug(debug);
+            LOG.debug(DEBUG);
         }
     }
 }

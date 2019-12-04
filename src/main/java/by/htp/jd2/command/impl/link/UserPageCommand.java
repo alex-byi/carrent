@@ -23,8 +23,8 @@ import by.htp.jd2.entity.UserType;
  */
 public class UserPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserPageCommand.class.getName());
-    private static final String debug = "Go to userpage page command";
-    private static final String error = "Go to userpage page command ERROR";
+    private static final String DEBUG = "Go to userpage page command";
+    private static final String ERROR = "Go to userpage page command ERROR";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -33,19 +33,22 @@ public class UserPageCommand implements Command {
         User user;
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
-            user = (User) session.getAttribute("user");
-            if (user.getType() == UserType.ADMIN) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADMIN_AUTH_PAGE);
-                session.setAttribute("user", user);
-                dispatcher.forward(request, response);
-                LOG.debug(debug);
-            } else {
-                RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_AUTH_PAGE);
-                session.setAttribute("user", user);
-                dispatcher.forward(request, response);
-                LOG.debug(debug);
+            if (session != null) {
+
+                user = (User) session.getAttribute("user");
+                if (user.getType() == UserType.ADMIN) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.ADMIN_AUTH_PAGE);
+                    session.setAttribute("user", user);
+                    dispatcher.forward(request, response);
+                    LOG.debug(DEBUG);
+                } else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.USER_AUTH_PAGE);
+                    session.setAttribute("user", user);
+                    dispatcher.forward(request, response);
+                    LOG.debug(DEBUG);
+                }
             }
         }
     }

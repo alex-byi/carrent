@@ -34,7 +34,6 @@ public class SQLUserDao implements UserDao {
     private static final String GET_USER_BY_ID = "SELECT * FROM users WHERE iduser = ?;";
     private static final String SEARCH_USER = "select * from users where login like ?;";
 
-
     private static String md5Apache(String st) {
         return DigestUtils.md5Hex(st);
     }
@@ -59,25 +58,25 @@ public class SQLUserDao implements UserDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.retrieve();
         String hash = md5Apache(passwordA);
-        try {
-            PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);
+        try (PreparedStatement ps = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
             ps.setString(1, loginA);
             ps.setString(2, hash);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(5);
-                type = UserType.valueOf(rs.getString(1).toUpperCase());
-                active = rs.getBoolean(9);
-                passNum = rs.getString(3);
-                fullName = rs.getString(6);
-                address = rs.getString(8);
-                email = rs.getString(7);
-                cash = rs.getInt(10);
-                login = rs.getString(4);
-                password = rs.getString(2);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(5);
+                    type = UserType.valueOf(rs.getString(1).toUpperCase());
+                    active = rs.getBoolean(9);
+                    passNum = rs.getString(3);
+                    fullName = rs.getString(6);
+                    address = rs.getString(8);
+                    email = rs.getString(7);
+                    cash = rs.getInt(10);
+                    login = rs.getString(4);
+                    password = rs.getString(2);
 
+                }
+                return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
             }
-            return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("AUTORIZATION ERROR", e);
@@ -85,7 +84,6 @@ public class SQLUserDao implements UserDao {
             pool.putback(connection);
         }
     }
-
 
     /**
      * @param user object User
@@ -97,8 +95,7 @@ public class SQLUserDao implements UserDao {
         Connection connection = pool.retrieve();
         String hash = md5Apache(user.getPassword());
 
-        try {
-            PreparedStatement ps = connection.prepareStatement(REGISTRATION_USER);
+        try (PreparedStatement ps = connection.prepareStatement(REGISTRATION_USER)) {
             ps.setString(1, user.getLogin());
             ps.setString(2, hash);
             ps.setString(3, user.getPassNum());
@@ -135,21 +132,22 @@ public class SQLUserDao implements UserDao {
         Connection connection = pool.retrieve();
         try (PreparedStatement ps = connection.prepareStatement(GET_ALL_USERS)) {
             ps.setInt(1, page);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(5);
-                type = UserType.valueOf(rs.getString(1).toUpperCase());
-                active = rs.getBoolean(9);
-                passNum = rs.getString(3);
-                fullName = rs.getString(6);
-                address = rs.getString(8);
-                email = rs.getString(7);
-                cash = rs.getInt(10);
-                login = rs.getString(4);
-                password = rs.getString(2);
-                list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(5);
+                    type = UserType.valueOf(rs.getString(1).toUpperCase());
+                    active = rs.getBoolean(9);
+                    passNum = rs.getString(3);
+                    fullName = rs.getString(6);
+                    address = rs.getString(8);
+                    email = rs.getString(7);
+                    cash = rs.getInt(10);
+                    login = rs.getString(4);
+                    password = rs.getString(2);
+                    list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET ALL CAR ERROR!!!", e);
@@ -253,11 +251,12 @@ public class SQLUserDao implements UserDao {
         List<String> logins = new ArrayList<>();
 
         try (PreparedStatement ps = connection.prepareStatement(SELECT_LOGINS)) {
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                logins.add(rs.getString(1));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    logins.add(rs.getString(1));
+                }
+                return !logins.contains(login);
             }
-            return !logins.contains(login);
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("SELECT USER BY ID ERROR", e);
@@ -286,19 +285,20 @@ public class SQLUserDao implements UserDao {
 
         try (PreparedStatement ps = connection.prepareStatement(GET_USER_BY_ID)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                type = UserType.valueOf(rs.getString(1).toUpperCase());
-                active = rs.getBoolean(9);
-                passNum = rs.getString(3);
-                fullName = rs.getString(6);
-                address = rs.getString(8);
-                email = rs.getString(7);
-                cash = rs.getInt(10);
-                login = rs.getString(4);
-                password = rs.getString(2);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    type = UserType.valueOf(rs.getString(1).toUpperCase());
+                    active = rs.getBoolean(9);
+                    passNum = rs.getString(3);
+                    fullName = rs.getString(6);
+                    address = rs.getString(8);
+                    email = rs.getString(7);
+                    cash = rs.getInt(10);
+                    login = rs.getString(4);
+                    password = rs.getString(2);
+                }
+                return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
             }
-            return new User(login, password, fullName, passNum, email, address, cash, type, active, id);
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("GET USER BY ID ERROR", e);
@@ -330,21 +330,22 @@ public class SQLUserDao implements UserDao {
 
         try (PreparedStatement ps = connection.prepareStatement(SEARCH_USER)) {
             ps.setString(1, "%" + searchLogin + "%");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                id = rs.getInt(5);
-                type = UserType.valueOf(rs.getString(1).toUpperCase());
-                active = rs.getBoolean(9);
-                passNum = rs.getString(3);
-                fullName = rs.getString(6);
-                address = rs.getString(8);
-                email = rs.getString(7);
-                cash = rs.getInt(10);
-                login = rs.getString(4);
-                password = rs.getString(2);
-                list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getInt(5);
+                    type = UserType.valueOf(rs.getString(1).toUpperCase());
+                    active = rs.getBoolean(9);
+                    passNum = rs.getString(3);
+                    fullName = rs.getString(6);
+                    address = rs.getString(8);
+                    email = rs.getString(7);
+                    cash = rs.getInt(10);
+                    login = rs.getString(4);
+                    password = rs.getString(2);
+                    list.add(new User(login, password, fullName, passNum, email, address, cash, type, active, id));
+                }
+                return list;
             }
-            return list;
         } catch (SQLException e) {
             LOG.error(e);
             throw new DaoException("SEARCH USER ERROR", e);

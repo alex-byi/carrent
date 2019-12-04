@@ -1,16 +1,11 @@
 package by.htp.jd2.dao.impl;
 
 import by.htp.jd2.dao.DaoException;
-import by.htp.jd2.dao.connectionpool.ConnectionPool;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.entity.UserType;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 

@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
 /**
  * add money to user by USER
  *
@@ -21,9 +20,8 @@ import java.io.IOException;
  */
 public class AddMoneyUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddMoneyUserCommand.class.getName());
-    private static final String error = "ADD money by USER ERROR";
-    private static final String debug = "Add money by USER command";
-
+    private static final String ERROR = "ADD money by USER ERROR";
+    private static final String DEBUG = "Add money by USER command";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -33,22 +31,24 @@ public class AddMoneyUserCommand implements Command {
         int userId = 0;
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
-            LOG.error(error);
+            LOG.error(ERROR);
         } else {
-            User user = (User) session.getAttribute("user");
-            try {
-                userId = Integer.parseInt(request.getParameter("idUser"));
-                moneyCol = Integer.parseInt(request.getParameter("moneyCol"));
-                ServiceProvider.getInstance().getUserService().addMoney(moneyCol, userId);
-            } catch (ServiceException | NumberFormatException e) {
-                LOG.error(error + e);
-                e.printStackTrace();
-                session.setAttribute("error", error);
+            if (session != null) {
+                User user = (User) session.getAttribute("user");
+
+                try {
+                    userId = Integer.parseInt(request.getParameter("idUser"));
+                    moneyCol = Integer.parseInt(request.getParameter("moneyCol"));
+                    ServiceProvider.getInstance().getUserService().addMoney(moneyCol, userId);
+                } catch (ServiceException | NumberFormatException e) {
+                    LOG.error(ERROR, e);
+                    session.setAttribute("error", ERROR);
+                }
+                user.setCash(user.getCash() + moneyCol);
+                session.setAttribute("user", user);
+                response.sendRedirect("controller?command=USER_PAGE");
+                LOG.debug(DEBUG);
             }
-            user.setCash(user.getCash() + moneyCol);
-            session.setAttribute("user", user);
-            response.sendRedirect("controller?command=USER_PAGE");
-            LOG.debug(debug);
         }
 
     }
