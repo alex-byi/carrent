@@ -2,24 +2,33 @@ package by.htp.jd2.service.impl;
 
 import java.util.List;
 
+import by.htp.jd2.dao.CrashDao;
 import by.htp.jd2.dao.DaoException;
-import by.htp.jd2.dao.DaoProvider;
-import by.htp.jd2.dao.impl.SqlCrashDao;
 import by.htp.jd2.entity.Crash;
 import by.htp.jd2.service.CrashService;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.validation.CrashDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CrashServiceImpl implements CrashService {
 
     private static final CrashDataValidator validator = CrashDataValidator.getInstance();
     private static final Logger LOG = LogManager.getLogger(CrashServiceImpl.class.getName());
 
+    CrashDao crashDao;
+
+    @Autowired
+    public void setCrashDao(CrashDao crashDao) {
+        this.crashDao = crashDao;
+    }
+
     @Override
     public List<Crash> getAllCrashs() throws ServiceException {
-        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
+//        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         List<Crash> list;
         try {
             list = crashDao.getAllCrashs();
@@ -39,7 +48,7 @@ public class CrashServiceImpl implements CrashService {
         if (validator.checkCrashInfo(crash)) {
             throw new ServiceException("Crash data is no valid");
         }
-        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
+//        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         try {
             id = crashDao.addCrash(crash);
         } catch (DaoException e) {
@@ -51,7 +60,7 @@ public class CrashServiceImpl implements CrashService {
 
     @Override
     public List<Crash> getUsersCrashs(int idUser) throws ServiceException {
-        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
+//        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         List<Crash> list;
         try {
             list = crashDao.getUsersCrashs(idUser);
@@ -67,7 +76,7 @@ public class CrashServiceImpl implements CrashService {
 
     @Override
     public boolean setCrashPayment(int idCrash) throws ServiceException {
-        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
+//        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         try {
             return crashDao.setCrashPayment(idCrash);
         } catch (DaoException e) {
@@ -77,7 +86,7 @@ public class CrashServiceImpl implements CrashService {
 
     @Override
     public Crash getCrashById(int idCrash) throws ServiceException {
-        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
+//        SqlCrashDao crashDao = DaoProvider.getInstance().getCrashDao();
         try {
             return crashDao.getCrashById(idCrash);
         } catch (DaoException e) {

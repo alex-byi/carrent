@@ -7,22 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.htp.jd2.command.Command;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * cancel order
  *
  * @author alexey
  */
+@Component
 public class OrderCancelCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCancelCommand.class.getName());
     private static final String DEBUG = "Order cancel command";
     private static final String ERROR = "Cancel order ERROR";
+
+    private OrderService orderService = (OrderService) ConnectionListener.getContextBean(OrderService.class);
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -36,8 +42,8 @@ public class OrderCancelCommand implements Command {
                 int id = Integer.parseInt(request.getParameter("orderId"));
                 String reason = request.getParameter("reason");
 
-                ServiceProvider.getInstance().getOrderService().setCanceled(id);
-                ServiceProvider.getInstance().getOrderService().setRejectReason(reason, id);
+                orderService.setCanceled(id);
+                orderService.setRejectReason(reason, id);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(ERROR, e);
                 if (session != null) {

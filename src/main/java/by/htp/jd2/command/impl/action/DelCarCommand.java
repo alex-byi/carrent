@@ -7,23 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * deactivate car to exclude from list of availible cars
  *
  * @author alexey
  */
+@Component
 public class DelCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(DelCarCommand.class.getName());
     private static final String ERROR = "Del car ERROR";
     private static final String DEBUG = "Del car command";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,7 +39,7 @@ public class DelCarCommand implements Command {
         } else {
             try {
                 int id = Integer.parseInt(request.getParameter(RequestParameterName.ID_CAR));
-                ServiceProvider.getInstance().getCarService().delCar(id);
+               carService.delCar(id);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(ERROR, e);
                 if (session != null) {

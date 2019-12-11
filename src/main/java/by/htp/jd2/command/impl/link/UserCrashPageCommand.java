@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
+import by.htp.jd2.service.CrashService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +24,6 @@ import by.htp.jd2.entity.Car;
 import by.htp.jd2.entity.Crash;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
 
 /**
  * go to page where user can see all his additional bills
@@ -32,6 +34,12 @@ public class UserCrashPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPageCommand.class.getName());
     private static final String DEBUG = "Go to USER crash page command";
     private static final String ERROR = "Go to USER crash page command ERROR";
+
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
+    private CrashService crashService = (CrashService) ConnectionListener.getContextBean(CrashService.class);
+
+
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -46,11 +54,11 @@ public class UserCrashPageCommand implements Command {
                 User user = (User) session.getAttribute("user");
 
                 try {
-                    crashs = ServiceProvider.getInstance().getCrashService().getUsersCrashs(user.getId());
+                    crashs = crashService.getUsersCrashs(user.getId());
 
                     Set<Car> cars = new HashSet<>();
                     for (Crash crash : crashs) {
-                        cars.add(ServiceProvider.getInstance().getCarService().getCarById(crash.getIdCar()));
+                        cars.add(carService.getCarById(crash.getIdCar()));
                     }
                     request.setAttribute("cars", cars);
                 } catch (ServiceException e) {

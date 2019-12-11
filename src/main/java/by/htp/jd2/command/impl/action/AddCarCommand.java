@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,17 +17,20 @@ import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.entity.TransmissionType;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * add new car to database
  *
  * @author alexey
  */
+@Component
 public class AddCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarCommand.class.getName());
     private static final String ERROR = "Add car ERROR";
     private static final String DEBUG = "Add car command";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -45,7 +50,7 @@ public class AddCarCommand implements Command {
                 TransmissionType transmission = TransmissionType
                         .valueOf(request.getParameter(RequestParameterName.REQ_PARAM_TRANSMISSION).toUpperCase());
                 Car car = new Car(name, price, fuel, color, body, transmission, true);
-                ServiceProvider.getInstance().getCarService().addNewCar(car);
+                carService.addNewCar(car);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(ERROR, e);
                 if (session != null) {

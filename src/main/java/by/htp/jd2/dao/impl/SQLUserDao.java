@@ -8,6 +8,7 @@ import by.htp.jd2.entity.UserType;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * @author alexey
  */
+
 public class SQLUserDao implements UserDao {
 
     private static final Logger LOG = LogManager.getLogger(SQLUserDao.class.getName());

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,17 +18,20 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * get list of cars with some fuel type
  *
  * @author alexey
  */
+@Component
 public class GetFuelCarsCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(GetFuelCarsCommand.class.getName());
     private static final String ERROR = "Get fuel cars USER ERROR";
     private static final String DEBUG = "Get fuel cars command";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -37,7 +42,7 @@ public class GetFuelCarsCommand implements Command {
             LOG.error(ERROR);
         } else {
             try {
-                List<Car> list = ServiceProvider.getInstance().getCarService().getFuelCars(fuel);
+                List<Car> list = carService.getFuelCars(fuel);
                 request.setAttribute("fuelCar", list);
                 request.setAttribute("fuelStr", fuel);
             } catch (ServiceException e) {

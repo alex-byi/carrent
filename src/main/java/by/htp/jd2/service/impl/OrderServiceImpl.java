@@ -3,23 +3,32 @@ package by.htp.jd2.service.impl;
 import java.util.List;
 
 import by.htp.jd2.dao.DaoException;
-import by.htp.jd2.dao.DaoProvider;
-import by.htp.jd2.dao.impl.SQLOrderDao;
+import by.htp.jd2.dao.OrderDao;
 import by.htp.jd2.entity.Order;
 import by.htp.jd2.service.OrderService;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.validation.OrderDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
     private static final OrderDataValidator validator = OrderDataValidator.getInstance();
     private static final Logger LOG = LogManager.getLogger(OrderServiceImpl.class.getName());
 
+    OrderDao orderDao;
+
+    @Autowired
+    public void setOrderDao(OrderDao orderDao) {
+        this.orderDao = orderDao;
+    }
+
     @Override
     public List<Order> getAllOrders(int page) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         List<Order> list;
         try {
             list = orderDao.getAllOrders(page);
@@ -38,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         if (validator.checkOrderInfo(order)) {
             throw new ServiceException("Order data is no valid");
         }
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.addNewOrder(order);
         } catch (DaoException e) {
@@ -49,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> userOrders(int id) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         List<Order> list;
         try {
             list = orderDao.userOrders(id);
@@ -64,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setAmount(int orderId, int amount) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setAmount(orderId, amount);
         } catch (DaoException e) {
@@ -75,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order getOrderById(int id) throws ServiceException {
         Order order;
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             order = orderDao.getOrderById(id);
         } catch (DaoException e) {
@@ -89,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setPayment(int orderId) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setPayment(orderId);
         } catch (DaoException e) {
@@ -99,7 +108,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setComplete(int orderId) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setComplete(orderId);
         } catch (DaoException e) {
@@ -109,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setCanceled(int orderId) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setCanceled(orderId);
         } catch (DaoException e) {
@@ -119,7 +128,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setRejectReason(String reason, int orderId) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setRejectReason(reason, orderId);
         } catch (DaoException e) {
@@ -129,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean setCrash(int orderId, int crashId) throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         try {
             return orderDao.setCrash(orderId, crashId);
         } catch (DaoException e) {
@@ -139,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public int pageCol() throws ServiceException {
-        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
+//        SQLOrderDao orderDao = DaoProvider.getInstance().getOrderDao();
         int pageCol;
         try {
             pageCol = orderDao.pageCol();

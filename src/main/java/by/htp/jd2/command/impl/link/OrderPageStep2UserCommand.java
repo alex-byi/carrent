@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,17 +21,20 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * go to page where user can choose car
  *
  * @author alexey
  */
+@Component
 public class OrderPageStep2UserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageStep2UserCommand.class.getName());
     private static final String DEBUG = "Order step 2 command";
     private static final String ERROR = "Order step 2 command ERROR";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -51,7 +56,7 @@ public class OrderPageStep2UserCommand implements Command {
                 String startDate = dateFormat.format(dateS);
                 String endDate = dateFormat.format(dateE);
 
-                List<Car> availableCars = ServiceProvider.getInstance().getCarService().getAllAvailableCars(startDate,
+                List<Car> availableCars = carService.getAllAvailableCars(startDate,
                         endDate);
 
                 long milliseconds = dateE.getTime() - dateS.getTime();

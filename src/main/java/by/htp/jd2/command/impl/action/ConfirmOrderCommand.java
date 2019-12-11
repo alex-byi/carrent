@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
+import by.htp.jd2.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,18 +20,23 @@ import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.entity.Order;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * confirmation order by user
  *
  * @author alexey
  */
+@Component
 public class ConfirmOrderCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ConfirmOrderCommand.class.getName());
     private static final String ERROR = "Confirm order ERROR";
     private static final String DEBUG = "Confirm order Command";
     private static final String ERROR_CONFIRM_ORDER = "Автомобиль уже заказал кто-то другой. Попробуйте еще раз";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
+
+    private OrderService orderService = (OrderService) ConnectionListener.getContextBean(OrderService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -49,11 +57,11 @@ public class ConfirmOrderCommand implements Command {
                 int dayCol = Integer.parseInt(request.getParameter("dayCol"));
                 Car car;
                 Order order = new Order(date, date1, date2, idCar, idUser, amount, dayCol);
-                List<Car> availableCars = ServiceProvider.getInstance().getCarService().getAllAvailableCars(date1,
+                List<Car> availableCars = carService.getAllAvailableCars(date1,
                         date2);
-                car = ServiceProvider.getInstance().getCarService().getCarById(idCar);
+                car = carService.getCarById(idCar);
                 if (availableCars.contains(car)) {
-                    ServiceProvider.getInstance().getOrderService().addNewOrder(order);
+                    orderService.addNewOrder(order);
                 } else {
                     if (session != null) {
                         session.setAttribute("error", ERROR_CONFIRM_ORDER);

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,18 +18,22 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * go to "Control users" page
  *
  * @author alexey
  */
+@Component
 public class ControlUsersPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ControlUsersPageCommand.class.getName());
     private static final String ERROR = "go to Control users page error";
     private static final String DEBUG = "Go to User control page command";
     private static final String CURRENT_PAGE_PARAMETER = "currentPage";
+
+
+    private UserService userService = (UserService) ConnectionListener.getContextBean(UserService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -47,7 +53,8 @@ public class ControlUsersPageCommand implements Command {
                 }
                 int page = currentPage * 5;
 
-                List<User> users = ServiceProvider.getInstance().getUserService().getAllUsers(page);
+//                List<User> users = ServiceProvider.getInstance().getUserService().getAllUsers(page);
+                List<User> users = userService.getAllUsers(page);
                 request.setAttribute("allUsers", users);
                 request.setAttribute(CURRENT_PAGE_PARAMETER, currentPage);
             } catch (ServiceException e) {

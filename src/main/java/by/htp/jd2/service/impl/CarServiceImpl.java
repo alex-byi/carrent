@@ -2,24 +2,34 @@ package by.htp.jd2.service.impl;
 
 import java.util.List;
 
+import by.htp.jd2.dao.CarDAO;
 import by.htp.jd2.dao.DaoException;
-import by.htp.jd2.dao.DaoProvider;
-import by.htp.jd2.dao.impl.SQLCarDao;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.service.CarService;
 import by.htp.jd2.service.ServiceException;
 import by.htp.jd2.service.validation.CarDataValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CarServiceImpl implements CarService {
 
     private static final CarDataValidator validator = CarDataValidator.getInstance();
     private static final Logger LOG = LogManager.getLogger(CarServiceImpl.class.getName());
 
+
+    CarDAO carDao;
+
+    @Autowired
+    public void setCarDAO(CarDAO carDAO) {
+        this.carDao = carDAO;
+    }
+
     @Override
     public List<Car> getAllCars() throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         List<Car> list;
         try {
             list = carDao.getAllCars();
@@ -38,7 +48,7 @@ public class CarServiceImpl implements CarService {
         if (validator.checkCarInfo(car)) {
             throw new ServiceException("Car data is no valid");
         }
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         try {
             return carDao.addNewCar(car);
         } catch (DaoException e) {
@@ -49,7 +59,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean delCar(int id) throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         try {
             return carDao.delCar(id);
         } catch (DaoException e) {
@@ -60,7 +70,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public boolean activateCar(int id) throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         try {
             return carDao.activateCar(id);
         } catch (DaoException e) {
@@ -71,7 +81,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getAllAvailableCars(String startDate, String endDate) throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         List<Car> list;
         try {
             list = carDao.getAllAvailableCars(startDate, endDate);
@@ -88,7 +98,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car getCarById(int id) throws ServiceException {
         Car car;
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         try {
             car = carDao.getCarById(id);
         } catch (DaoException e) {
@@ -103,7 +113,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getTransmissionCar(String transmission) throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         List<Car> list;
         try {
             list = carDao.getTransmissionCar(transmission);
@@ -119,7 +129,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public List<Car> getFuelCars(String fuel) throws ServiceException {
-        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
+//        SQLCarDao carDao = DaoProvider.getInstance().getCarDao();
         List<Car> list;
         try {
             list = carDao.getFuelCars(fuel);

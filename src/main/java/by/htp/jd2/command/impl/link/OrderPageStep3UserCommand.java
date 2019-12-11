@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,17 +21,21 @@ import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.entity.Car;
 import by.htp.jd2.entity.Order;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * go to page where user can confirm order
  *
  * @author alexey
  */
+@Component
 public class OrderPageStep3UserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderPageStep3UserCommand.class.getName());
     private static final String DEBUG = "Order step 3 command";
     private static final String ERROR = "Order step 3 command ERROR";
+
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -48,7 +54,7 @@ public class OrderPageStep3UserCommand implements Command {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 Car car;
-                car = ServiceProvider.getInstance().getCarService().getCarById(idCar);
+                car = carService.getCarById(idCar);
                 Order order = new Order(dateFormat.format(date), date1, date2, idCar, idUser, amount, dayCol);
 
                 request.setAttribute("selectCar", car);

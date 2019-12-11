@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CrashService;
+import by.htp.jd2.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,17 +17,21 @@ import by.htp.jd2.command.Command;
 import by.htp.jd2.entity.Crash;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * pay additional bill by user
  *
  * @author alexey
  */
+@Component
 public class UserCrashPayCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(UserCrashPayCommand.class.getName());
     private static final String DEBUG = "User crash pay command";
     private static final String ERROR = "Pay ERROR";
+
+    private CrashService crashService = (CrashService) ConnectionListener.getContextBean(CrashService.class);
+    private UserService userService = (UserService) ConnectionListener.getContextBean(UserService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -41,9 +48,9 @@ public class UserCrashPayCommand implements Command {
                     int crashId = Integer.parseInt(request.getParameter("crashId"));
                     int amount = Integer.parseInt(request.getParameter("amount"));
                     Crash crash;
-                    crash = ServiceProvider.getInstance().getCrashService().getCrashById(crashId);
-                    ServiceProvider.getInstance().getCrashService().setCrashPayment(crashId);
-                    ServiceProvider.getInstance().getUserService().pay(amount, userId);
+                    crash = crashService.getCrashById(crashId);
+                    crashService.setCrashPayment(crashId);
+                    userService.pay(amount, userId);
                     user.setCash(user.getCash() - crash.getAmount());
                     session.setAttribute("user", user);
                 }

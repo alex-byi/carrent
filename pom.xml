@@ -21,6 +21,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.2.2.RELEASE</version>
+        </dependency>
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
@@ -58,12 +68,7 @@
             <artifactId>log4j-core</artifactId>
             <version>2.12.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-servlet-api</artifactId>
-            <version>7.0.21</version>
-            <scope>provided</scope>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -86,7 +91,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.2</version>
                     <configuration>
-                        <skipTests>false</skipTests>
+                        <skipTests>true</skipTests>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -110,14 +115,10 @@
                         <server>TomcatServer</server>
                         <path>/carrent</path>
                         <username>admin</username>
-                        <password>admin</password>
+                        <password>12345</password>
                     </configuration>
                 </plugin>
-                  <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.7.0.1746</version>
-            </plugin>
+
             </plugins>
         </pluginManagement>
     </build>

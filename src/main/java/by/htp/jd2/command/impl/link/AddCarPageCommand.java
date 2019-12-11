@@ -19,6 +19,7 @@ import by.htp.jd2.controller.JSPPageName;
  *
  * @author alexey
  */
+
 public class AddCarPageCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddCarPageCommand.class.getName());
     private static final String ERROR = "Go to add car page without session";

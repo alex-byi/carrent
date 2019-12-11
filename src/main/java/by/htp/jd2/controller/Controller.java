@@ -9,16 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.htp.jd2.command.Command;
 import by.htp.jd2.command.CommandHelper;
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * controller for all application
  *
  * @author alexey
  */
+@Component
 public class Controller extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final CommandHelper helper = CommandHelper.getInstance();
+
+//    private CommandHelper helper = (CommandHelper) ConnectionListener.getContextBean(CommandHelper.class);
+
+//    static {
+//        CommandHelper.Puts();
+//    }
 
     public Controller() {
         super();

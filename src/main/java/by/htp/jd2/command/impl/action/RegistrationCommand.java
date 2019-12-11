@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,13 +18,16 @@ import by.htp.jd2.controller.JSPPageName;
 import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RegistrationCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(RegistrationCommand.class.getName());
     private static final String DEBUG = "Registration command";
     private static final String ERROR = "Registration ERROR";
     private static final String DUPLICATE = "Пользователь с таким логином уже существует. Выберите другой";
+
+    private UserService userService = (UserService) ConnectionListener.getContextBean(UserService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -38,12 +43,12 @@ public class RegistrationCommand implements Command {
         User user = new User(login, password, fullName, passNum, email, address);
 
         try {
-            if (!ServiceProvider.getInstance().getUserService().checkUser(login)) {
+            if (!userService.checkUser(login)) {
                 session.setAttribute("duplicateLogin", DUPLICATE);
                 RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPageName.REGISTRATION_PAGE);
                 dispatcher.forward(request, response);
             } else {
-                ServiceProvider.getInstance().getUserService().registration(user);
+                userService.registration(user);
                 session.setAttribute("user", user);
                 response.sendRedirect("controller?command=AUTHORIZATION");
                 LOG.debug(DEBUG);

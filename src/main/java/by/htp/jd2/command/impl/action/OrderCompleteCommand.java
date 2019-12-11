@@ -7,22 +7,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.OrderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.htp.jd2.command.Command;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * complete order
  *
  * @author alexey
  */
+@Component
 public class OrderCompleteCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(OrderCompleteCommand.class.getName());
     private static final String DEBUG = "Order complete command";
     private static final String ERROR = "Complete order ERROR";
+
+    private OrderService orderService = (OrderService) ConnectionListener.getContextBean(OrderService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -34,7 +39,7 @@ public class OrderCompleteCommand implements Command {
         } else {
             try {
                 int id = Integer.parseInt(request.getParameter("orderId"));
-                ServiceProvider.getInstance().getOrderService().setComplete(id);
+               orderService.setComplete(id);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(ERROR, e);
                 if (session != null) {

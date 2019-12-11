@@ -1,11 +1,13 @@
 package by.htp.jd2.command.impl.action;
 
 import by.htp.jd2.command.Command;
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
 import by.htp.jd2.entity.User;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import by.htp.jd2.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,17 +20,20 @@ import java.io.IOException;
  *
  * @author alexey
  */
+@Component
 public class AddMoneyUserCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(AddMoneyUserCommand.class.getName());
     private static final String ERROR = "ADD money by USER ERROR";
     private static final String DEBUG = "Add money by USER command";
+
+    private UserService userService = (UserService) ConnectionListener.getContextBean(UserService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         HttpSession session = request.getSession(false);
         int moneyCol = 0;
-        int userId = 0;
+        int userId;
         if (session != null && session.getAttribute("user") == null) {
             response.sendRedirect("index.jsp");
             LOG.error(ERROR);
@@ -39,7 +44,7 @@ public class AddMoneyUserCommand implements Command {
                 try {
                     userId = Integer.parseInt(request.getParameter("idUser"));
                     moneyCol = Integer.parseInt(request.getParameter("moneyCol"));
-                    ServiceProvider.getInstance().getUserService().addMoney(moneyCol, userId);
+                   userService.addMoney(moneyCol, userId);
                 } catch (ServiceException | NumberFormatException e) {
                     LOG.error(ERROR, e);
                     session.setAttribute("error", ERROR);

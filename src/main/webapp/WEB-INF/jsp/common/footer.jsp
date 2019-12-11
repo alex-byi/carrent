@@ -10,13 +10,7 @@
 
 </head>
 <body>
-<center>
-    <h2> Version:
-        <c:import url="http://localhost:8090/job/carrent/lastBuild/buildNumber"/>
-        timestamp:
-        <c:import url="http://localhost:8090/job/carrent/lastBuild/buildTimestamp"/>
-    </h2>
-</center>
+
 <div>
 
     <a href="mailto:alex-byi@mail.ru">Написать нам</a>

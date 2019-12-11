@@ -7,23 +7,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import by.htp.jd2.dao.connectionpool.ConnectionListener;
+import by.htp.jd2.service.CarService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.htp.jd2.command.Command;
 import by.htp.jd2.controller.RequestParameterName;
 import by.htp.jd2.service.ServiceException;
-import by.htp.jd2.service.ServiceProvider;
+import org.springframework.stereotype.Component;
 
 /**
  * activate one car by carID
  *
  * @author alexey
  */
+@Component
 public class ActivateCarCommand implements Command {
     private static final Logger LOG = LogManager.getLogger(ActivateCarCommand.class.getName());
     private static final String ERROR = "Car activate ERROR";
     private static final String DEBUG = "Activate car command";
+
+    private CarService carService = (CarService) ConnectionListener.getContextBean(CarService.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -36,7 +41,7 @@ public class ActivateCarCommand implements Command {
         } else {
             try {
                 int id = Integer.parseInt(request.getParameter(RequestParameterName.ID_CAR));
-                ServiceProvider.getInstance().getCarService().activateCar(id);
+                carService.activateCar(id);
             } catch (ServiceException | NumberFormatException e) {
                 LOG.error(ERROR, e);
                 if (session != null) {
